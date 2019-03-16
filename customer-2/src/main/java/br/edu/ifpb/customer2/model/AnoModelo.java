@@ -12,13 +12,14 @@ import javax.persistence.*;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Modelo {
+public class AnoModelo {
 
     @Id
     @GeneratedValue
     private int id;
     private String nome;
     private String tipo;
+    private double valor;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
-    private Fabricante fabricante;
+    private Modelo modelo;
 }
