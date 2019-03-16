@@ -19,6 +19,8 @@ public class Veiculo {
     private int id;
     private String placa;
     private double quilometragem;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     private Cor cor;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    private Modelo modelo;
 }
