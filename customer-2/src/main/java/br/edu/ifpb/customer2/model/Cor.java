@@ -5,20 +5,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Veiculo {
-
+public class Cor {
     @Id
     @GeneratedValue
     private int id;
-    private String placa;
-    private double quilometragem;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Cor cor;
+    private String nome;
 }
