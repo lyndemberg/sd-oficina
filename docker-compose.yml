@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+        customer2:
+                build: ./customer-2
+                container_name: db-customer2
+                ports: 
+                        - "5433:5432"
+                networks:
+                        - private_network
+networks:
+        private_network:
+                driver: bridge
