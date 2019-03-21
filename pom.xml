@@ -12,6 +12,6 @@
     <modules>
         <module>customer2</module>
         <module>shared</module>
-
+        <module>back-end</module>
     </modules>
 </project>

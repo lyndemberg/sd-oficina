@@ -2,6 +2,7 @@ package br.edu.ifpb.customer2.controller;
 
 import br.edu.ifpb.customer2.model.Modelo;
 import br.edu.ifpb.customer2.service.ModeloService;
+import br.edu.ifpb.model.Modelo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

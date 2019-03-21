@@ -11,27 +11,5 @@ import java.util.Optional;
 @Service
 public class VeiculoService {
 
-    private final VeiculoRepository repository;
-
-    public VeiculoService(VeiculoRepository repository) {
-        this.repository = repository;
-    }
-
-    public Veiculo salvar(Veiculo veiculo) {
-        return repository.save(veiculo);
-    }
-
-    public Optional<Veiculo> buscarVeiculo(int id) {
-        return repository.findById(id);
-    }
-
-    public List<Veiculo> listarTodos() {
-        return repository.findAll();
-    }
-
-    public void deletar(int id) {
-        repository.delete(buscarVeiculo(id).get());
-    }
-
 
 }
