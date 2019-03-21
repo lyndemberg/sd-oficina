@@ -1,4 +1,4 @@
-package br.edu.ifpb.repository;
+package br.edu.ifpb.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -14,7 +14,7 @@ public class DAO {
                 .createEntityManager();
     }
 
-    public void salvar(Object obj){
+    public Object salvar(Object obj){
         em.getTransaction().begin();
         em.persist(obj);
         em.getTransaction().commit();

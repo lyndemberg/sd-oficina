@@ -1,6 +1,5 @@
 package br.edu.ifpb.customer2.controller;
 
-import br.edu.ifpb.customer2.model.Modelo;
 import br.edu.ifpb.customer2.service.ModeloService;
 import br.edu.ifpb.model.Modelo;
 import org.springframework.http.ResponseEntity;
@@ -21,24 +20,24 @@ public class ModeloController {
 
     @GetMapping
     private ResponseEntity<List<Modelo>> listarTodos() {
-        List<Modelo> Modelos = service.listarTodos();
+        List<Modelo> Modelos = null;
         return Modelos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(Modelos);
     }
 
     @GetMapping("/{id}")
     private ResponseEntity<Modelo> buscarModelo(@PathVariable("id") int id) {
-        Optional<Modelo> Modelo = service.buscar(id);
+        Optional<Modelo> Modelo = null;
         return Modelo.isPresent() ? ResponseEntity.ok(Modelo.get()) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
     private ResponseEntity<Modelo> salvar(@RequestBody Modelo Modelo) {
-        return ResponseEntity.ok(service.salvar(Modelo));
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> deletar(@PathVariable int id) {
-        service.deletar(id);
+
         return ResponseEntity.ok().build();
     }
 }

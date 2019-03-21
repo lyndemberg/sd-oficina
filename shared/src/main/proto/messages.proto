@@ -1,6 +1,46 @@
 syntax="proto3";
 
 option java_multiple_files = true;
+option objc_class_prefix = "HLW";
 
-package br.edu.ifpb.shared;
+package br.edu.ifpb.proto;
 
+
+
+message Fabricante{
+    int32 id =1;
+    string nome = 2;
+}
+
+message Modelo{
+    int32 id = 1;
+    string nome = 2;
+    string tipo = 3;
+    Fabricante fabricante = 4;
+}
+
+message Cor{
+    int32 id =1;
+    string nome = 2;
+}
+
+message Veiculo{
+    int32 id = 1;
+    string placa = 2;
+    double quilometragem = 3;
+    Cor cor = 4;
+    Modelo modelo = 5;
+}
+
+message AnoModelo{
+    int32 id = 1;
+    string nome = 2;
+    string tipo = 3;
+    double valor = 4;
+    Modelo modelo = 5;
+}
+
+
+service FabricanteService{
+    rpc salvar(Fabricante) returns (Fabricante);
+}

@@ -1,8 +1,7 @@
 package br.edu.ifpb.customer2.service;
 
-import br.edu.ifpb.customer2.model.Fabricante;
-import br.edu.ifpb.customer2.repository.FabricanteRepository;
-import br.edu.ifpb.customer2.repository.FabricanteRepository;
+import br.edu.ifpb.customer2.grpc.FabricanteGrpc;
+import br.edu.ifpb.model.Fabricante;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,4 +11,13 @@ import java.util.Optional;
 public class FabricanteService {
 
 
+    private FabricanteGrpc grpc;
+
+    public FabricanteService(){
+        this.grpc = new FabricanteGrpc();
+    }
+
+    public Fabricante salvar(Fabricante fabricante){
+        return grpc.salvar(fabricante);
+    }
 }
