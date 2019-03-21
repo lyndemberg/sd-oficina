@@ -11,7 +11,7 @@
     <groupId>br.edu.ifpb</groupId>
     <artifactId>customer-2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>customer-2</name>
+    <name>back-end</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
