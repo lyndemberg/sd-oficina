@@ -5,42 +5,48 @@ option objc_class_prefix = "HLW";
 
 package br.edu.ifpb.proto;
 
-
-
-message Fabricante{
+message FabricanteProto{
     int32 id =1;
     string nome = 2;
 }
 
-message Modelo{
+message FabricanteResult{
+    FabricanteProto fabricante = 1;
+    int32 codigo = 2;
+}
+
+message ModeloProto{
     int32 id = 1;
     string nome = 2;
     string tipo = 3;
-    Fabricante fabricante = 4;
+    FabricanteProto fabricante = 4;
 }
 
-message Cor{
+message CorProto{
     int32 id =1;
     string nome = 2;
 }
 
-message Veiculo{
+message VeiculoProto{
     int32 id = 1;
     string placa = 2;
     double quilometragem = 3;
-    Cor cor = 4;
-    Modelo modelo = 5;
+    CorProto cor = 4;
+    ModeloProto modelo = 5;
 }
 
-message AnoModelo{
+message AnoModeloProto{
     int32 id = 1;
     string nome = 2;
     string tipo = 3;
     double valor = 4;
-    Modelo modelo = 5;
+    ModeloProto modelo = 5;
 }
 
 
 service FabricanteService{
-    rpc salvar(Fabricante) returns (Fabricante);
+    rpc salvar(FabricanteProto) returns (FabricanteResult);
+    rpc atualizar(FabricanteProto) returns (FabricanteResult);
+    rpc deletar(FabricanteProto) returns (FabricanteResult);
+    rpc buscar(FabricanteProto) returns (FabricanteResult);
 }

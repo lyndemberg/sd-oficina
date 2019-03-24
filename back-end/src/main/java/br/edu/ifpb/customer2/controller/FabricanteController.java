@@ -26,18 +26,23 @@ public class FabricanteController {
 
     @GetMapping("/{id}")
     private ResponseEntity<Fabricante> buscarFabricante(@PathVariable("id") int id) {
-        Optional<Fabricante> fabricante = null;
-        return fabricante.isPresent() ? ResponseEntity.ok(fabricante.get()) : ResponseEntity.notFound().build();
+        Fabricante fabricante = service.buscar(id);
+        return fabricante.getNome() != null? ResponseEntity.ok(fabricante) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    private ResponseEntity<Fabricante> salvar(@RequestBody Fabricante fabricante) {
+    private ResponseEntity<Object> salvar(@RequestBody Fabricante fabricante) {
         return ResponseEntity.ok(service.salvar(fabricante));
     }
 
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> deletar(@PathVariable int id) {
-
+        service.deletar(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    private ResponseEntity<Object> atualizar(@RequestBody Fabricante fabricante) {
+        return ResponseEntity.ok(service.atualizar(fabricante));
     }
 }

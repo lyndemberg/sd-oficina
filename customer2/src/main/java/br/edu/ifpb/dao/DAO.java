@@ -1,22 +1,10 @@
 package br.edu.ifpb.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+public interface DAO<T> {
 
-public class DAO {
+    T salvar(T obj);
+    T atualizar(T obj);
+    void deletar(Object key);
+    T buscar(Object key);
 
-    private EntityManager em;
-
-
-    public DAO(){
-        this.em = Persistence
-                .createEntityManagerFactory("Projeto")
-                .createEntityManager();
-    }
-
-    public Object salvar(Object obj){
-        em.getTransaction().begin();
-        em.persist(obj);
-        em.getTransaction().commit();
-    }
 }
