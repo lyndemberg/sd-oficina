@@ -1,33 +1,56 @@
-syntax="proto3";
+syntax = "proto3";
+import "google/protobuf/empty.proto";
 
 option java_multiple_files = true;
 option objc_class_prefix = "HLW";
 
 package br.edu.ifpb.proto;
 
-message FabricanteProto{
-    int32 id =1;
+// FABRICANTE
+message FabricanteProto {
+    int32 id = 1;
     string nome = 2;
 }
 
-message FabricanteResult{
+message FabricanteProtoList {
+    repeated FabricanteProto fabricantes = 1;
+}
+
+message FabricanteResult {
     FabricanteProto fabricante = 1;
     int32 codigo = 2;
 }
 
-message ModeloProto{
+// MODELO
+message ModeloProto {
     int32 id = 1;
     string nome = 2;
     string tipo = 3;
     FabricanteProto fabricante = 4;
 }
 
-message CorProto{
-    int32 id =1;
+message ModeloProtoList {
+    repeated ModeloProto modelos = 1;
+}
+
+message ModeloResult {
+    ModeloProto modelo = 1;
+    int32 codigo = 2;
+}
+
+// COR
+message CorProto {
+    int32 id = 1;
     string nome = 2;
 }
 
-message VeiculoProto{
+message CorProtoResult{
+    CorProto cor = 1;
+    int32 codigo = 2;
+}
+
+// VEICULO
+message VeiculoProto {
     int32 id = 1;
     string placa = 2;
     double quilometragem = 3;
@@ -35,12 +58,18 @@ message VeiculoProto{
     ModeloProto modelo = 5;
 }
 
-message VeiculoResult{
+message VeiculoProtoList {
+    repeated VeiculoProto veiculos = 1;
+}
+
+message VeiculoResult {
     int32 codigo = 1;
     VeiculoProto veiculo = 2;
 }
 
-message AnoModeloProto{
+
+// ANOMODELO
+message AnoModeloProto {
     int32 id = 1;
     string nome = 2;
     string tipo = 3;
@@ -48,17 +77,44 @@ message AnoModeloProto{
     ModeloProto modelo = 5;
 }
 
-
-service FabricanteService{
-    rpc salvar(FabricanteProto) returns (FabricanteResult);
-    rpc atualizar(FabricanteProto) returns (FabricanteResult);
-    rpc deletar(FabricanteProto) returns (FabricanteResult);
-    rpc buscar(FabricanteProto) returns (FabricanteResult);
+message AnoModeloProtoList{
+    repeated AnoModeloProto anoModelos = 1;
 }
 
-service VeiculoService{
-    rpc salvar(VeiculoProto) returns (VeiculoResult);
-    rpc atualizar(VeiculoProto) returns (VeiculoResult);
-    rpc deletar(VeiculoProto) returns (VeiculoResult);
-    rpc buscar(VeiculoProto) returns (VeiculoResult);
+message AnoModeloResult{
+    AnoModeloProto anoModelo = 1;
+    int32 codigo = 2;
+}
+
+
+service FabricanteService {
+    rpc buscarTodos (google.protobuf.Empty) returns (FabricanteProtoList);
+    rpc salvar (FabricanteProto) returns (FabricanteResult);
+    rpc atualizar (FabricanteProto) returns (FabricanteResult);
+    rpc deletar (FabricanteProto) returns (FabricanteResult);
+    rpc buscar (FabricanteProto) returns (FabricanteResult);
+}
+
+service VeiculoService {
+    rpc buscarTodos (google.protobuf.Empty) returns (VeiculoProtoList);
+    rpc salvar (VeiculoProto) returns (VeiculoResult);
+    rpc atualizar (VeiculoProto) returns (VeiculoResult);
+    rpc deletar (VeiculoProto) returns (VeiculoResult);
+    rpc buscar (VeiculoProto) returns (VeiculoResult);
+}
+
+service ModeloService {
+    rpc buscarTodos (google.protobuf.Empty) returns (ModeloProtoList);
+    rpc salvar (ModeloProto) returns (ModeloResult);
+    rpc atualizar (ModeloProto) returns (ModeloResult);
+    rpc deletar (ModeloProto) returns (ModeloResult);
+    rpc buscar (ModeloProto) returns (ModeloResult);
+}
+
+service AnoModeloService {
+    rpc buscarTodos (google.protobuf.Empty) returns (AnoModeloProtoList);
+    rpc salvar (AnoModeloProto) returns (AnoModeloResult);
+    rpc atualizar (AnoModeloProto) returns (AnoModeloResult);
+    rpc deletar (AnoModeloProto) returns (AnoModeloResult);
+    rpc buscar (AnoModeloProto) returns (AnoModeloResult);
 }

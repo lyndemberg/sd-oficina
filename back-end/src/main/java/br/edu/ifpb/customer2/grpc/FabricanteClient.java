@@ -4,6 +4,7 @@ import br.edu.ifpb.model.Fabricante;
 import br.edu.ifpb.proto.FabricanteProto;
 import br.edu.ifpb.proto.FabricanteResult;
 import br.edu.ifpb.proto.FabricanteServiceGrpc;
+import com.google.protobuf.Empty;
 import converter.ProtoConverter;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -11,6 +12,9 @@ import io.grpc.stub.StreamObserver;
 import sun.misc.FDBigInteger;
 
 import java.net.ProtocolException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FabricanteClient {
 
@@ -23,6 +27,14 @@ public class FabricanteClient {
                 .forAddress("localhost", 2222)
                 .usePlaintext()
                 .build();
+    }
+
+    public List<Fabricante> todos(){
+        FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channel);
+        List<FabricanteProto> lista = stub.buscarTodos(Empty.newBuilder().build()).getFabricantesList();
+        List<Fabricante> fabricantes = new ArrayList<>();
+        lista.forEach(f-> fabricantes.add(ProtoConverter.protoToModel(f)));
+        return fabricantes;
     }
 
     public Fabricante salvar(Fabricante fabricante) {

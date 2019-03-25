@@ -1,12 +1,14 @@
 package br.edu.ifpb.grpc;
 
 import br.edu.ifpb.dao.VeiculoDAO;
+import br.edu.ifpb.model.Fabricante;
 import br.edu.ifpb.model.Veiculo;
-import br.edu.ifpb.proto.VeiculoProto;
-import br.edu.ifpb.proto.VeiculoResult;
-import br.edu.ifpb.proto.VeiculoServiceGrpc;
+import br.edu.ifpb.proto.*;
+import com.google.protobuf.Empty;
 import converter.ProtoConverter;
 import io.grpc.stub.StreamObserver;
+
+import java.util.List;
 
 public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
 
@@ -14,6 +16,15 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
 
     public VeiculoImpl() {
         this.dao = new VeiculoDAO();
+    }
+
+    @Override
+    public void buscarTodos(Empty request, StreamObserver<VeiculoProtoList> responseObserver) {
+        List<Veiculo> veiculos = dao.todos();
+        final VeiculoProtoList.Builder builder = VeiculoProtoList.newBuilder();
+        veiculos.forEach(f -> builder.addVeiculos(ProtoConverter.modelToProto(f)));
+        responseObserver.onNext(builder.build());
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -29,16 +40,29 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
 
     @Override
     public void atualizar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
-        super.atualizar(request, responseObserver);
+        Veiculo veiculo = dao.atualizar(ProtoConverter.protoToModel(request));
+        responseObserver.onNext(VeiculoResult
+                .newBuilder()
+                .setVeiculo(veiculo != null ? ProtoConverter.modelToProto(veiculo) : VeiculoProto.newBuilder().build())
+                .build());
+        responseObserver.onCompleted();
     }
 
     @Override
     public void deletar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
-        super.deletar(request, responseObserver);
+        this.dao.deletar(request.getId());
+        responseObserver.onNext(VeiculoResult.newBuilder().setCodigo(200).build());
+        responseObserver.onCompleted();
     }
 
     @Override
     public void buscar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
-        super.buscar(request, responseObserver);
+
+        Veiculo veiculo = dao.buscar(request.getId());
+        responseObserver.onNext(VeiculoResult
+                .newBuilder()
+                .setVeiculo(veiculo != null ? ProtoConverter.modelToProto(veiculo) : VeiculoProto.newBuilder().build())
+                .build());
+        responseObserver.onCompleted();
     }
 }

@@ -5,6 +5,7 @@ import br.edu.ifpb.model.Veiculo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class VeiculoDAO implements DAO<Veiculo> {
     private EntityManager em;
@@ -37,5 +38,9 @@ public class VeiculoDAO implements DAO<Veiculo> {
 
     public Veiculo buscar(Object key) {
         return em.find(Veiculo.class, key);
+    }
+
+    public List<Veiculo> todos(){
+        return em.createQuery("SELECT v FROM Veiculo  v").getResultList();
     }
 }

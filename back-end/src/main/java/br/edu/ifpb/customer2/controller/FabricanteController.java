@@ -20,14 +20,14 @@ public class FabricanteController {
 
     @GetMapping
     private ResponseEntity<List<Fabricante>> listarTodos() {
-        List<Fabricante> fabricantes = null;
+        List<Fabricante> fabricantes = service.todos();
         return fabricantes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(fabricantes);
     }
 
     @GetMapping("/{id}")
     private ResponseEntity<Fabricante> buscarFabricante(@PathVariable("id") int id) {
         Fabricante fabricante = service.buscar(id);
-        return fabricante.getNome() != null? ResponseEntity.ok(fabricante) : ResponseEntity.notFound().build();
+        return fabricante.getId() != 0? ResponseEntity.ok(fabricante) : ResponseEntity.notFound().build();
     }
 
     @PostMapping

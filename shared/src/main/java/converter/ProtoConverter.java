@@ -8,8 +8,6 @@ import br.edu.ifpb.proto.CorProto;
 import br.edu.ifpb.proto.ModeloProto;
 import br.edu.ifpb.proto.VeiculoProto;
 
-import javax.jws.WebParam;
-
 public class ProtoConverter {
 
 
@@ -57,7 +55,6 @@ public class ProtoConverter {
                 .setNome(model.getNome() != null ? model.getNome() : "")
                 .build();
     }
-
 
     public static br.edu.ifpb.proto.VeiculoProto modelToProto(Veiculo model) {
         return VeiculoProto.newBuilder()

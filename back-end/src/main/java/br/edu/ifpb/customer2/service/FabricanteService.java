@@ -4,6 +4,8 @@ import br.edu.ifpb.customer2.grpc.FabricanteClient;
 import br.edu.ifpb.model.Fabricante;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FabricanteService {
 
@@ -28,5 +30,9 @@ public class FabricanteService {
 
     public Fabricante atualizar(Fabricante fabricante) {
         return grpc.atualizar(fabricante);
+    }
+
+    public List<Fabricante> todos(){
+        return grpc.todos();
     }
 }

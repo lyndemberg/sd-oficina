@@ -4,6 +4,7 @@ import br.edu.ifpb.model.Fabricante;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class FabricanteDAO implements DAO<Fabricante> {
 
@@ -37,5 +38,9 @@ public class FabricanteDAO implements DAO<Fabricante> {
 
     public Fabricante buscar(Object key) {
         return em.find(Fabricante.class, key);
+    }
+
+    public List<Fabricante> todos(){
+        return em.createQuery("SELECT f FROM Fabricante  f").getResultList();
     }
 }
