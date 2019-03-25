@@ -35,6 +35,11 @@ message VeiculoProto{
     ModeloProto modelo = 5;
 }
 
+message VeiculoResult{
+    int32 codigo = 1;
+    VeiculoProto veiculo = 2;
+}
+
 message AnoModeloProto{
     int32 id = 1;
     string nome = 2;
@@ -49,4 +54,11 @@ service FabricanteService{
     rpc atualizar(FabricanteProto) returns (FabricanteResult);
     rpc deletar(FabricanteProto) returns (FabricanteResult);
     rpc buscar(FabricanteProto) returns (FabricanteResult);
+}
+
+service VeiculoService{
+    rpc salvar(VeiculoProto) returns (VeiculoResult);
+    rpc atualizar(VeiculoProto) returns (VeiculoResult);
+    rpc deletar(VeiculoProto) returns (VeiculoResult);
+    rpc buscar(VeiculoProto) returns (VeiculoResult);
 }
