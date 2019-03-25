@@ -5,6 +5,7 @@ import br.edu.ifpb.model.Modelo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class ModeloDAO implements DAO<Modelo> {
 
@@ -38,5 +39,9 @@ public class ModeloDAO implements DAO<Modelo> {
 
     public Modelo buscar(Object key) {
         return em.find(Modelo.class, key);
+    }
+
+    public List<Modelo> todos(){
+        return em.createQuery("SELECT m FROM Modelo  m").getResultList();
     }
 }

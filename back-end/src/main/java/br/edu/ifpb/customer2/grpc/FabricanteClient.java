@@ -45,7 +45,6 @@ public class FabricanteClient {
                 .protoToModel(stub
                         .salvar(ProtoConverter.modelToProto(fabricante))
                         .getFabricante());
-
     }
 
     public Fabricante buscar(int id) {

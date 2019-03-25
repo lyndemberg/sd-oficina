@@ -11,7 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("anoModelo")
 public class AnoModeloController {
-    
+
     private final AnoModeloService service;
 
     public AnoModeloController(AnoModeloService service) {
@@ -20,24 +20,29 @@ public class AnoModeloController {
 
     @GetMapping
     private ResponseEntity<List<AnoModelo>> listarTodos() {
-        List<AnoModelo> anoModelos = null;
+        List<AnoModelo> anoModelos = service.todos();
         return anoModelos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(anoModelos);
     }
 
     @GetMapping("/{id}")
     private ResponseEntity<AnoModelo> buscarAnoModelo(@PathVariable("id") int id) {
-        Optional<AnoModelo> anoModelo = null;
-        return anoModelo.isPresent() ? ResponseEntity.ok(anoModelo.get()) : ResponseEntity.notFound().build();
+        AnoModelo anoModelo = service.buscar(id);
+        return anoModelo.getNome() != "" ? ResponseEntity.ok(anoModelo) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
     private ResponseEntity<AnoModelo> salvar(@RequestBody AnoModelo anoModelo) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(service.salvar(anoModelo));
+    }
+
+    @PutMapping
+    private ResponseEntity<Object> atualizar(@RequestBody AnoModelo anoModelo) {
+        return ResponseEntity.ok(service.atualizar(anoModelo));
     }
 
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> deletar(@PathVariable int id) {
-
+        service.deletar(id);
         return ResponseEntity.ok().build();
     }
 }

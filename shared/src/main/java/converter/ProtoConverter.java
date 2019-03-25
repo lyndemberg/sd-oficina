@@ -1,9 +1,7 @@
 package converter;
 
-import br.edu.ifpb.model.Cor;
-import br.edu.ifpb.model.Fabricante;
-import br.edu.ifpb.model.Modelo;
-import br.edu.ifpb.model.Veiculo;
+import br.edu.ifpb.model.*;
+import br.edu.ifpb.proto.AnoModeloProto;
 import br.edu.ifpb.proto.CorProto;
 import br.edu.ifpb.proto.ModeloProto;
 import br.edu.ifpb.proto.VeiculoProto;
@@ -47,6 +45,16 @@ public class ProtoConverter {
         return modelo;
     }
 
+    public static AnoModelo protoToModel(br.edu.ifpb.proto.AnoModeloProto proto) {
+
+        AnoModelo anoModelo = new AnoModelo();
+        anoModelo.setTipo(proto.getTipo() != null ? proto.getTipo() : "");
+        anoModelo.setNome(proto.getNome() != null ? proto.getNome() : "");
+        anoModelo.setId(proto.getId() != 0 ? proto.getId() : 0);
+        anoModelo.setValor(proto.getValor() != 0 ? proto.getValor() : 0);
+        anoModelo.setModelo(protoToModel(proto.getModelo()));
+        return anoModelo;
+    }
 
     // CONVERSÃO DE CLASSES DE MODELO PARA PROTO
     public static br.edu.ifpb.proto.FabricanteProto modelToProto(Fabricante model) {
@@ -79,6 +87,16 @@ public class ProtoConverter {
                 .setNome(model.getNome() != null ? model.getNome() : "")
                 .setTipo(model.getTipo() != null ? model.getTipo() : "")
                 .setFabricante(modelToProto(model.getFabricante()))
+                .build();
+    }
+
+    public static br.edu.ifpb.proto.AnoModeloProto modelToProto(AnoModelo model) {
+        return AnoModeloProto.newBuilder()
+                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setNome(model.getNome() != null ? model.getNome() : "")
+                .setTipo(model.getTipo() != null ? model.getTipo() : "")
+                .setModelo(modelToProto(model.getModelo()))
+                .setValor(model.getValor() != 0 ? model.getValor() : 0)
                 .build();
     }
 }

@@ -1,9 +1,11 @@
 package br.edu.ifpb.dao;
 
 import br.edu.ifpb.model.AnoModelo;
+import br.edu.ifpb.model.Veiculo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class AnoModeloDAO implements DAO<AnoModelo> {
 
@@ -37,5 +39,9 @@ public class AnoModeloDAO implements DAO<AnoModelo> {
 
     public AnoModelo buscar(Object key) {
         return em.find(AnoModelo.class, key);
+    }
+
+    public List<AnoModelo> todos(){
+        return em.createQuery("SELECT a FROM AnoModelo a").getResultList();
     }
 }
