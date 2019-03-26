@@ -2,6 +2,7 @@ package br.edu.ifpb;
 
 import br.edu.ifpb.grpc.FabricanteImpl;
 import br.edu.ifpb.grpc.AnoModeloImpl;
+import br.edu.ifpb.grpc.ModeloImpl;
 import br.edu.ifpb.grpc.VeiculoImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -15,6 +16,7 @@ public class Main {
                 .addService(new FabricanteImpl())
                 .addService(new VeiculoImpl())
                 .addService(new AnoModeloImpl())
+                .addService(new ModeloImpl())
                 .build();
 
         System.out.println("Iniciando Server - Customer 2");
