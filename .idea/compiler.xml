@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="customer2" />
         <module name="oficina-webapp" />
+        <module name="order1" />
         <module name="shared" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="customer2" target="1.8" />
       <module name="oficina-webapp" target="1.8" />
+      <module name="order1" target="1.8" />
       <module name="projeto" target="1.8" />
       <module name="shared" target="1.8" />
     </bytecodeTargetLevel>
