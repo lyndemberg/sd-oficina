@@ -1,54 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7db0614e-2386-4865-8798-d020342d9df1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/back-end/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/postgres/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/OficinaApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/controller/AnoModeloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/controller/FabricanteController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/controller/ModeloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/controller/VeiculoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/grpc/AnoModeloClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/grpc/FabricanteClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/grpc/ModeloClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/grpc/VeiculoClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/service/AnoModeloService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/service/FabricanteService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/service/ModeloService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/br/edu/ifpb/customer2/service/VeiculoService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/br/edu/ifpb/customer2/OficinaAppTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/customer2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/Customer2Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/dao/AnoModeloDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/dao/AnoModeloDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/dao/DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/dao/FabricanteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/dao/FabricanteDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/dao/ModeloDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/dao/ModeloDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/dao/VeiculoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/dao/VeiculoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/grpc/AnoModeloImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/grpc/AnoModeloImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/grpc/FabricanteImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/grpc/FabricanteImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/grpc/ModeloImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/grpc/ModeloImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/java/br/edu/ifpb/grpc/VeiculoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/grpc/VeiculoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer2/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer2/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shared/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/br/edu/ifpb/model/AnoModelo.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/sd/oficina/shared/model/AnoModelo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/br/edu/ifpb/model/Cor.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/sd/oficina/shared/model/Cor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/br/edu/ifpb/model/Fabricante.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/sd/oficina/shared/model/Fabricante.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/br/edu/ifpb/model/Modelo.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/sd/oficina/shared/model/Modelo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/br/edu/ifpb/model/Veiculo.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/sd/oficina/shared/model/Veiculo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/converter/ProtoConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/sd/oficina/shared/converter/ProtoConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/proto/messages.proto" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/proto/messages.proto" afterDir="false" />
-    </list>
+    <list default="true" id="7db0614e-2386-4865-8798-d020342d9df1" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/shared/target/" />
     <ignored path="$PROJECT_DIR$/customer2/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -61,107 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/customer2/src/main/java/sd/oficina/customer2/Customer2Application.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/OficinaApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/service/AnoModeloService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/service/ModeloService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/service/VeiculoService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/AnoModeloClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/FabricanteClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-115">
-              <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/ModeloClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-100">
-              <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/VeiculoClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-190">
-              <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -197,6 +50,8 @@
         <option value="$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/ModeloClient.java" />
         <option value="$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/VeiculoClient.java" />
         <option value="$PROJECT_DIR$/oficina-app/pom.xml" />
+        <option value="$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/OficinaApplication.java" />
+        <option value="$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/OficinaWebApplication.java" />
       </list>
     </option>
   </component>
@@ -224,11 +79,6 @@
             <path>
               <item name="projeto" type="b2602c69:ProjectViewProjectNode" />
               <item name="sd-projeto" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="projeto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sd-projeto" type="462c0819:PsiDirectoryNode" />
-              <item name="oficina-app" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -285,17 +135,17 @@
       <updated>1553707912399</updated>
       <workItem from="1553707914622" duration="2090000" />
       <workItem from="1553713890280" duration="1785000" />
-      <workItem from="1553715726415" duration="773000" />
+      <workItem from="1553715726415" duration="929000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4648000" />
+    <option name="totallyTimeSpent" value="4804000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="30" width="1366" height="697" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29242423" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29242423" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info id="Designer" order="3" />
@@ -524,7 +374,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/AnoModeloClient.java">
+    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/grpc/AnoModeloClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
           <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
@@ -534,7 +384,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/FabricanteClient.java">
+    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/grpc/FabricanteClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-115">
           <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
@@ -544,7 +394,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/ModeloClient.java">
+    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/grpc/ModeloClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-100">
           <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
@@ -554,7 +404,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/grpc/VeiculoClient.java">
+    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/grpc/VeiculoClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-190">
           <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
@@ -564,21 +414,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/service/AnoModeloService.java">
+    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/service/AnoModeloService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/service/ModeloService.java">
+    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/service/ModeloService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/service/VeiculoService.java">
+    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/service/VeiculoService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
@@ -592,10 +442,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinaapp/OficinaApplication.java">
+    <entry file="file://$PROJECT_DIR$/oficina-app/src/main/java/sd/oficina/oficinawebapp/OficinaWebApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="120">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -655,7 +505,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>oficina-app</last-edited>
+          <last-edited>oficina-webapp</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
