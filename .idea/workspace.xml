@@ -266,18 +266,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.OficinaApp">
-    <configuration name="OficinaApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+  <component name="RunManager">
+    <configuration name="OficinaWebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="oficina-webapp" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="br.edu.ifpb.sd.oficinaapp.OficinaApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="sd.oficina.oficinawebapp.OficinaWebApplication" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="OficinaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="oficina-webapp" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="sd.oficina.oficinaapp.OficinaApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
