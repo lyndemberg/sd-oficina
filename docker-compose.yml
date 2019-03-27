@@ -1,11 +1,22 @@
 version: '3.3'
 
 services:
-        customer2:
-                build: back-end
-                container_name: db-customer2
-                ports: 
+        db-postgres:
+                build:
+                        dockerfile: ./postgres
+                        context: .
+                container_name: db-postgres
+                ports:
                         - "5433:5432"
+                networks:
+                        - private_network
+        oficina-app:
+                build:
+                        dockerfile: ./oficina-app
+                        context: .
+                container_name: oficina-app
+                ports:
+                        - "8080:8080"
                 networks:
                         - private_network
 networks:
