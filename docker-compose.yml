@@ -3,17 +3,17 @@ version: '3.3'
 services:
         db-postgres:
                 build:
-                        dockerfile: ./postgres
-                        context: .
+                        dockerfile: ./Dockerfile
+                        context: ./postgres
                 container_name: db-postgres
                 ports:
                         - "5433:5432"
                 networks:
                         - private_network
-        oficina-app:
+        oficina-webapp:
                 build:
-                        dockerfile: ./oficina-app
-                        context: .
+                        dockerfile: ./Dockerfile
+                        context: ./oficina-webapp
                 container_name: oficina-app
                 ports:
                         - "8080:8080"

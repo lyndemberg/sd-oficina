@@ -48,7 +48,7 @@
     </dependencies>
 
     <build>
-        <finalName>oficina-app</finalName>
+        <finalName>oficina-webapp</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
