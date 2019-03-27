@@ -14,8 +14,8 @@
     <bytecodeTargetLevel>
       <module name="customer2" target="8" />
       <module name="oficina-webapp" target="1.8" />
-      <module name="projeto" target="1.5" />
-      <module name="shared" target="1.5" />
+      <module name="projeto" target="1.8" />
+      <module name="shared" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

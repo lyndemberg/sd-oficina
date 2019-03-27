@@ -16,6 +16,10 @@
 
     <properties>
         <java.version>1.8</java.version>
+
+        <!--pula o maven-assembly-plugin definido no pom.xml geral,
+         ja que o spring-boot-maven-plugin empacote tudo o que e necessario para o projeto spring rodar -->
+        <skip.assembly>true</skip.assembly>
     </properties>
 
     <dependencies>
