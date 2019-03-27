@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/customer2/customer2.iml" filepath="$PROJECT_DIR$/customer2/customer2.iml" />
       <module fileurl="file://$PROJECT_DIR$/back-end/oficina-app.iml" filepath="$PROJECT_DIR$/back-end/oficina-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oficina-webapp/oficina-webapp.iml" filepath="$PROJECT_DIR$/oficina-webapp/oficina-webapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/oficina-app/oficina-webapp.iml" filepath="$PROJECT_DIR$/oficina-app/oficina-webapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/projeto.iml" filepath="$PROJECT_DIR$/projeto.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
