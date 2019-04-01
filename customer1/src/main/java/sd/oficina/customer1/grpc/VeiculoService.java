@@ -6,7 +6,7 @@ import sd.oficina.customer1.dao.VeiculoDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
 import sd.oficina.shared.converter.ProtoConverter;
-import sd.oficina.shared.model.Veiculo;
+import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.proto.VeiculoProto;
 import sd.oficina.shared.proto.VeiculoProtoList;
 import sd.oficina.shared.proto.VeiculoResult;

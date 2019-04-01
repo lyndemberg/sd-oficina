@@ -3,7 +3,7 @@ package sd.oficina.customer2.grpc;
 import sd.oficina.customer2.dao.FabricanteDAO;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverter;
-import sd.oficina.shared.model.Fabricante;
+import sd.oficina.shared.model.customer.Fabricante;
 import io.grpc.stub.StreamObserver;
 import sd.oficina.shared.proto.FabricanteProto;
 import sd.oficina.shared.proto.FabricanteProtoList;

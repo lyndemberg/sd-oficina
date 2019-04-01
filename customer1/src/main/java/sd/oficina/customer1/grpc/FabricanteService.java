@@ -6,7 +6,7 @@ import sd.oficina.customer1.dao.FabricanteDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
 import sd.oficina.shared.converter.ProtoConverter;
-import sd.oficina.shared.model.Fabricante;
+import sd.oficina.shared.model.customer.Fabricante;
 import sd.oficina.shared.proto.FabricanteProto;
 import sd.oficina.shared.proto.FabricanteProtoList;
 import sd.oficina.shared.proto.FabricanteResult;

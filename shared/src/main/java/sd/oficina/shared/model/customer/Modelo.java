@@ -1,4 +1,4 @@
-package sd.oficina.shared.model;
+package sd.oficina.shared.model.customer;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package sd.oficina.customer2.grpc;
 
 import sd.oficina.customer2.dao.ModeloDAO;
-import sd.oficina.shared.model.Modelo;
+import sd.oficina.shared.model.customer.Modelo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverter;
 import io.grpc.stub.StreamObserver;

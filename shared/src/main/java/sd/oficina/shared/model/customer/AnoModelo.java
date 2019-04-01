@@ -1,4 +1,4 @@
-package sd.oficina.shared.model;
+package sd.oficina.shared.model.customer;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,15 +12,14 @@ import javax.persistence.*;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Veiculo {
+public class AnoModelo {
 
     @Id
     @GeneratedValue
     private int id;
-    private String placa;
-    private double quilometragem;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
-    private Cor cor;
+    private String nome;
+    private String tipo;
+    private double valor;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     private Modelo modelo;
 }

@@ -1,7 +1,7 @@
 package sd.oficina.oficinawebapp.service;
 
 import sd.oficina.oficinawebapp.grpc.VeiculoClient;
-import sd.oficina.shared.model.Veiculo;
+import sd.oficina.shared.model.customer.Veiculo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

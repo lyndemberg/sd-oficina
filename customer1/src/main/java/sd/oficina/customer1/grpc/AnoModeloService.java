@@ -1,13 +1,12 @@
 package sd.oficina.customer1.grpc;
 
 import com.google.protobuf.Empty;
-import io.grpc.netty.shaded.io.netty.handler.codec.http.HttpResponseStatus;
 import io.grpc.stub.StreamObserver;
 import sd.oficina.customer1.dao.AnoModeloDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
 import sd.oficina.shared.converter.ProtoConverter;
-import sd.oficina.shared.model.AnoModelo;
+import sd.oficina.shared.model.customer.AnoModelo;
 import sd.oficina.shared.proto.AnoModeloProto;
 import sd.oficina.shared.proto.AnoModeloProtoList;
 import sd.oficina.shared.proto.AnoModeloResult;

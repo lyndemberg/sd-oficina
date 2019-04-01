@@ -1,7 +1,7 @@
 package sd.oficina.oficinawebapp.controller;
 
 import sd.oficina.oficinawebapp.service.FabricanteService;
-import sd.oficina.shared.model.Fabricante;
+import sd.oficina.shared.model.customer.Fabricante;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

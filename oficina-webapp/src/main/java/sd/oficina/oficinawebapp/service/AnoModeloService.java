@@ -2,7 +2,7 @@ package sd.oficina.oficinawebapp.service;
 
 
 import sd.oficina.oficinawebapp.grpc.AnoModeloClient;
-import sd.oficina.shared.model.AnoModelo;
+import sd.oficina.shared.model.customer.AnoModelo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

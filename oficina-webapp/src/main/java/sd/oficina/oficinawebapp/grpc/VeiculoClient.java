@@ -1,6 +1,6 @@
 package sd.oficina.oficinawebapp.grpc;
 
-import sd.oficina.shared.model.Veiculo;
+import sd.oficina.shared.model.customer.Veiculo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverter;
 import io.grpc.ManagedChannel;

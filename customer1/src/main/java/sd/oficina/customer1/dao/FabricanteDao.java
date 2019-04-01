@@ -3,7 +3,7 @@ package sd.oficina.customer1.dao;
 import com.google.common.collect.ImmutableList;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
-import sd.oficina.shared.model.Fabricante;
+import sd.oficina.shared.model.customer.Fabricante;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
