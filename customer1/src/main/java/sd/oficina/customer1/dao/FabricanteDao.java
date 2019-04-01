@@ -11,11 +11,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public class FabricanteDao implements Serializable {
+public final class FabricanteDao implements Serializable {
 
     private final EntityManager entityManager;
 
-    public FabricanteDao(){
+    public FabricanteDao() {
         this.entityManager = Persistence
                 .createEntityManagerFactory("customer1-persistence")
                 .createEntityManager();

@@ -7,14 +7,15 @@ import sd.oficina.shared.model.Veiculo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public class VeiculoDao {
+public final class VeiculoDao implements Serializable {
 
     private final EntityManager entityManager;
 
-    public VeiculoDao(){
+    public VeiculoDao() {
         this.entityManager = Persistence
                 .createEntityManagerFactory("customer1-persistence")
                 .createEntityManager();

@@ -7,10 +7,11 @@ import sd.oficina.shared.model.Modelo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public class ModeloDao {
+public final class ModeloDao implements Serializable {
 
     private final EntityManager entityManager;
 

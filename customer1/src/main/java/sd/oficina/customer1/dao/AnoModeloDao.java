@@ -15,7 +15,7 @@ public final class AnoModeloDao implements Serializable {
 
     private final EntityManager entityManager;
 
-    public AnoModeloDao(){
+    public AnoModeloDao() {
         this.entityManager = Persistence
                 .createEntityManagerFactory("customer1-persistence")
                 .createEntityManager();
