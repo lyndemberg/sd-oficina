@@ -20,8 +20,8 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
 
     private final AnoModeloDao anoModeloDao;
 
-    public AnoModeloService(final AnoModeloDao anoModeloDao) {
-        this.anoModeloDao = anoModeloDao;
+    public AnoModeloService() {
+        this.anoModeloDao = new AnoModeloDao();
     }
 
     @Override

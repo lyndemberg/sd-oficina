@@ -19,8 +19,8 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
 
     private final FabricanteDao fabricanteDao;
 
-    public FabricanteService(final FabricanteDao fabricanteDao) {
-        this.fabricanteDao = fabricanteDao;
+    public FabricanteService() {
+        this.fabricanteDao = new FabricanteDao();
     }
 
     @Override

@@ -19,8 +19,8 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
 
     private final VeiculoDao veiculoDao;
 
-    public VeiculoService(final VeiculoDao veiculoDao) {
-        this.veiculoDao = veiculoDao;
+    public VeiculoService() {
+        this.veiculoDao = new VeiculoDao();
     }
 
     @Override

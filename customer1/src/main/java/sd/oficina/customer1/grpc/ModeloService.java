@@ -19,8 +19,8 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
 
     private final ModeloDao modeloDao;
 
-    public ModeloService(final ModeloDao modeloDao) {
-        this.modeloDao = modeloDao;
+    public ModeloService() {
+        this.modeloDao = new ModeloDao();
     }
 
     @Override
