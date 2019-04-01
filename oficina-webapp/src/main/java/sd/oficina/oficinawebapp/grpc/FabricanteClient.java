@@ -2,7 +2,7 @@ package sd.oficina.oficinawebapp.grpc;
 
 import sd.oficina.shared.model.customer.Fabricante;
 import com.google.protobuf.Empty;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import sd.oficina.shared.proto.customer.FabricanteProto;
@@ -28,17 +28,17 @@ public class FabricanteClient {
         FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channel);
         List<FabricanteProto> lista = stub.buscarTodos(Empty.newBuilder().build()).getFabricantesList();
         List<Fabricante> fabricantes = new ArrayList<>();
-        lista.forEach(f-> fabricantes.add(ProtoConverter.protoToModel(f)));
+        lista.forEach(f-> fabricantes.add(ProtoConverterCustomer.protoToModel(f)));
         return fabricantes;
     }
 
     public Fabricante salvar(Fabricante fabricante) {
 
-        FabricanteProto grpc = ProtoConverter.modelToProto(fabricante);
+        FabricanteProto grpc = ProtoConverterCustomer.modelToProto(fabricante);
         FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channel);
-        return ProtoConverter
+        return ProtoConverterCustomer
                 .protoToModel(stub
-                        .salvar(ProtoConverter.modelToProto(fabricante))
+                        .salvar(ProtoConverterCustomer.modelToProto(fabricante))
                         .getFabricante());
     }
 
@@ -46,14 +46,14 @@ public class FabricanteClient {
 
         FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channel);
         FabricanteProto proto = FabricanteProto.newBuilder().setId(id).build();
-        return ProtoConverter.protoToModel(stub.buscar(proto).getFabricante());
+        return ProtoConverterCustomer.protoToModel(stub.buscar(proto).getFabricante());
     }
 
     public Fabricante atualizar(Fabricante fabricante){
         FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channel);
-        return ProtoConverter
+        return ProtoConverterCustomer
                 .protoToModel(stub
-                        .atualizar(ProtoConverter.modelToProto(fabricante)).getFabricante());
+                        .atualizar(ProtoConverterCustomer.modelToProto(fabricante)).getFabricante());
     }
 
     public void deletar(int id) {

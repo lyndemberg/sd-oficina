@@ -1,6 +1,6 @@
 package sd.oficina.person1.daos;
 
-import sd.oficina.shared.modelPerson1.Cliente;
+import sd.oficina.shared.model.person.Cliente;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

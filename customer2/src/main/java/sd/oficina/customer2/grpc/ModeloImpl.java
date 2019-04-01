@@ -3,7 +3,7 @@ package sd.oficina.customer2.grpc;
 import sd.oficina.customer2.dao.ModeloDAO;
 import sd.oficina.shared.model.customer.Modelo;
 import com.google.protobuf.Empty;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.stub.StreamObserver;
 import sd.oficina.shared.proto.customer.ModeloProto;
 import sd.oficina.shared.proto.customer.ModeloProtoList;
@@ -24,17 +24,17 @@ public class ModeloImpl extends ModeloServiceGrpc.ModeloServiceImplBase {
     public void buscarTodos(Empty request, StreamObserver<ModeloProtoList> responseObserver) {
         List<Modelo> modelos = dao.todos();
         final ModeloProtoList.Builder builder = ModeloProtoList.newBuilder();
-        modelos.forEach(f-> builder.addModelos(ProtoConverter.modelToProto(f)));
+        modelos.forEach(f-> builder.addModelos(ProtoConverterCustomer.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
     }
 
     @Override
     public void salvar(ModeloProto request, StreamObserver<ModeloResult> responseObserver) {
-        Modelo result = this.dao.salvar(ProtoConverter.protoToModel(request));
+        Modelo result = this.dao.salvar(ProtoConverterCustomer.protoToModel(request));
         ModeloResult modeloResult = ModeloResult.newBuilder()
                 .setCodigo(200)
-                .setModelo(ProtoConverter.modelToProto(result))
+                .setModelo(ProtoConverterCustomer.modelToProto(result))
                 .build();
         responseObserver.onNext(modeloResult);
         responseObserver.onCompleted();
@@ -42,11 +42,11 @@ public class ModeloImpl extends ModeloServiceGrpc.ModeloServiceImplBase {
 
     @Override
     public void atualizar(ModeloProto request, StreamObserver<ModeloResult> responseObserver) {
-        Modelo modelo = dao.atualizar(ProtoConverter.protoToModel(request));
+        Modelo modelo = dao.atualizar(ProtoConverterCustomer.protoToModel(request));
         responseObserver.onNext(ModeloResult
                 .newBuilder()
                 .setModelo(
-                        modelo != null ? ProtoConverter.modelToProto(modelo) : ModeloProto.newBuilder().build()
+                        modelo != null ? ProtoConverterCustomer.modelToProto(modelo) : ModeloProto.newBuilder().build()
                 )
                 .build());
         responseObserver.onCompleted();
@@ -65,7 +65,7 @@ public class ModeloImpl extends ModeloServiceGrpc.ModeloServiceImplBase {
         responseObserver.onNext(ModeloResult
                 .newBuilder()
                 .setModelo(
-                        modelo != null ? ProtoConverter.modelToProto(modelo) : ModeloProto.newBuilder().build())
+                        modelo != null ? ProtoConverterCustomer.modelToProto(modelo) : ModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
     }

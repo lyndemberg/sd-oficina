@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import sd.oficina.customer1.dao.ModeloDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Modelo;
 import sd.oficina.shared.proto.customer.ModeloProto;
 import sd.oficina.shared.proto.customer.ModeloProtoList;
@@ -30,7 +30,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
 
         modeloDao.listarTodos()
                 .forEach(modelo -> builder.addModelos(
-                        ProtoConverter.modelToProto(modelo)
+                        ProtoConverterCustomer.modelToProto(modelo)
                 ));
 
         responseObserver.onNext(builder.build());
@@ -40,7 +40,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
     @Override
     public void salvar(ModeloProto request, StreamObserver<ModeloResult> responseObserver) {
 
-        Modelo modelo = ProtoConverter.protoToModel(request);
+        Modelo modelo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Optional<Modelo> optional = this.modeloDao.salvar(modelo);
@@ -54,7 +54,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setModelo(
-                                        ProtoConverter.modelToProto(modeloSalvo)
+                                        ProtoConverterCustomer.modelToProto(modeloSalvo)
                                 )
                                 .build()
                 );
@@ -96,7 +96,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
     @Override
     public void atualizar(ModeloProto request, StreamObserver<ModeloResult> responseObserver) {
 
-        Modelo modelo = ProtoConverter.protoToModel(request);
+        Modelo modelo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Optional<Modelo> optional = this.modeloDao.atualizar(modelo);
@@ -110,7 +110,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setModelo(
-                                        ProtoConverter.modelToProto(modeloSalvo)
+                                        ProtoConverterCustomer.modelToProto(modeloSalvo)
                                 )
                                 .build()
                 );
@@ -152,7 +152,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
     @Override
     public void deletar(ModeloProto request, StreamObserver<ModeloResult> responseObserver) {
 
-        Modelo modelo = ProtoConverter.protoToModel(request);
+        Modelo modelo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Boolean foiRemovido = this.modeloDao.remover(modelo.getId());
@@ -203,7 +203,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
     @Override
     public void buscar(ModeloProto request, StreamObserver<ModeloResult> responseObserver) {
 
-        Modelo modelo = ProtoConverter.protoToModel(request);
+        Modelo modelo = ProtoConverterCustomer.protoToModel(request);
 
         try {
 
@@ -218,7 +218,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setModelo(
-                                        ProtoConverter.modelToProto(modeloDB)
+                                        ProtoConverterCustomer.modelToProto(modeloDB)
                                 )
                                 .build()
                 );

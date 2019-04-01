@@ -1,4 +1,4 @@
-package sd.oficina.shared.modelPerson1;
+package sd.oficina.shared.model.person;
 
 import lombok.Data;
 

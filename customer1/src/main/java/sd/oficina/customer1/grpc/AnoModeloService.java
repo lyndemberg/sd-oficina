@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import sd.oficina.customer1.dao.AnoModeloDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.AnoModelo;
 import sd.oficina.shared.proto.customer.AnoModeloProto;
 import sd.oficina.shared.proto.customer.AnoModeloProtoList;
@@ -30,7 +30,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
 
         anoModeloDao.listarTodos()
                 .forEach(anoModelo -> builder.addAnoModelos(
-                        ProtoConverter.modelToProto(anoModelo)
+                        ProtoConverterCustomer.modelToProto(anoModelo)
                 ));
 
         responseObserver.onNext(builder.build());
@@ -40,7 +40,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
     @Override
     public void salvar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
 
-        AnoModelo anoModelo = ProtoConverter.protoToModel(request);
+        AnoModelo anoModelo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Optional<AnoModelo> optional = this.anoModeloDao.salvar(anoModelo);
@@ -54,7 +54,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setAnoModelo(
-                                        ProtoConverter.modelToProto(anoModeloSalvo)
+                                        ProtoConverterCustomer.modelToProto(anoModeloSalvo)
                                 )
                                 .build()
                 );
@@ -96,7 +96,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
     @Override
     public void atualizar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
 
-        AnoModelo anoModelo = ProtoConverter.protoToModel(request);
+        AnoModelo anoModelo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Optional<AnoModelo> optional = this.anoModeloDao.atualizar(anoModelo);
@@ -110,7 +110,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setAnoModelo(
-                                        ProtoConverter.modelToProto(anoModeloSalvo)
+                                        ProtoConverterCustomer.modelToProto(anoModeloSalvo)
                                 )
                                 .build()
                 );
@@ -152,7 +152,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
     @Override
     public void deletar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
 
-        AnoModelo anoModelo = ProtoConverter.protoToModel(request);
+        AnoModelo anoModelo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Boolean foiRemovido = this.anoModeloDao.remover(anoModelo.getId());
@@ -203,7 +203,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
     @Override
     public void buscar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
 
-        AnoModelo anoModelo = ProtoConverter.protoToModel(request);
+        AnoModelo anoModelo = ProtoConverterCustomer.protoToModel(request);
 
         try {
 
@@ -218,7 +218,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setAnoModelo(
-                                        ProtoConverter.modelToProto(anoModeloDB)
+                                        ProtoConverterCustomer.modelToProto(anoModeloDB)
                                 )
                                 .build()
                 );

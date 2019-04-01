@@ -3,7 +3,7 @@ package sd.oficina.customer2.grpc;
 import sd.oficina.customer2.dao.AnoModeloDAO;
 import sd.oficina.shared.model.customer.AnoModelo;
 import com.google.protobuf.Empty;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.stub.StreamObserver;
 import sd.oficina.shared.proto.customer.AnoModeloProto;
 import sd.oficina.shared.proto.customer.AnoModeloProtoList;
@@ -24,17 +24,17 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
 
         List<AnoModelo> anoModelos = dao.todos();
         final AnoModeloProtoList.Builder builder = AnoModeloProtoList.newBuilder();
-        anoModelos.forEach(a -> builder.addAnoModelos(ProtoConverter.modelToProto(a)));
+        anoModelos.forEach(a -> builder.addAnoModelos(ProtoConverterCustomer.modelToProto(a)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
     }
 
     @Override
     public void salvar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
-        AnoModelo result = this.dao.salvar(ProtoConverter.protoToModel(request));
+        AnoModelo result = this.dao.salvar(ProtoConverterCustomer.protoToModel(request));
         AnoModeloResult anoModeloResult = AnoModeloResult.newBuilder()
                 .setCodigo(200)
-                .setAnoModelo(ProtoConverter.modelToProto(result))
+                .setAnoModelo(ProtoConverterCustomer.modelToProto(result))
                 .build();
         responseObserver.onNext(anoModeloResult);
         responseObserver.onCompleted();
@@ -42,11 +42,11 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
 
     @Override
     public void atualizar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
-        AnoModelo anoModelo = dao.atualizar(ProtoConverter.protoToModel(request));
+        AnoModelo anoModelo = dao.atualizar(ProtoConverterCustomer.protoToModel(request));
         responseObserver.onNext(AnoModeloResult
                 .newBuilder()
                 .setAnoModelo(
-                        anoModelo != null ? ProtoConverter.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build()
+                        anoModelo != null ? ProtoConverterCustomer.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build()
                 )
                 .build());
         responseObserver.onCompleted();
@@ -65,7 +65,7 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
         responseObserver.onNext(AnoModeloResult
                 .newBuilder()
                 .setAnoModelo(
-                        anoModelo != null ? ProtoConverter.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build())
+                        anoModelo != null ? ProtoConverterCustomer.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
     }

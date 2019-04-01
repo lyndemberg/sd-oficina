@@ -1,10 +1,7 @@
 package sd.oficina.shared.converter;
 
-import sd.oficina.shared.modelPerson1.Cidade;
-import sd.oficina.shared.modelPerson1.Cliente;
-import sd.oficina.shared.modelPerson1.Estado;
-import sd.oficina.shared.modelPerson1.Fornecedor;
-import sd.oficina.shared.proto.*;
+import sd.oficina.shared.model.person.*;
+import sd.oficina.shared.proto.person.*;
 
 public class ProtoConverterPerson1 {
 

@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import sd.oficina.customer1.dao.FabricanteDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Fabricante;
 import sd.oficina.shared.proto.customer.FabricanteProto;
 import sd.oficina.shared.proto.customer.FabricanteProtoList;
@@ -30,7 +30,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
 
         fabricanteDao.listarTodos()
                 .forEach(fabricante -> builder.addFabricantes(
-                        ProtoConverter.modelToProto(fabricante)
+                        ProtoConverterCustomer.modelToProto(fabricante)
                 ));
 
         responseObserver.onNext(builder.build());
@@ -40,7 +40,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
     @Override
     public void salvar(FabricanteProto request, StreamObserver<FabricanteResult> responseObserver) {
 
-        Fabricante fabricante = ProtoConverter.protoToModel(request);
+        Fabricante fabricante = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Optional<Fabricante> optional = this.fabricanteDao.salvar(fabricante);
@@ -54,7 +54,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setFabricante(
-                                        ProtoConverter.modelToProto(fabricanteSalvo)
+                                        ProtoConverterCustomer.modelToProto(fabricanteSalvo)
                                 )
                                 .build()
                 );
@@ -96,7 +96,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
     @Override
     public void atualizar(FabricanteProto request, StreamObserver<FabricanteResult> responseObserver) {
 
-        Fabricante fabricante = ProtoConverter.protoToModel(request);
+        Fabricante fabricante = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Optional<Fabricante> optional = this.fabricanteDao.atualizar(fabricante);
@@ -110,7 +110,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setFabricante(
-                                        ProtoConverter.modelToProto(fabricanteSalvo)
+                                        ProtoConverterCustomer.modelToProto(fabricanteSalvo)
                                 )
                                 .build()
                 );
@@ -152,7 +152,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
     @Override
     public void deletar(FabricanteProto request, StreamObserver<FabricanteResult> responseObserver) {
 
-        Fabricante fabricante = ProtoConverter.protoToModel(request);
+        Fabricante fabricante = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Boolean foiRemovido = this.fabricanteDao.remover(fabricante.getId());
@@ -203,7 +203,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
     @Override
     public void buscar(FabricanteProto request, StreamObserver<FabricanteResult> responseObserver) {
 
-        Fabricante fabricante = ProtoConverter.protoToModel(request);
+        Fabricante fabricante = ProtoConverterCustomer.protoToModel(request);
 
         try {
 
@@ -218,7 +218,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setFabricante(
-                                        ProtoConverter.modelToProto(fabricanteDB)
+                                        ProtoConverterCustomer.modelToProto(fabricanteDB)
                                 )
                                 .build()
                 );

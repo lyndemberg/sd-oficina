@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import sd.oficina.customer1.dao.VeiculoDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.proto.customer.VeiculoProto;
 import sd.oficina.shared.proto.customer.VeiculoProtoList;
@@ -30,7 +30,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
 
         veiculoDao.listarTodos()
                 .forEach(veiculo -> builder.addVeiculos(
-                        ProtoConverter.modelToProto(veiculo)
+                        ProtoConverterCustomer.modelToProto(veiculo)
                 ));
 
         responseObserver.onNext(builder.build());
@@ -40,7 +40,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
     @Override
     public void salvar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
 
-        Veiculo veiculo = ProtoConverter.protoToModel(request);
+        Veiculo veiculo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Optional<Veiculo> optional = this.veiculoDao.salvar(veiculo);
@@ -54,7 +54,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setVeiculo(
-                                        ProtoConverter.modelToProto(veiculoSalvo)
+                                        ProtoConverterCustomer.modelToProto(veiculoSalvo)
                                 )
                                 .build()
                 );
@@ -96,7 +96,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
     @Override
     public void atualizar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
 
-        Veiculo veiculo = ProtoConverter.protoToModel(request);
+        Veiculo veiculo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Optional<Veiculo> optional = this.veiculoDao.atualizar(veiculo);
@@ -110,7 +110,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setVeiculo(
-                                        ProtoConverter.modelToProto(veiculoSalvo)
+                                        ProtoConverterCustomer.modelToProto(veiculoSalvo)
                                 )
                                 .build()
                 );
@@ -152,7 +152,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
     @Override
     public void deletar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
 
-        Veiculo veiculo = ProtoConverter.protoToModel(request);
+        Veiculo veiculo = ProtoConverterCustomer.protoToModel(request);
 
         try {
             Boolean foiRemovido = this.veiculoDao.remover(veiculo.getId());
@@ -203,7 +203,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
     @Override
     public void buscar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
 
-        Veiculo veiculo = ProtoConverter.protoToModel(request);
+        Veiculo veiculo = ProtoConverterCustomer.protoToModel(request);
 
         try {
 
@@ -218,7 +218,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 .newBuilder()
                                 .setCodigo(200)
                                 .setVeiculo(
-                                        ProtoConverter.modelToProto(veiculoDB)
+                                        ProtoConverterCustomer.modelToProto(veiculoDB)
                                 )
                                 .build()
                 );

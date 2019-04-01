@@ -2,7 +2,7 @@ package sd.oficina.oficinawebapp.grpc;
 
 import sd.oficina.shared.model.customer.Modelo;
 import com.google.protobuf.Empty;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import sd.oficina.shared.proto.customer.ModeloProto;
@@ -27,17 +27,17 @@ public class ModeloClient {
         ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channel);
         List<ModeloProto> lista = stub.buscarTodos(Empty.newBuilder().build()).getModelosList();
         List<Modelo> modelos = new ArrayList<>();
-        lista.forEach(f-> modelos.add(ProtoConverter.protoToModel(f)));
+        lista.forEach(f-> modelos.add(ProtoConverterCustomer.protoToModel(f)));
         return modelos;
     }
 
     public Modelo salvar(Modelo modelo) {
 
-        ModeloProto grpc = ProtoConverter.modelToProto(modelo);
+        ModeloProto grpc = ProtoConverterCustomer.modelToProto(modelo);
         ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channel);
-        return ProtoConverter
+        return ProtoConverterCustomer
                 .protoToModel(stub
-                        .salvar(ProtoConverter.modelToProto(modelo))
+                        .salvar(ProtoConverterCustomer.modelToProto(modelo))
                         .getModelo());
     }
 
@@ -45,14 +45,14 @@ public class ModeloClient {
 
         ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channel);
         ModeloProto proto = ModeloProto.newBuilder().setId(id).build();
-        return ProtoConverter.protoToModel(stub.buscar(proto).getModelo());
+        return ProtoConverterCustomer.protoToModel(stub.buscar(proto).getModelo());
     }
 
     public Modelo atualizar(Modelo modelo){
         ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channel);
-        return ProtoConverter
+        return ProtoConverterCustomer
                 .protoToModel(stub
-                        .atualizar(ProtoConverter.modelToProto(modelo)).getModelo());
+                        .atualizar(ProtoConverterCustomer.modelToProto(modelo)).getModelo());
     }
 
     public void deletar(int id) {

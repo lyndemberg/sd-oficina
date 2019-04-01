@@ -2,7 +2,7 @@ package sd.oficina.oficinawebapp.grpc;
 
 import sd.oficina.shared.model.customer.Veiculo;
 import com.google.protobuf.Empty;
-import sd.oficina.shared.converter.ProtoConverter;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import sd.oficina.shared.proto.customer.VeiculoProto;
@@ -32,18 +32,18 @@ public class VeiculoClient {
                 .getVeiculosList();
 
         List<Veiculo> veiculos = new ArrayList<>();
-        lista.forEach(v-> veiculos.add(ProtoConverter.protoToModel(v)));
+        lista.forEach(v-> veiculos.add(ProtoConverterCustomer.protoToModel(v)));
         return  veiculos;
         
     }
 
     public Veiculo salvar(Veiculo veiculo) {
 
-        VeiculoProto grpc = ProtoConverter.modelToProto(veiculo);
+        VeiculoProto grpc = ProtoConverterCustomer.modelToProto(veiculo);
         VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channel);
-        return ProtoConverter
+        return ProtoConverterCustomer
                 .protoToModel(stub
-                        .salvar(ProtoConverter.modelToProto(veiculo))
+                        .salvar(ProtoConverterCustomer.modelToProto(veiculo))
                         .getVeiculo());
     }
 
@@ -51,14 +51,14 @@ public class VeiculoClient {
 
         VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channel);
         VeiculoProto proto = VeiculoProto.newBuilder().setId(id).build();
-        return ProtoConverter.protoToModel(stub.buscar(proto).getVeiculo());
+        return ProtoConverterCustomer.protoToModel(stub.buscar(proto).getVeiculo());
     }
 
     public Veiculo atualizar(Veiculo veiculo) {
         VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channel);
-        return ProtoConverter
+        return ProtoConverterCustomer
                 .protoToModel(stub
-                        .atualizar(ProtoConverter.modelToProto(veiculo)).getVeiculo());
+                        .atualizar(ProtoConverterCustomer.modelToProto(veiculo)).getVeiculo());
     }
 
     public void deletar(int id) {

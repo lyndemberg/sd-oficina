@@ -4,7 +4,7 @@ package sd.oficina.shared.converter;
 import sd.oficina.shared.model.customer.*;
 import sd.oficina.shared.proto.customer.*;
 
-public class ProtoConverter {
+public class ProtoConverterCustomer {
 
     // CONVERSÃO DE PROTOS PARA CLASSES DE MODELO
     public static Fabricante protoToModel(FabricanteProto proto) {
