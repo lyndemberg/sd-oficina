@@ -57,9 +57,10 @@
 
     <modules>
         <module>shared</module>
+        <module>order1</module>
+        <module>customer1</module>
         <module>customer2</module>
         <module>oficina-webapp</module>
-        <module>order1</module>
         <module>person1</module>
     </modules>
 </project>
