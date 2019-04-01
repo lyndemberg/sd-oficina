@@ -1,0 +1,37 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package sd.oficina.shared.proto;
+import "google/protobuf/empty.proto";
+import "messagesPerson1.proto";
+
+service CidadeService {
+    rpc salvar (CidadeProto) returns (CidadeResult);
+    rpc atualizar (CidadeProto) returns (CidadeResult);
+    rpc deletar (CidadeProto) returns (CidadeResult);
+    rpc buscar (CidadeProto) returns (CidadeResult);
+    rpc listar (google.protobuf.Empty) returns (CidadeList);
+}
+
+service EstadoService {
+    rpc salvar (EstadoProto) returns (EstadoResult);
+    rpc atualizar (EstadoProto) returns (EstadoResult);
+    rpc deletar (EstadoProto) returns (EstadoResult);
+    rpc buscar (EstadoProto) returns (EstadoResult);
+    rpc listar (google.protobuf.Empty) returns (EstadoList);
+}
+
+service ClienteService {
+    rpc salvar (ClienteProto) returns (ClienteResult);
+    rpc atualizar (ClienteProto) returns (ClienteResult);
+    rpc deletar (ClienteProto) returns (ClienteResult);
+    rpc buscar (ClienteProto) returns (ClienteResult);
+    rpc listar (google.protobuf.Empty) returns (ClienteList);
+}
+
+service FornecedorService {
+    rpc salvar (FornecedorProto) returns (FornecedorResult);
+    rpc atualizar (FornecedorProto) returns (FornecedorResult);
+    rpc deletar (FornecedorProto) returns (FornecedorResult);
+    rpc buscar (FornecedorProto) returns (FornecedorResult);
+    rpc listar (google.protobuf.Empty) returns (FornecedorList);
+}

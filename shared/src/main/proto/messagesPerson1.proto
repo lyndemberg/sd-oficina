@@ -1,0 +1,87 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package sd.oficina.shared.proto;
+
+//ESTADO
+message EstadoProto {
+    int32 id = 1;
+    string nome = 2;
+}
+
+message EstadoResult {
+    EstadoProto estado = 1;
+    int32 codigo = 2;
+}
+
+message EstadoList {
+    repeated EstadoProto estados = 1;
+}
+
+//CIDADE
+message CidadeProto {
+    int32 id = 1;
+    string nome = 2;
+    EstadoProto estado = 3;
+}
+
+message CidadeResult {
+    CidadeProto cidade = 1;
+    int32 codigo = 2;
+}
+
+message CidadeList {
+    repeated CidadeProto cidades = 1;
+}
+
+//CLIENTE
+message ClienteProto {
+    int32 id = 1;
+    string telefoneFixo = 2;
+    string CEP = 3;
+    int32 numero = 4;
+    string logradouro = 5;
+    string bairro = 6;
+    string CPF = 7;
+    string complemento = 8;
+    string nome = 9;
+    string telefoneCelular = 10;
+    string email = 11;
+    EstadoProto estado = 12;
+    CidadeProto cidade = 13;
+}
+
+message ClienteResult {
+    ClienteProto cliente = 1;
+    int32 codigo = 2;
+}
+
+message ClienteList {
+    repeated ClienteProto clientes = 1;
+}
+
+//FORNECEDOR
+message FornecedorProto {
+    int32 id = 1;
+    string nomeFantasia = 2;
+    string razaoSocial = 3;
+    string vendedor = 4;
+    int32 codigo = 5;
+    string CNPJ = 6;
+    string logradouro = 7;
+    int32 numero = 8;
+    string telefone = 9;
+    string complemento = 10;
+    string bairro = 11;
+    string CEP = 12;
+    CidadeProto cidade = 13;
+    EstadoProto estado = 14;
+}
+
+message FornecedorResult {
+    FornecedorProto fornecedor = 1;
+    int32 codigo = 2;
+}
+
+message FornecedorList {
+    repeated FornecedorProto fornecedores = 1;
+}
