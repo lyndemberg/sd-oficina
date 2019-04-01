@@ -3,7 +3,7 @@ package sd.oficina.shared.converter;
 import sd.oficina.shared.model.person.*;
 import sd.oficina.shared.proto.person.*;
 
-public class ProtoConverterPerson1 {
+public class ProtoConverterPerson {
 
     // CONVERSÃO DE PROTOS PARA CLASSES DE MODELO
     public static Cidade protoToModel(CidadeProto proto) {

@@ -4,7 +4,7 @@ option java_multiple_files = true;
 package sd.oficina.shared.proto.person;
 
 import "google/protobuf/empty.proto";
-import "messagesPerson1.proto";
+import "person.proto";
 
 service CidadeService {
     rpc salvar (CidadeProto) returns (CidadeResult);
