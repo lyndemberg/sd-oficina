@@ -3,38 +3,38 @@ option java_multiple_files = true;
 package sd.oficina.shared.proto;
 
 //ESTADO
-message Estado {
+message EstadoProto {
     int32 id = 1;
     string nome = 2;
 }
 
-message EstadoResult{
-    Estado estado = 1;
+message EstadoResult {
+    EstadoProto estado = 1;
     int32 codigo = 2;
 }
 
 message EstadoList {
-    repeated Estado estados = 1;
+    repeated EstadoProto estados = 1;
 }
 
 //CIDADE
-message Cidade {
+message CidadeProto {
     int32 id = 1;
     string nome = 2;
-    Estado estado = 3;
+    EstadoProto estado = 3;
 }
 
 message CidadeResult {
-    Cidade cidade = 1;
+    CidadeProto cidade = 1;
     int32 codigo = 2;
 }
 
 message CidadeList {
-    repeated Cidade cidades = 1;
+    repeated CidadeProto cidades = 1;
 }
 
 //CLIENTE
-message Cliente {
+message ClienteProto {
     int32 id = 1;
     string telefoneFixo = 2;
     string CEP = 3;
@@ -46,21 +46,21 @@ message Cliente {
     string nome = 9;
     string telefoneCelular = 10;
     string email = 11;
-    Estado estado = 12;
-    Cidade cidade = 13;
+    EstadoProto estado = 12;
+    CidadeProto cidade = 13;
 }
 
 message ClienteResult {
-    Cliente cliente = 1;
+    ClienteProto cliente = 1;
     int32 codigo = 2;
 }
 
 message ClienteList {
-    repeated Cliente clientes = 1;
+    repeated ClienteProto clientes = 1;
 }
 
 //FORNECEDOR
-message Fornecedor {
+message FornecedorProto {
     int32 id = 1;
     string nomeFantasia = 2;
     string razaoSocial = 3;
@@ -69,19 +69,19 @@ message Fornecedor {
     string CNPJ = 6;
     string logradouro = 7;
     int32 numero = 8;
-    string telefone 9;
+    string telefone = 9;
     string complemento = 10;
     string bairro = 11;
     string CEP = 12;
-    Cidade cidade = 13;
-    Estado estado = 14;
+    CidadeProto cidade = 13;
+    EstadoProto estado = 14;
 }
 
 message FornecedorResult {
-    Fornecedor fornecedor = 1;
+    FornecedorProto fornecedor = 1;
     int32 codigo = 2;
 }
 
 message FornecedorList {
-    repeated Fornecedor fornecedores = 1;
+    repeated FornecedorProto fornecedores = 1;
 }

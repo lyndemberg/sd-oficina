@@ -5,33 +5,33 @@ import "google/protobuf/empty.proto";
 import "messagesPerson1.proto";
 
 service CidadeService {
-    rpc salvar (Cidade) returns (CidadeResult);
-    rpc atualizar (Cidade) returns (CidadeResult);
-    rpc deletar (Cidade) returns (CidadeResult);
-    rpc buscar (Cidade) returns (CidadeResult);
+    rpc salvar (CidadeProto) returns (CidadeResult);
+    rpc atualizar (CidadeProto) returns (CidadeResult);
+    rpc deletar (CidadeProto) returns (CidadeResult);
+    rpc buscar (CidadeProto) returns (CidadeResult);
     rpc listar (google.protobuf.Empty) returns (CidadeList);
 }
 
 service EstadoService {
-    rpc salvar (Estado) returns (EstadoResult);
-    rpc atualizar (Estado) returns (EstadoResult);
-    rpc deletar (Estado) returns (EstadoResult);
-    rpc buscar (Estado) returns (EstadoResult);
+    rpc salvar (EstadoProto) returns (EstadoResult);
+    rpc atualizar (EstadoProto) returns (EstadoResult);
+    rpc deletar (EstadoProto) returns (EstadoResult);
+    rpc buscar (EstadoProto) returns (EstadoResult);
     rpc listar (google.protobuf.Empty) returns (EstadoList);
 }
 
 service ClienteService {
-    rpc salvar (Cliente) returns (ClienteResult);
-    rpc atualizar (Cliente) returns (ClienteResult);
-    rpc deletar (Cliente) returns (ClienteResult);
-    rpc buscar (Cliente) returns (ClienteResult);
+    rpc salvar (ClienteProto) returns (ClienteResult);
+    rpc atualizar (ClienteProto) returns (ClienteResult);
+    rpc deletar (ClienteProto) returns (ClienteResult);
+    rpc buscar (ClienteProto) returns (ClienteResult);
     rpc listar (google.protobuf.Empty) returns (ClienteList);
 }
 
 service FornecedorService {
-    rpc salvar (Fornecedor) returns (FornecedorResult);
-    rpc atualizar (Fornecedor) returns (FornecedorResult);
-    rpc deletar (Fornecedor) returns (FornecedorResult);
-    rpc buscar (Fornecedor) returns (FornecedorResult);
+    rpc salvar (FornecedorProto) returns (FornecedorResult);
+    rpc atualizar (FornecedorProto) returns (FornecedorResult);
+    rpc deletar (FornecedorProto) returns (FornecedorResult);
+    rpc buscar (FornecedorProto) returns (FornecedorResult);
     rpc listar (google.protobuf.Empty) returns (FornecedorList);
 }
