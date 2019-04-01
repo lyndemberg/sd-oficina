@@ -5,10 +5,10 @@ import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverter;
 import sd.oficina.shared.model.customer.Fabricante;
 import io.grpc.stub.StreamObserver;
-import sd.oficina.shared.proto.FabricanteProto;
-import sd.oficina.shared.proto.FabricanteProtoList;
-import sd.oficina.shared.proto.FabricanteResult;
-import sd.oficina.shared.proto.FabricanteServiceGrpc;
+import sd.oficina.shared.proto.customer.FabricanteProto;
+import sd.oficina.shared.proto.customer.FabricanteProtoList;
+import sd.oficina.shared.proto.customer.FabricanteResult;
+import sd.oficina.shared.proto.customer.FabricanteServiceGrpc;
 
 import java.util.List;
 

@@ -7,10 +7,10 @@ import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
 import sd.oficina.shared.converter.ProtoConverter;
 import sd.oficina.shared.model.customer.Modelo;
-import sd.oficina.shared.proto.ModeloProto;
-import sd.oficina.shared.proto.ModeloProtoList;
-import sd.oficina.shared.proto.ModeloResult;
-import sd.oficina.shared.proto.ModeloServiceGrpc;
+import sd.oficina.shared.proto.customer.ModeloProto;
+import sd.oficina.shared.proto.customer.ModeloProtoList;
+import sd.oficina.shared.proto.customer.ModeloResult;
+import sd.oficina.shared.proto.customer.ModeloServiceGrpc;
 
 import java.io.Serializable;
 import java.util.Optional;

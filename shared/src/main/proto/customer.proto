@@ -4,7 +4,7 @@ import "google/protobuf/empty.proto";
 option java_multiple_files = true;
 option objc_class_prefix = "HLW";
 
-package sd.oficina.shared.proto;
+package sd.oficina.shared.proto.customer;
 
 // FABRICANTE
 message FabricanteProto {

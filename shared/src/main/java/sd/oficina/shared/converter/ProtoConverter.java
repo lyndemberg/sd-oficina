@@ -2,8 +2,7 @@ package sd.oficina.shared.converter;
 
 
 import sd.oficina.shared.model.customer.*;
-import sd.oficina.shared.proto.FabricanteProto;
-import sd.oficina.shared.proto.*;
+import sd.oficina.shared.proto.customer.*;
 
 public class ProtoConverter {
 

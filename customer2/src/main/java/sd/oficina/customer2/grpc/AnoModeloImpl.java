@@ -5,10 +5,10 @@ import sd.oficina.shared.model.customer.AnoModelo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverter;
 import io.grpc.stub.StreamObserver;
-import sd.oficina.shared.proto.AnoModeloProto;
-import sd.oficina.shared.proto.AnoModeloProtoList;
-import sd.oficina.shared.proto.AnoModeloResult;
-import sd.oficina.shared.proto.AnoModeloServiceGrpc;
+import sd.oficina.shared.proto.customer.AnoModeloProto;
+import sd.oficina.shared.proto.customer.AnoModeloProtoList;
+import sd.oficina.shared.proto.customer.AnoModeloResult;
+import sd.oficina.shared.proto.customer.AnoModeloServiceGrpc;
 
 import java.util.List;
 

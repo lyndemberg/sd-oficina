@@ -5,10 +5,10 @@ import sd.oficina.shared.model.customer.Veiculo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverter;
 import io.grpc.stub.StreamObserver;
-import sd.oficina.shared.proto.VeiculoProto;
-import sd.oficina.shared.proto.VeiculoProtoList;
-import sd.oficina.shared.proto.VeiculoResult;
-import sd.oficina.shared.proto.VeiculoServiceGrpc;
+import sd.oficina.shared.proto.customer.VeiculoProto;
+import sd.oficina.shared.proto.customer.VeiculoProtoList;
+import sd.oficina.shared.proto.customer.VeiculoResult;
+import sd.oficina.shared.proto.customer.VeiculoServiceGrpc;
 
 import java.util.List;
 

@@ -5,8 +5,8 @@ import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverter;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import sd.oficina.shared.proto.ModeloProto;
-import sd.oficina.shared.proto.ModeloServiceGrpc;
+import sd.oficina.shared.proto.customer.ModeloProto;
+import sd.oficina.shared.proto.customer.ModeloServiceGrpc;
 
 import java.util.ArrayList;
 import java.util.List;
