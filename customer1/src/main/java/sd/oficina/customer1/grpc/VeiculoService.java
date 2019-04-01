@@ -1,37 +1,36 @@
 package sd.oficina.customer1.grpc;
 
 import com.google.protobuf.Empty;
-import io.grpc.netty.shaded.io.netty.handler.codec.http.HttpResponseStatus;
 import io.grpc.stub.StreamObserver;
-import sd.oficina.customer1.dao.AnoModeloDao;
+import sd.oficina.customer1.dao.VeiculoDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
 import sd.oficina.shared.converter.ProtoConverter;
-import sd.oficina.shared.model.AnoModelo;
-import sd.oficina.shared.proto.AnoModeloProto;
-import sd.oficina.shared.proto.AnoModeloProtoList;
-import sd.oficina.shared.proto.AnoModeloResult;
-import sd.oficina.shared.proto.AnoModeloServiceGrpc;
+import sd.oficina.shared.model.Veiculo;
+import sd.oficina.shared.proto.VeiculoProto;
+import sd.oficina.shared.proto.VeiculoProtoList;
+import sd.oficina.shared.proto.VeiculoResult;
+import sd.oficina.shared.proto.VeiculoServiceGrpc;
 
 import java.io.Serializable;
 import java.util.Optional;
 
-public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplBase implements Serializable {
+public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase implements Serializable {
 
-    private final AnoModeloDao anoModeloDao;
+    private final VeiculoDao veiculoDao;
 
-    public AnoModeloService(final AnoModeloDao anoModeloDao) {
-        this.anoModeloDao = anoModeloDao;
+    public VeiculoService(final VeiculoDao veiculoDao) {
+        this.veiculoDao = veiculoDao;
     }
 
     @Override
-    public void buscarTodos(Empty request, StreamObserver<AnoModeloProtoList> responseObserver) {
+    public void buscarTodos(Empty request, StreamObserver<VeiculoProtoList> responseObserver) {
 
-        final AnoModeloProtoList.Builder builder = AnoModeloProtoList.newBuilder();
+        final VeiculoProtoList.Builder builder = VeiculoProtoList.newBuilder();
 
-        anoModeloDao.listarTodos()
-                .forEach(anoModelo -> builder.addAnoModelos(
-                        ProtoConverter.modelToProto(anoModelo)
+        veiculoDao.listarTodos()
+                .forEach(veiculo -> builder.addVeiculos(
+                        ProtoConverter.modelToProto(veiculo)
                 ));
 
         responseObserver.onNext(builder.build());
@@ -39,30 +38,30 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
     }
 
     @Override
-    public void salvar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
+    public void salvar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
 
-        AnoModelo anoModelo = ProtoConverter.protoToModel(request);
+        Veiculo veiculo = ProtoConverter.protoToModel(request);
 
         try {
-            Optional<AnoModelo> optional = this.anoModeloDao.salvar(anoModelo);
+            Optional<Veiculo> optional = this.veiculoDao.salvar(veiculo);
 
             if (optional.isPresent()) {
 
-                AnoModelo anoModeloSalvo = optional.get();
+                Veiculo veiculoSalvo = optional.get();
 
                 responseObserver.onNext(
-                        AnoModeloResult
+                        VeiculoResult
                                 .newBuilder()
                                 .setCodigo(200)
-                                .setAnoModelo(
-                                        ProtoConverter.modelToProto(anoModeloSalvo)
+                                .setVeiculo(
+                                        ProtoConverter.modelToProto(veiculoSalvo)
                                 )
                                 .build()
                 );
 
             } else {
                 responseObserver.onNext(
-                        AnoModeloResult
+                        VeiculoResult
                                 .newBuilder()
                                 .setCodigo(400)
                                 .build()
@@ -74,7 +73,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             ex.printStackTrace();
 
             responseObserver.onNext(
-                    AnoModeloResult
+                    VeiculoResult
                             .newBuilder()
                             .setCodigo(400)
                             .build()
@@ -84,7 +83,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             ex.printStackTrace();
 
             responseObserver.onNext(
-                    AnoModeloResult
+                    VeiculoResult
                             .newBuilder()
                             .setCodigo(500)
                             .build()
@@ -95,30 +94,30 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
     }
 
     @Override
-    public void atualizar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
+    public void atualizar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
 
-        AnoModelo anoModelo = ProtoConverter.protoToModel(request);
+        Veiculo veiculo = ProtoConverter.protoToModel(request);
 
         try {
-            Optional<AnoModelo> optional = this.anoModeloDao.atualizar(anoModelo);
+            Optional<Veiculo> optional = this.veiculoDao.atualizar(veiculo);
 
             if (optional.isPresent()) {
 
-                AnoModelo anoModeloSalvo = optional.get();
+                Veiculo veiculoSalvo = optional.get();
 
                 responseObserver.onNext(
-                        AnoModeloResult
+                        VeiculoResult
                                 .newBuilder()
                                 .setCodigo(200)
-                                .setAnoModelo(
-                                        ProtoConverter.modelToProto(anoModeloSalvo)
+                                .setVeiculo(
+                                        ProtoConverter.modelToProto(veiculoSalvo)
                                 )
                                 .build()
                 );
 
             } else {
                 responseObserver.onNext(
-                        AnoModeloResult
+                        VeiculoResult
                                 .newBuilder()
                                 .setCodigo(400)
                                 .build()
@@ -130,7 +129,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             ex.printStackTrace();
 
             responseObserver.onNext(
-                    AnoModeloResult
+                    VeiculoResult
                             .newBuilder()
                             .setCodigo(400)
                             .build()
@@ -140,7 +139,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             ex.printStackTrace();
 
             responseObserver.onNext(
-                    AnoModeloResult
+                    VeiculoResult
                             .newBuilder()
                             .setCodigo(500)
                             .build()
@@ -151,17 +150,17 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
     }
 
     @Override
-    public void deletar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
+    public void deletar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
 
-        AnoModelo anoModelo = ProtoConverter.protoToModel(request);
+        Veiculo veiculo = ProtoConverter.protoToModel(request);
 
         try {
-            Boolean foiRemovido = this.anoModeloDao.remover(anoModelo.getId());
+            Boolean foiRemovido = this.veiculoDao.remover(veiculo.getId());
 
             if (foiRemovido) {
 
                 responseObserver.onNext(
-                        AnoModeloResult
+                        VeiculoResult
                                 .newBuilder()
                                 .setCodigo(200)
                                 .build()
@@ -169,7 +168,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             } else {
 
                 responseObserver.onNext(
-                        AnoModeloResult
+                        VeiculoResult
                                 .newBuilder()
                                 .setCodigo(204)
                                 .build()
@@ -181,7 +180,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             aiiEx.printStackTrace();
 
             responseObserver.onNext(
-                    AnoModeloResult
+                    VeiculoResult
                             .newBuilder()
                             .setCodigo(400)
                             .build()
@@ -191,7 +190,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             ex.printStackTrace();
 
             responseObserver.onNext(
-                    AnoModeloResult
+                    VeiculoResult
                             .newBuilder()
                             .setCodigo(500)
                             .build()
@@ -202,31 +201,31 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
     }
 
     @Override
-    public void buscar(AnoModeloProto request, StreamObserver<AnoModeloResult> responseObserver) {
+    public void buscar(VeiculoProto request, StreamObserver<VeiculoResult> responseObserver) {
 
-        AnoModelo anoModelo = ProtoConverter.protoToModel(request);
+        Veiculo veiculo = ProtoConverter.protoToModel(request);
 
         try {
 
-            Optional<AnoModelo> optional = this.anoModeloDao.buscarPorId(anoModelo.getId());
+            Optional<Veiculo> optional = this.veiculoDao.buscarPorId(veiculo.getId());
 
             if (optional.isPresent()) {
 
-                AnoModelo anoModeloDB = optional.get();
+                Veiculo veiculoDB = optional.get();
 
                 responseObserver.onNext(
-                        AnoModeloResult
+                        VeiculoResult
                                 .newBuilder()
                                 .setCodigo(200)
-                                .setAnoModelo(
-                                        ProtoConverter.modelToProto(anoModeloDB)
+                                .setVeiculo(
+                                        ProtoConverter.modelToProto(veiculoDB)
                                 )
                                 .build()
                 );
             } else {
 
                 responseObserver.onNext(
-                        AnoModeloResult
+                        VeiculoResult
                                 .newBuilder()
                                 .setCodigo(204)
                                 .build()
@@ -238,7 +237,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             ex.printStackTrace();
 
             responseObserver.onNext(
-                    AnoModeloResult
+                    VeiculoResult
                             .newBuilder()
                             .setCodigo(400)
                             .build()
@@ -247,7 +246,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
             ex.printStackTrace();
 
             responseObserver.onNext(
-                    AnoModeloResult
+                    VeiculoResult
                             .newBuilder()
                             .setCodigo(500)
                             .build()
