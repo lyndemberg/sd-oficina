@@ -66,5 +66,6 @@
         <module>customer2</module>
 
         <module>oficina-webapp</module>
+        <module>store1</module>
     </modules>
 </project>
