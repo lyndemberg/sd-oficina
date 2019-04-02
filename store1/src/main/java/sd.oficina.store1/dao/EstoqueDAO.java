@@ -35,7 +35,10 @@ public class EstoqueDAO implements DAO<Estoque> {
     @Override
     public void deletar(Object key) {
         em.getTransaction().begin();
-        em.remove(buscar(key));
+        Estoque estoque = buscar(key);
+        if(estoque != null){
+            em.remove(estoque);
+        }
         em.getTransaction().commit();
     }
 
