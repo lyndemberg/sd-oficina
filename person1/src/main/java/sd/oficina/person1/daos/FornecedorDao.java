@@ -9,29 +9,28 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FornecedorDao implements Dao<Fornecedor> {
+public class FornecedorDao {
 
     private EntityManager entityManager =
                 Persistence.createEntityManagerFactory("persistencia")
                         .createEntityManager();
 
-    @Override
-    public void salvar(Fornecedor fornecedor) {
+    public Fornecedor salvar(Fornecedor fornecedor) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(fornecedor);
         transaction.commit();
+        return fornecedor;
     }
 
-    @Override
-    public void atualizar(Fornecedor fornecedor) {
+    public Fornecedor atualizar(Fornecedor fornecedor) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.merge(fornecedor);
         transaction.commit();
+        return fornecedor;
     }
 
-    @Override
     public void deletar(Fornecedor fornecedor) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -44,12 +43,10 @@ public class FornecedorDao implements Dao<Fornecedor> {
         transaction.commit();
     }
 
-    @Override
     public Fornecedor buscar(Fornecedor fornecedor) {
         return entityManager.find(Fornecedor.class, fornecedor.getId());
     }
 
-    @Override
     public List<Fornecedor> listar() {
         TypedQuery<Fornecedor> query = entityManager
                 .createQuery("SELECT fornecedor FROM Fornecedor fornecedor", Fornecedor.class);

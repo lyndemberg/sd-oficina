@@ -9,29 +9,28 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CidadeDao implements Dao<Cidade> {
+public class CidadeDao {
 
     private EntityManager entityManager =
                 Persistence.createEntityManagerFactory("persistencia")
                         .createEntityManager();
 
-    @Override
-    public void salvar(Cidade cidade) {
+    public Cidade salvar(Cidade cidade) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(cidade);
         transaction.commit();
+        return cidade;
     }
 
-    @Override
-    public void atualizar(Cidade cidade) {
+    public Cidade atualizar(Cidade cidade) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.merge(cidade);
         transaction.commit();
+        return cidade;
     }
 
-    @Override
     public void deletar(Cidade cidade) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -44,12 +43,10 @@ public class CidadeDao implements Dao<Cidade> {
         transaction.commit();
     }
 
-    @Override
     public Cidade buscar(Cidade cidade) {
         return entityManager.find(Cidade.class, cidade.getId());
     }
 
-    @Override
     public List<Cidade> listar() {
         TypedQuery<Cidade> query = entityManager
                 .createQuery("SELECT cidade FROM Cidade cidade", Cidade.class);

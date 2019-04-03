@@ -9,29 +9,28 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteDao implements Dao<Cliente> {
+public class ClienteDao {
 
     private EntityManager entityManager =
                 Persistence.createEntityManagerFactory("persistencia")
                         .createEntityManager();
 
-    @Override
-    public void salvar(Cliente cliente) {
+    public Cliente salvar(Cliente cliente) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(cliente);
         transaction.commit();
+        return cliente;
     }
 
-    @Override
-    public void atualizar(Cliente cliente) {
+    public Cliente atualizar(Cliente cliente) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.merge(cliente);
         transaction.commit();
+        return cliente;
     }
 
-    @Override
     public void deletar(Cliente cliente) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -44,12 +43,10 @@ public class ClienteDao implements Dao<Cliente> {
         transaction.commit();
     }
 
-    @Override
     public Cliente buscar(Cliente cliente) {
         return entityManager.find(Cliente.class, cliente.getId());
     }
 
-    @Override
     public List<Cliente> listar() {
         TypedQuery<Cliente> query = entityManager
                 .createQuery("SELECT cliente FROM Cliente cliente", Cliente.class);
