@@ -45,7 +45,10 @@ public class ServicoDAO implements DAO<Servico> {
     @Override
     public void deletar(Object key) {
         em.getTransaction().begin();
-        em.remove(buscar(key));
+        Servico servico = buscar(key);
+        if(servico!= null){
+            em.remove(servico);
+        }
         em.getTransaction().commit();
     }
 

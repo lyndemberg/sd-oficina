@@ -16,7 +16,7 @@ public class Estoque {
     private int idPeca;
     private long qtdPeca;
     private int codigoPeca;
-    private LocalDate validade;
+    private String validade;
     private double valorPeca;
     private String nomePeca;
 }
