@@ -1,7 +1,7 @@
-package sd.oficina.oficinawebapp.service;
+package sd.oficina.oficinawebapp.customer.service;
 
 import org.springframework.stereotype.Service;
-import sd.oficina.oficinawebapp.grpc.EstoqueClient;
+import sd.oficina.oficinawebapp.customer.grpc.EstoqueClient;
 import sd.oficina.shared.model.store.Estoque;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package sd.oficina.oficinawebapp.controller;
+package sd.oficina.oficinawebapp.customer.controller;
 
-import sd.oficina.oficinawebapp.service.VeiculoService;
+import sd.oficina.oficinawebapp.customer.service.VeiculoService;
 import sd.oficina.shared.model.customer.Veiculo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

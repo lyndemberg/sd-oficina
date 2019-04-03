@@ -1,4 +1,4 @@
-package sd.oficina.oficinawebapp.grpc;
+package sd.oficina.oficinawebapp.customer.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;

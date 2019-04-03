@@ -1,4 +1,4 @@
-package sd.oficina.oficinawebapp.grpc;
+package sd.oficina.oficinawebapp.customer.grpc;
 
 import sd.oficina.shared.model.customer.AnoModelo;
 import com.google.protobuf.Empty;
