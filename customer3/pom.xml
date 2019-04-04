@@ -2,26 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>oficina</artifactId>
         <groupId>sd.oficina</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>customer2</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
+    <artifactId>customer3</artifactId>
 
     <properties>
-        <class.main>sd.oficina.customer2.Customer2Application</class.main>
+        <class.main>sd.oficina.customer3.Customer3Application</class.main>
         <skip.assembly>false</skip.assembly>
     </properties>
-
-    <build>
-        <finalName>customer2</finalName>
-    </build>
 
     <dependencies>
         <dependency>
@@ -50,11 +43,6 @@
             <version>1.18.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>sd.oficina</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>sd.oficina</groupId>
             <artifactId>shared</artifactId>

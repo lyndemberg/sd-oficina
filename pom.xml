@@ -69,5 +69,6 @@
 
         <module>store1</module>
         <module>store2</module>
+        <module>customer3</module>
     </modules>
 </project>
