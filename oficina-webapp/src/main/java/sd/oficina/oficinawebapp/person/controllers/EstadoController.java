@@ -18,6 +18,7 @@ public class EstadoController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Estado> salvar(@RequestBody Estado estado) {
         return ResponseEntity.ok().body(estadoService.salvar(estado));
     }
