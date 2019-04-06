@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EstadoService } from 'src/app/person1/service/estado.service';
+import { EstadoService } from 'src/app/person1/service/estado/estado.service';
 import { Estado } from 'src/app/person1/model/estado.model';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-cadastrar-estado',
@@ -11,27 +12,31 @@ import { Estado } from 'src/app/person1/model/estado.model';
 export class CadastrarEstadoComponent implements OnInit {
 
   estado: Estado;
-  messageSuccess: boolean;
-  messageError: boolean;
 
-  constructor(private estadoService: EstadoService) { }
+  constructor(private estadoService: EstadoService,
+    private messageService: MessageService) { }
 
   ngOnInit() {
     this.estado = new Estado();
   }
 
   salvar(estado) {
-    if(estado.nome == null || estado.nome == ""){
-      alert("Por favor preencha todos os campos!")
-    } else {
-    this.estadoService.salvar(estado).subscribe(data => {
-      if(data != null) {
-        this.messageSuccess = true;
+      if(estado.nome == null || estado.nome == ""){
+        this.message('error', 'Erro', 'Por favor preencha todos os campos!');
       } else {
-        this.messageError = true;
-      }
-    });
-  }
+      this.estadoService.salvar(estado).subscribe(data => {
+        if(data != null) {
+          this.message('success', 'Sucesso', 'Estado salvo com sucesso!');
+          estado.nome = null;
+        } else {
+          this.message('error', 'Erro', 'Erro ao salvar estado!');
+        }
+      });
+    }
   }
 
+  message(severity: string, summary: string, detail: string) {
+      this.messageService.add({severity:severity, summary:summary, detail:detail});
+  }
+  
 }

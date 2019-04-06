@@ -18,28 +18,33 @@ public class CidadeController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Cidade> salvar(@RequestBody Cidade cidade) {
         return ResponseEntity.ok().body(cidadeService.salvar(cidade));
     }
 
     @PutMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Cidade> atualizar(@RequestBody Cidade cidade) {
         return ResponseEntity.ok().body(cidadeService.atualizar(cidade));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deletar(@RequestParam("id") int idDaCidade) {
+    @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Void> deletar(@PathVariable("id") int idDaCidade) {
         cidadeService.deletar(idDaCidade);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<Cidade> buscar(@RequestParam("id") int idDaCidade) {
+    @GetMapping("/buscar/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Cidade> buscar(@PathVariable("id") int idDaCidade) {
         Cidade cidade = cidadeService.buscar(idDaCidade);
         return ResponseEntity.ok().body(cidade);
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<Cidade>> listar() {
         return ResponseEntity.ok().body(cidadeService.listar());
     }

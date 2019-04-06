@@ -1,15 +1,17 @@
 package sd.oficina.shared.model.person;
 
 import lombok.Data;
+import org.omg.PortableServer.ServantActivator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
-public class Fornecedor {
+public class Fornecedor implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String nomeFantasia;
     private String razaoSocial;

@@ -18,28 +18,33 @@ public class FornecedorController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Fornecedor> salvar(@RequestBody Fornecedor fornecedor) {
         return ResponseEntity.ok().body(fornecedorService.salvar(fornecedor));
     }
 
     @PutMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Fornecedor> atualizar(@RequestBody Fornecedor fornecedor) {
         return ResponseEntity.ok().body(fornecedorService.atualizar(fornecedor));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deletar(@RequestParam("id") int idDoFornecedor) {
+    @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Void> deletar(@PathVariable("id") int idDoFornecedor) {
         fornecedorService.deletar(idDoFornecedor);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<Fornecedor> buscar(@RequestParam("id") int idDoFornecedor) {
+    @GetMapping("/buscar/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Fornecedor> buscar(@PathVariable("id") int idDoFornecedor) {
         Fornecedor fornecedor = fornecedorService.buscar(idDoFornecedor);
         return ResponseEntity.ok().body(fornecedor);
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<Fornecedor>> listar() {
         return ResponseEntity.ok().body(fornecedorService.listar());
     }

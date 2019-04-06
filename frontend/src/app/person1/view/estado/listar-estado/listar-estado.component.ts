@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EstadoService } from 'src/app/person1/service/estado.service';
+import { EstadoService } from 'src/app/person1/service/estado/estado.service';
 import { Estado } from 'src/app/person1/model/estado.model';
 
 @Component({

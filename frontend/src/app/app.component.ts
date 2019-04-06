@@ -24,11 +24,29 @@ export class AppComponent implements OnInit {
                                 label: 'Estado',
                                 icon: 'pi pi-fw pi-plus',
                                 items: [
-                                {label: 'Save', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado'},
-                                {label: 'Update', icon: 'pi pi-fw pi-pencil'},
-                                {label: 'Search', icon: 'pi pi-fw pi-search'},
-                                {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-                                {label: 'List', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado'}                                ]
+                                {label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado'},
+                                {label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado'}                                ]
+                            },
+                            {
+                                label: 'Cidade',
+                                icon: 'pi pi-fw pi-plus',
+                                items: [
+                                {label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCidade'},
+                                {label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado'}                                ]
+                            },
+                            {
+                                label: 'Cliente',
+                                icon: 'pi pi-fw pi-plus',
+                                items: [
+                                {label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado'},
+                                {label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado'}                                ]
+                            },
+                            {
+                                label: 'Fornecedor',
+                                icon: 'pi pi-fw pi-plus',
+                                items: [
+                                {label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado'},
+                                {label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado'}                                ]
                             }
                         ]
                     },
