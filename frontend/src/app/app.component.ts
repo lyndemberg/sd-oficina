@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
                                 {label: 'Update', icon: 'pi pi-fw pi-pencil'},
                                 {label: 'Search', icon: 'pi pi-fw pi-search'},
                                 {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-                                {label: 'List', icon: 'pi pi-fw pi-list'}                                ]
+                                {label: 'List', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado'}                                ]
                             }
                         ]
                     },

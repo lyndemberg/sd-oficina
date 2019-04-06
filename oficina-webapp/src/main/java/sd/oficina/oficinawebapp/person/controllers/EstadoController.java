@@ -24,23 +24,27 @@ public class EstadoController {
     }
 
     @PutMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Estado> atualizar(@RequestBody Estado estado) {
         return ResponseEntity.ok().body(estadoService.atualizar(estado));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deletar(@RequestParam("id") int idDoEstado) {
+    @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Void> deletar(@PathVariable("id") int idDoEstado) {
         estadoService.deletar(idDoEstado);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<Estado> buscar(@RequestParam("id") int idDoEstado) {
+    @GetMapping("/buscar/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Estado> buscar(@PathVariable("id") int idDoEstado) {
         Estado estado = estadoService.buscar(idDoEstado);
         return ResponseEntity.ok().body(estado);
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<Estado>> listar() {
         return ResponseEntity.ok().body(estadoService.listar());
     }

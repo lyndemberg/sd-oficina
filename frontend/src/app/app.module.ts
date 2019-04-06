@@ -16,11 +16,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import {TableModule} from 'primeng/table';
+import { ListarEstadoComponent } from './person1/view/estado/listar-estado/listar-estado.component';
+import {DialogModule} from 'primeng/dialog';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     CadastrarEstadoComponent,
+    ListarEstadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,9 @@ import {MessageModule} from 'primeng/message';
     FormsModule,
     HttpClientModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    TableModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
