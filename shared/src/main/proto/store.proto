@@ -1,0 +1,60 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option objc_class_prefix = "HLW";
+
+package sd.oficina.shared.proto.customer;
+
+//  ESTOQUE
+message EstoqueProto {
+    int32 idPeca = 1;
+    int64 qtdPeca = 2;
+    int32 codigoPeca = 3;
+    string validade = 4;
+    double valorPeca = 5;
+    string nomePeca = 6;
+}
+
+message EstoqueProtoList {
+    repeated EstoqueProto estoque = 1;
+}
+
+message EstoqueResult {
+    int32 codigo = 1;
+    EstoqueProto estoque = 2;
+}
+
+//  SERVIÇO
+message ServicoProto {
+    int32 id = 1;
+    string descricao = 2;
+    double valor = 3;
+    EstoqueProtoList estoques = 4;
+}
+
+message ServicoProtoList {
+    repeated ServicoProto servico = 1;
+}
+
+message ServicoResult {
+    int32 codigo = 1;
+    ServicoProto servico = 2;
+}
+
+service EstoqueService {
+    rpc salvar(EstoqueProto) returns (EstoqueResult){};
+    rpc atualizar(EstoqueProto) returns (EstoqueResult){};
+    rpc deletar(EstoqueProto) returns (EstoqueResult){};
+    rpc buscar(EstoqueProto) returns (EstoqueResult) {};
+    rpc buscarTodos(google.protobuf.Empty) returns (EstoqueProtoList){};
+}
+
+service ServicoService {
+    rpc salvar(ServicoProto) returns (ServicoResult){};
+    rpc atualizar(ServicoProto) returns (ServicoResult){};
+    rpc deletar(ServicoProto) returns (ServicoResult){};
+    rpc buscar(ServicoProto) returns (ServicoResult) {};
+    rpc buscarTodos(google.protobuf.Empty) returns (ServicoProtoList){};
+}

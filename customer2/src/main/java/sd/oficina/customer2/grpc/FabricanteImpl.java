@@ -2,13 +2,13 @@ package sd.oficina.customer2.grpc;
 
 import sd.oficina.customer2.dao.FabricanteDAO;
 import com.google.protobuf.Empty;
-import sd.oficina.shared.converter.ProtoConverter;
-import sd.oficina.shared.model.Fabricante;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
+import sd.oficina.shared.model.customer.Fabricante;
 import io.grpc.stub.StreamObserver;
-import sd.oficina.shared.proto.FabricanteProto;
-import sd.oficina.shared.proto.FabricanteProtoList;
-import sd.oficina.shared.proto.FabricanteResult;
-import sd.oficina.shared.proto.FabricanteServiceGrpc;
+import sd.oficina.shared.proto.customer.FabricanteProto;
+import sd.oficina.shared.proto.customer.FabricanteProtoList;
+import sd.oficina.shared.proto.customer.FabricanteResult;
+import sd.oficina.shared.proto.customer.FabricanteServiceGrpc;
 
 import java.util.List;
 
@@ -24,17 +24,17 @@ public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplB
     public void buscarTodos(Empty request, StreamObserver<FabricanteProtoList> responseObserver) {
         List<Fabricante> fabricantes = dao.todos();
         final FabricanteProtoList.Builder builder = FabricanteProtoList.newBuilder();
-        fabricantes.forEach(f-> builder.addFabricantes(ProtoConverter.modelToProto(f)));
+        fabricantes.forEach(f-> builder.addFabricantes(ProtoConverterCustomer.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
     }
 
     @Override
     public void salvar(FabricanteProto request, StreamObserver<FabricanteResult> responseObserver) {
-        Fabricante result = this.dao.salvar(ProtoConverter.protoToModel(request));
+        Fabricante result = this.dao.salvar(ProtoConverterCustomer.protoToModel(request));
         FabricanteResult fabricanteResult = FabricanteResult.newBuilder()
                 .setCodigo(200)
-                .setFabricante(ProtoConverter.modelToProto(result))
+                .setFabricante(ProtoConverterCustomer.modelToProto(result))
                 .build();
         responseObserver.onNext(fabricanteResult);
         responseObserver.onCompleted();
@@ -42,11 +42,11 @@ public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplB
 
     @Override
     public void atualizar(FabricanteProto request, StreamObserver<FabricanteResult> responseObserver) {
-        Fabricante fabricante = dao.atualizar(ProtoConverter.protoToModel(request));
+        Fabricante fabricante = dao.atualizar(ProtoConverterCustomer.protoToModel(request));
         responseObserver.onNext(FabricanteResult
                 .newBuilder()
                 .setFabricante(
-                        fabricante != null ? ProtoConverter.modelToProto(fabricante) : FabricanteProto.newBuilder().build()
+                        fabricante != null ? ProtoConverterCustomer.modelToProto(fabricante) : FabricanteProto.newBuilder().build()
                 )
                 .build());
         responseObserver.onCompleted();
@@ -66,7 +66,7 @@ public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplB
         responseObserver.onNext(FabricanteResult
                 .newBuilder()
                 .setFabricante(
-                        fabricante != null ? ProtoConverter.modelToProto(fabricante) : FabricanteProto.newBuilder().build())
+                        fabricante != null ? ProtoConverterCustomer.modelToProto(fabricante) : FabricanteProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
     }

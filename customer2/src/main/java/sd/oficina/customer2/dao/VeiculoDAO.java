@@ -1,6 +1,6 @@
 package sd.oficina.customer2.dao;
 
-import sd.oficina.shared.model.Veiculo;
+import sd.oficina.shared.model.customer.Veiculo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
