@@ -32,6 +32,7 @@ import {ToastModule} from 'primeng/components/toast/toast';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputMaskModule} from 'primeng/inputmask';
 import {KeyFilterModule} from 'primeng/keyfilter';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {KeyFilterModule} from 'primeng/keyfilter';
     ListarClienteComponent,
     CadastrarFornecedorComponent,
     ListarFornecedorComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

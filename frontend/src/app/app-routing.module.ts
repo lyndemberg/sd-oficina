@@ -6,8 +6,10 @@ import { CadastrarCidadeComponent } from './person1/view/cidade/cadastrar-cidade
 import { ListarCidadeComponent } from './person1/view/cidade/listar-cidade/listar-cidade.component';
 import { CadastrarClienteComponent } from './person1/view/cliente/cadastrar-cliente/cadastrar-cliente.component';
 import { ListarClienteComponent } from './person1/view/cliente/listar-cliente/listar-cliente.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: 'home', component: HomeComponent},
   { path: 'cadastrarEstado', component: CadastrarEstadoComponent},
   { path: 'listarEstado', component: ListarEstadoComponent},
   { path: 'cadastrarCidade', component: CadastrarCidadeComponent},
