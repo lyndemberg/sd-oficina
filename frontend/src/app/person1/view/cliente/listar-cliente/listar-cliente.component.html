@@ -1,3 +1,75 @@
-<p>
-  listar-cliente works!
-</p>
+<div class="p-grid">
+    <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
+        <h2 class="box">Clientes</h2>
+    </div>
+    <p-table [value]="clientes" class="p-sm-12 p-md-12 p-lg-12 p-xl-12">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nome</th>
+                <th>Telefone Fixo</th>
+                <th>Telefone Celular</th>
+                <th>CEP</th>
+                <th>Número</th>    
+                <th>Logradouro</th>
+                <th>Bairro</th>
+                <th>CPF</th>
+                <th>Complemento</th>
+                <th>E-mail</th>
+                <th>Estado</th>
+                <th>Cidade</th>
+                <th>Ação</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cliente>
+            <tr style="text-align:center">
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.telefoneFixo}}</td>
+                <td>{{cliente.telefoneCelular}}</td>
+                <td>{{cliente.cep}}</td>
+                <td>{{cliente.numero}}</td>
+                <td>{{cliente.logradouro}}</td>
+                <td>{{cliente.bairro}}</td>
+                <td>{{cliente.cpf}}</td>
+                <td>{{cliente.complemento}}</td>
+                <td>{{cliente.email}}</td>
+                <td>{{cliente.estado.nome}}</td>
+                <td>{{cliente.cidade.nome}}</td>
+                <td>
+                    <p-button (click)="showDialogUpdate(cliente)" icon="pi pi-pencil"></p-button>&nbsp;
+                    <p-button (click)="showDialogDelete(cliente)" icon="pi pi-trash"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+  
+  <p-dialog header="Cliente" [(visible)]="displayUpdate" [modal]="true" [responsive]="true" [style]="{width: '450px', minWidth: '200px'}" [minY]="70" 
+    [maximizable]="true" [baseZIndex]="10000">
+    <br>
+    <span class="ui-float-label">
+        <input id="float-input" type="text" size="50" pInputText [value]="cliente.nome" [(ngModel)]="cliente.nome"> 
+        <label for="float-input">Nome</label>
+    </span>
+    <br>
+    <span class="ui-fluid">
+      <p-dropdown [options]="estados" [(ngModel)]="cliente.estado" placeholder="Selecione o Estado" optionLabel="nome" [showClear]="true"></p-dropdown>
+    </span>
+    <br><br><br>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="atualizar(cliente)" label="Atualizar"></button>
+        <button type="button" pButton icon="pi pi-close" (click)="displayUpdate=false" label="Cancelar" class="ui-button-secondary"></button>
+    </p-footer>
+  </p-dialog>
+  
+  <p-dialog header="Cliente" [(visible)]="displayDelete" [modal]="true" [responsive]="true" [style]="{width: '450px', minWidth: '200px'}" [minY]="70" 
+    [maximizable]="true" [baseZIndex]="10000">
+    <br>
+    <span>
+        <p>Deseja realmente excluir este cliente ?</p>
+    </span>
+    <br>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="deletar(cliente)" label="Deletar"></button>
+        <button type="button" pButton icon="pi pi-close" (click)="displayDelete=false" label="Cancelar" class="ui-button-secondary"></button>
+    </p-footer>
+  </p-dialog>  

@@ -5,14 +5,12 @@
     <p-table [value]="estados" class="p-sm-12 p-md-12 p-lg-12 p-xl-12">
         <ng-template pTemplate="header">
             <tr>
-                <th>Id</th>
                 <th>Nome</th>
                 <th>Ação</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-estado>
             <tr style="text-align:center">
-                <td>{{estado.id}}</td>
                 <td>{{estado.nome}}</td>
                 <td>
                     <p-button (click)="showDialogUpdate(estado)" icon="pi pi-pencil"></p-button>&nbsp;
@@ -45,7 +43,7 @@
     </span>
     <br>
     <p-footer>
-        <button type="submit" pButton icon="pi pi-check" (click)="deletar(estado)" label="Deletar"></button>
+        <button type="button" pButton icon="pi pi-check" (click)="deletar(estado)" label="Deletar"></button>
         <button type="button" pButton icon="pi pi-close" (click)="displayDelete=false" label="Cancelar" class="ui-button-secondary"></button>
     </p-footer>
 </p-dialog>
