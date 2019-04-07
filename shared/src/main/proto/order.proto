@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package sd.oficina.shared.proto.order;
+import "google/protobuf/empty.proto";
+
+message Cliente{
+    int64 id = 1;
+}
+message Pedido{
+    int64 idPedido = 1;
+    bool concluido = 2;
+    string dataRegistro = 3;
+    string dataPagamento = 4;
+    bool pago = 5;
+    int64 idVeiculo = 6;
+    int64 idCliente = 7;
+    repeated int64 servicos = 8;
+}
+message StatusExecution{
+    bool status = 1;
+    string message = 2;
+}
+
+//ações referente a ordem de serviço (ou seja, os pedidos)
+service OrderService{
+    rpc realizarPedido(Pedido) returns (StatusExecution);
+    rpc realizarPagamento(Pedido) returns (StatusExecution);
+    rpc concluirPedido(Pedido) returns (StatusExecution);
+    rpc buscarPedidosPorCliente(Cliente) returns (stream Pedido);
+}
+
+
+
