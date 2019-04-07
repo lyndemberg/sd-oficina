@@ -30,6 +30,8 @@ import {SplitButtonModule} from 'primeng/splitbutton';
 import { MessageService } from 'primeng/components/common/messageservice';
 import {ToastModule} from 'primeng/components/toast/toast';
 import {DropdownModule} from 'primeng/dropdown';
+import {InputMaskModule} from 'primeng/inputmask';
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import {DropdownModule} from 'primeng/dropdown';
     DialogModule,
     SplitButtonModule,
     ToastModule,
-    DropdownModule
+    DropdownModule,
+    InputMaskModule,
+    KeyFilterModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

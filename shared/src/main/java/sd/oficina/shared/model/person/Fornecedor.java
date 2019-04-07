@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Fornecedor implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
     private String nomeFantasia;
     private String razaoSocial;
@@ -25,10 +25,10 @@ public class Fornecedor implements Serializable {
     private String bairro;
     private String CEP;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private Cidade cidade;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private Estado estado;
 
 }
