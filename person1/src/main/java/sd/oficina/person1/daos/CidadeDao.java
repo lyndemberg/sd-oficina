@@ -32,6 +32,10 @@ public class CidadeDao {
     }
 
     public void deletar(Cidade cidade) {
+
+        cidade.setEstado(null);
+        cidade = atualizar(cidade);
+
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 

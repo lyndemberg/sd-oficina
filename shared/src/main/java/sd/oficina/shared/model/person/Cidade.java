@@ -10,8 +10,9 @@ import java.io.Serializable;
 public class Cidade implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
+    @Column(nullable = false)
     private String nome;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})

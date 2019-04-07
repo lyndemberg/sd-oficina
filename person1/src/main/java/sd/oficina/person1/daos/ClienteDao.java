@@ -32,6 +32,11 @@ public class ClienteDao {
     }
 
     public void deletar(Cliente cliente) {
+
+        cliente.setEstado(null);
+        cliente.setCidade(null);
+        cliente = atualizar(cliente);
+
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 

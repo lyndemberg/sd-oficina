@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Fornecedor implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
     private String nomeFantasia;
     private String razaoSocial;
