@@ -1,8 +1,8 @@
-package sd.oficina.oficinawebapp.customer.controller;
+package sd.oficina.oficinawebapp.store.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sd.oficina.oficinawebapp.customer.service.EstoqueService;
+import sd.oficina.oficinawebapp.store.service.EstoqueService;
 import sd.oficina.shared.model.store.Estoque;
 
 import java.util.List;
