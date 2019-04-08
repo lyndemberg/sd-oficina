@@ -19,7 +19,7 @@ public class Person1Application {
 
         //Inicializando o server
         Server server = ServerBuilder
-                .forPort(3333)
+                .forPort(2222)
                 .addService((BindableService) new CidadeService())
                 .addService((BindableService) new ClienteService())
                 .addService((BindableService) new EstadoService())
