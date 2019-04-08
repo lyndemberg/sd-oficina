@@ -1,4 +1,4 @@
-package sd.oficina.oficinawebapp.customer.grpc;
+package sd.oficina.oficinawebapp.store.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
@@ -17,7 +17,7 @@ public class ServicoClient {
 
     public ServicoClient() {
         channel = ManagedChannelBuilder
-                .forAddress("localhost", 3333)
+                .forAddress("localhost", 1111)
                 .usePlaintext()
                 .build();
     }
