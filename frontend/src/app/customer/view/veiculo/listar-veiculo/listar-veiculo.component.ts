@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Veiculo } from 'src/app/customer/model/veiculo';
 
 @Component({
   selector: 'app-listar-veiculo',
@@ -6,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./listar-veiculo.component.css']
 })
 export class ListarVeiculoComponent implements OnInit {
+
+  veiculo : Veiculo = {
+    cor : null,
+    modelo : null,
+    placa : '',
+    quilometragem : 0
+  }
+
+  veiculos : Veiculo [] = [];
 
   constructor() { }
 
