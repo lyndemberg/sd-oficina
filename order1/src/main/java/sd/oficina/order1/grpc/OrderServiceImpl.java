@@ -1,4 +1,4 @@
-package sd.oficina.order1.serviceimpl;
+package sd.oficina.order1.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
