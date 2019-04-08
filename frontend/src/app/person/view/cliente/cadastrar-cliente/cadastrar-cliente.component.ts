@@ -26,7 +26,6 @@ export class CadastrarClienteComponent implements OnInit {
   ngOnInit() {
     this.cliente = new Cliente();
     this.listarEstados();
-    this.listarCidades();
   }
 
   salvar(cliente) {
@@ -65,8 +64,8 @@ listarEstados() {
   });
 }
 
-listarCidades() {
-  this.cidadeService.listar().subscribe(data => {
+listarCidadesPorEstado() {
+  this.cidadeService.listarPorEstado(this.cliente.estado.id).subscribe(data => {
     this.cidades = data;
   });
 }

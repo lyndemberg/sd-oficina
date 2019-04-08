@@ -113,7 +113,7 @@
         </div>
         <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
             <span class="ui-fluid">
-            <p-dropdown [options]="estados" [(ngModel)]="cliente.estado" placeholder="Selecione o Estado" optionLabel="nome" [showClear]="true"></p-dropdown>
+            <p-dropdown [options]="estados" [(ngModel)]="cliente.estado" (click)="listarCidadesPorEstado()" placeholder="Selecione o Estado" optionLabel="nome" [showClear]="true"></p-dropdown>
             </span>
         </div>
         <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">

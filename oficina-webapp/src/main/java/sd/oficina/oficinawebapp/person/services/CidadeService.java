@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import sd.oficina.oficinawebapp.person.grpc.CidadeClient;
 import sd.oficina.shared.model.person.Cidade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,5 +34,15 @@ public class CidadeService {
 
     public List<Cidade> listar() {
         return cidadeClient.listar();
+    }
+
+    public List<Cidade> listarPorEstado(int idDoEstado) {
+
+        List<Cidade> cidadesRecuperadas = new ArrayList<>();
+
+        cidadeClient.listar().stream()
+                .filter(cidade -> cidade.getEstado().getId() == idDoEstado)
+                .forEach(c -> cidadesRecuperadas.add(c));
+        return cidadesRecuperadas;
     }
 }

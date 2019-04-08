@@ -32,7 +32,6 @@ export class ListarClienteComponent implements OnInit {
     this.cliente = new Cliente();
     this.listar();
     this.listarEstados();
-    this.listarCidades();
   }
 
   listar() {
@@ -56,6 +55,9 @@ export class ListarClienteComponent implements OnInit {
 
   showDialogUpdate(cliente) {
     this.cliente = cliente;
+
+    this.listarCidadesPorEstado();
+
     this.displayUpdate = true;
   }
 
@@ -70,8 +72,8 @@ export class ListarClienteComponent implements OnInit {
     });
   }
 
-  listarCidades() {
-    this.cidadeService.listar().subscribe(data => {
+  listarCidadesPorEstado() {
+    this.cidadeService.listarPorEstado(this.cliente.estado.id).subscribe(data => {
       this.cidades = data;
     });
   }

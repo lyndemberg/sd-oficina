@@ -32,7 +32,6 @@ export class ListarFornecedorComponent implements OnInit {
     this.fornecedor = new Fornecedor();
     this.listar();
     this.listarEstados();
-    this.listarCidades();
   }
 
   listar() {
@@ -56,6 +55,9 @@ export class ListarFornecedorComponent implements OnInit {
 
   showDialogUpdate(fornecedor) {
     this.fornecedor = fornecedor;
+
+    this.listarCidadesPorEstado();
+
     this.displayUpdate = true;
   }
 
@@ -70,8 +72,8 @@ export class ListarFornecedorComponent implements OnInit {
     });
   }
 
-  listarCidades() {
-    this.cidadeService.listar().subscribe(data => {
+  listarCidadesPorEstado() {
+    this.cidadeService.listarPorEstado(this.fornecedor.estado.id).subscribe(data => {
       this.cidades = data;
     });
   }

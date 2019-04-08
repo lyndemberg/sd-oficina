@@ -19,20 +19,6 @@ export class AppComponent implements OnInit {
                 icon: 'pi pi-fw pi-cog',
                 items: [
                     {
-                        label: 'Estado',
-                        icon: 'pi pi-fw pi-plus',
-                        items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado' }]
-                    },
-                    {
-                        label: 'Cidade',
-                        icon: 'pi pi-fw pi-plus',
-                        items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCidade' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCidade' }]
-                    },
-                    {
                         label: 'Cliente',
                         icon: 'pi pi-fw pi-plus',
                         items: [

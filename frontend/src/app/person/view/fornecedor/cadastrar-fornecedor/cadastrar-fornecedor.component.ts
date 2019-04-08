@@ -26,7 +26,6 @@ export class CadastrarFornecedorComponent implements OnInit {
   ngOnInit() {
     this.fornecedor = new Fornecedor();
     this.listarEstados();
-    this.listarCidades();
   }
 
   salvar(fornecedor) {
@@ -66,8 +65,8 @@ listarEstados() {
   });
 }
 
-listarCidades() {
-  this.cidadeService.listar().subscribe(data => {
+listarCidadesPorEstado() {
+  this.cidadeService.listarPorEstado(this.fornecedor.estado.id).subscribe(data => {
     this.cidades = data;
   });
 }
