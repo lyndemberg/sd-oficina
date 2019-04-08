@@ -19,15 +19,15 @@
         <td>{{anoModelo.valor}}</td>
         <td>{{anoModelo.modelo}}</td>
         <td>
-          <p-button (click)="showDialogUpdate(cidade)" icon="pi pi-pencil"></p-button>&nbsp;
-          <p-button (click)="showDialogDelete(cidade)" icon="pi pi-trash"></p-button>
+          <p-button (click)="showDialogUpdate(anoModelo)" icon="pi pi-pencil"></p-button>&nbsp;
+          <p-button (click)="showDialogDelete(anoModelo)" icon="pi pi-trash"></p-button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
 
-<p-dialog header="Cidade" [(visible)]="displayUpdate" [modal]="true" [responsive]="true"
+<p-dialog header="Ano Modelo" [(visible)]="displayUpdate" [modal]="true" [responsive]="true"
   [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
   <br>
   <span class="ui-float-label">
@@ -51,13 +51,13 @@
   </span>
   <br><br><br>
   <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="atualizar(cidade)" label="Atualizar"></button>
+    <button type="button" pButton icon="pi pi-check" (click)="atualizar(anoModelo)" label="Atualizar"></button>
     <button type="button" pButton icon="pi pi-close" (click)="displayUpdate=false" label="Cancelar"
       class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>
 
-<p-dialog header="Cidade" [(visible)]="displayDelete" [modal]="true" [responsive]="true"
+<p-dialog header="Ano Modelo" [(visible)]="displayDelete" [modal]="true" [responsive]="true"
   [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
   <br>
   <span>
@@ -65,7 +65,7 @@
   </span>
   <br>
   <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="deletar(cidade)" label="Deletar"></button>
+    <button type="button" pButton icon="pi pi-check" (click)="deletar(anoModelo)" label="Deletar"></button>
     <button type="button" pButton icon="pi pi-close" (click)="displayDelete=false" label="Cancelar"
       class="ui-button-secondary"></button>
   </p-footer>

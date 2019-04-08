@@ -13,8 +13,8 @@
       <tr style="text-align:center">
         <td>{{cor.nome}}</td>
         <td>
-          <p-button (click)="showDialogUpdate(cidade)" icon="pi pi-pencil"></p-button>&nbsp;
-          <p-button (click)="showDialogDelete(cidade)" icon="pi pi-trash"></p-button>
+          <p-button (click)="showDialogUpdate(cor)" icon="pi pi-pencil"></p-button>&nbsp;
+          <p-button (click)="showDialogDelete(cor)" icon="pi pi-trash"></p-button>
         </td>
       </tr>
     </ng-template>
@@ -30,13 +30,13 @@
   </span>
   <br><br><br>
   <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="atualizar(cidade)" label="Atualizar"></button>
+    <button type="button" pButton icon="pi pi-check" (click)="atualizar(cor)" label="Atualizar"></button>
     <button type="button" pButton icon="pi pi-close" (click)="displayUpdate=false" label="Cancelar"
       class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>
 
-<p-dialog header="Cidade" [(visible)]="displayDelete" [modal]="true" [responsive]="true"
+<p-dialog header="Cor" [(visible)]="displayDelete" [modal]="true" [responsive]="true"
   [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
   <br>
   <span>
@@ -44,7 +44,7 @@
   </span>
   <br>
   <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="deletar(cidade)" label="Deletar"></button>
+    <button type="button" pButton icon="pi pi-check" (click)="deletar(cor)" label="Deletar"></button>
     <button type="button" pButton icon="pi pi-close" (click)="displayDelete=false" label="Cancelar"
       class="ui-button-secondary"></button>
   </p-footer>

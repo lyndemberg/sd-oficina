@@ -13,6 +13,12 @@ import { CadastrarAnoModeloComponent } from './customer/view/anoModelo/cadastrar
 import { ListarAnoModeloComponent} from './customer/view/anoModelo/listar-ano-modelo/listar-ano-modelo.component';
 import { CadastrarCorComponent} from  './customer/view/cor/cadastrar-cor/cadastrar-cor.component';
 import { ListarCorComponent} from './customer/view/cor/listar-cor/listar-cor.component';
+import { CadastrarFabricanteComponent} from  './customer/view/fabricante/cadastrar-fabricante/cadastrar-fabricante.component';
+import { ListarFabricanteComponent} from './customer/view/fabricante/listar-fabricante/listar-fabricante.component';
+import { CadastrarModeloComponent} from  './customer/view/modelo/cadastrar-modelo/cadastrar-modelo.component';
+import { ListarModeloComponent} from './customer/view/modelo/listar-modelo/listar-modelo.component';
+import { CadastrarVeiculoComponent} from  './customer/view/veiculo/cadastrar-veiculo/cadastrar-veiculo.component';
+import { ListarVeiculoComponent} from './customer/view/veiculo/listar-veiculo/listar-veiculo.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -27,7 +33,13 @@ const routes: Routes = [
   { path: 'cadastrarAnoModelo', component: CadastrarAnoModeloComponent},
   { path: 'listarAnoModelo', component: ListarAnoModeloComponent},
   { path: 'cadastrarCor', component: CadastrarCorComponent},
-  { path: 'listarCor', component: ListarCorComponent}
+  { path: 'listarCor', component: ListarCorComponent},
+  { path: 'cadastrarFabricante', component: CadastrarFabricanteComponent},
+  { path: 'listarFabricante', component: ListarFabricanteComponent},
+  { path: 'cadastrarVeiculo', component: CadastrarVeiculoComponent},
+  { path: 'listarVeiculo', component: ListarVeiculoComponent},
+  { path: 'cadastrarModelo', component: CadastrarModeloComponent},
+  { path: 'listarModelo', component: ListarModeloComponent}
 ];
 
 @NgModule({

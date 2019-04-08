@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Fabricante } from 'src/app/model/fabricante';
 
 @Component({
   selector: 'app-cadastrar-fabricante',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cadastrar-fabricante.component.css']
 })
 export class CadastrarFabricanteComponent implements OnInit {
+
+  fabricante : Fabricante = {
+    nome : ''
+  }
 
   constructor() { }
 

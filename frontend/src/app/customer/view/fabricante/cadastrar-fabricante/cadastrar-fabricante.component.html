@@ -1,3 +1,20 @@
-<p>
-  cadastrar-fabricante works!
-</p>
+<div class="p-grid">
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
+    <h2 class="box">Cadastrar Fabricante</h2>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <span class="ui-float-label">
+        <input id="float-input" type="text" size="50" pInputText [(ngModel)]="fabricante.nome">
+        <label for="float-input">Nome</label>
+      </span>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-2 p-md-2 p-lg-2 p-xl-2 ui-fluid p-offset-5">
+      <button (click)="salvar(fabricante)" pButton type="button" label="Salvar"></button>
+    </div>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
