@@ -78,8 +78,8 @@ export class AppComponent implements OnInit {
                         label: 'Ano Modelo',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarAnoModelo' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarAnoModelo' }]
                     },
                     {
                         label: 'Fabricante',
@@ -109,13 +109,6 @@ export class AppComponent implements OnInit {
                 label: 'Order',
                 icon: 'pi pi-fw pi-cog',
                 items: [
-                    {
-                        label: 'Orçamento',
-                        icon: 'pi pi-fw pi-plus',
-                        items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado' }]
-                    },
                     {
                         label: 'Ordem de serviço',
                         icon: 'pi pi-fw pi-plus',

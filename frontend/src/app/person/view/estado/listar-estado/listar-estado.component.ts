@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EstadoService } from 'src/app/person1/service/estado/estado.service';
-import { Estado } from 'src/app/person1/model/estado.model';
+import { EstadoService } from 'src/app/person/service/estado/estado.service';
+import { Estado } from 'src/app/person/model/estado.model';
 
 @Component({
   selector: 'app-listar-estado',

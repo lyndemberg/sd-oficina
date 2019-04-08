@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Fornecedor } from 'src/app/person1/model/fornecedor.model';
-import { Estado } from 'src/app/person1/model/estado.model';
-import { Cidade } from 'src/app/person1/model/cidade.model';
-import { FornecedorService } from 'src/app/person1/service/fornecedor/fornecedor.service';
+import { Fornecedor } from 'src/app/person/model/fornecedor.model';
+import { Estado } from 'src/app/person/model/estado.model';
+import { Cidade } from 'src/app/person/model/cidade.model';
+import { FornecedorService } from 'src/app/person/service/fornecedor/fornecedor.service';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { EstadoService } from 'src/app/person1/service/estado/estado.service';
-import { CidadeService } from 'src/app/person1/service/cidade/cidade.service';
+import { EstadoService } from 'src/app/person/service/estado/estado.service';
+import { CidadeService } from 'src/app/person/service/cidade/cidade.service';
 
 @Component({
   selector: 'app-cadastrar-fornecedor',
