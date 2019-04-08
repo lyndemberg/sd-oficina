@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Cidade } from 'src/app/person1/model/cidade.model';
-import { CidadeService } from 'src/app/person1/service/cidade/cidade.service';
-import { Estado } from 'src/app/person1/model/estado.model';
-import { EstadoService } from 'src/app/person1/service/estado/estado.service';
+import { Cidade } from 'src/app/person/model/cidade.model';
+import { CidadeService } from 'src/app/person/service/cidade/cidade.service';
+import { Estado } from 'src/app/person/model/estado.model';
+import { EstadoService } from 'src/app/person/service/estado/estado.service';
 
 @Component({
   selector: 'app-listar-cidade',

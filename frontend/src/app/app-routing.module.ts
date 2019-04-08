@@ -9,6 +9,8 @@ import { ListarClienteComponent } from './person/view/cliente/listar-cliente/lis
 import { HomeComponent } from './home/home.component';
 import { CadastrarFornecedorComponent } from './person/view/fornecedor/cadastrar-fornecedor/cadastrar-fornecedor.component';
 import { ListarFornecedorComponent } from './person/view/fornecedor/listar-fornecedor/listar-fornecedor.component';
+import { CadastrarAnoModeloComponent } from './customer/view/anoModelo/cadastrar-ano-modelo/cadastrar-ano-modelo.component';
+import { ListarAnoModeloComponent} from './customer/view/anoModelo/listar-ano-modelo/listar-ano-modelo.component'
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -19,11 +21,14 @@ const routes: Routes = [
   { path: 'cadastrarCliente', component: CadastrarClienteComponent},
   { path: 'listarCliente', component: ListarClienteComponent},
   { path: 'cadastrarFornecedor', component: CadastrarFornecedorComponent},
-  { path: 'listarFornecedor', component: ListarFornecedorComponent}
+  { path: 'listarFornecedor', component: ListarFornecedorComponent},
+  { path: 'cadastrarAnoModelo', component: CadastrarAnoModeloComponent},
+  { path: 'listarAnoModelo', component: ListarAnoModeloComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from 'src/app/person1/model/cliente.model';
-import { ClienteService } from 'src/app/person1/service/cliente/cliente.service';
-import { Estado } from 'src/app/person1/model/estado.model';
-import { EstadoService } from 'src/app/person1/service/estado/estado.service';
-import { CidadeService } from 'src/app/person1/service/cidade/cidade.service';
-import { Cidade } from 'src/app/person1/model/cidade.model';
+import { Cliente } from 'src/app/person/model/cliente.model';
+import { ClienteService } from 'src/app/person/service/cliente/cliente.service';
+import { Estado } from 'src/app/person/model/estado.model';
+import { EstadoService } from 'src/app/person/service/estado/estado.service';
+import { CidadeService } from 'src/app/person/service/cidade/cidade.service';
+import { Cidade } from 'src/app/person/model/cidade.model';
 
 @Component({
   selector: 'app-listar-cliente',

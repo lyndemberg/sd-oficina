@@ -1,0 +1,72 @@
+<div class="p-grid">
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
+    <h2 class="box">Ano Modelo</h2>
+  </div>
+  <p-table [value]="anoModelos" class="p-sm-12 p-md-12 p-lg-12 p-xl-12">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Modelo</th>
+        <th>Ação</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-anoModelo>
+      <tr style="text-align:center">
+        <td>{{anoModelo.nome}}</td>
+        <td>{{anoModelo.tipo}}</td>
+        <td>{{anoModelo.valor}}</td>
+        <td>{{anoModelo.modelo}}</td>
+        <td>
+          <p-button (click)="showDialogUpdate(cidade)" icon="pi pi-pencil"></p-button>&nbsp;
+          <p-button (click)="showDialogDelete(cidade)" icon="pi pi-trash"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Cidade" [(visible)]="displayUpdate" [modal]="true" [responsive]="true"
+  [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <br>
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="50" pInputText [value]="anoModelo.nome" [(ngModel)]="anoModelo.nome">
+    <label for="float-input">Nome</label>
+  </span>
+  <br>
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="50" pInputText [value]="anoModelo.tipo" [(ngModel)]="anoModelo.nome">
+    <label for="float-input">Nome</label>
+  </span>
+  <br>
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="50" pInputText [value]="anoModelo.valor" [(ngModel)]="anoModelo.nome">
+    <label for="float-input">Nome</label>
+  </span>
+  <br>
+  <span class="ui-fluid">
+    <p-dropdown [options]="anoModelos" [(ngModel)]="anoModelo.modelo" placeholder="Selecione o Modelo"
+      optionLabel="nome" [showClear]="true"></p-dropdown>
+  </span>
+  <br><br><br>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="atualizar(cidade)" label="Atualizar"></button>
+    <button type="button" pButton icon="pi pi-close" (click)="displayUpdate=false" label="Cancelar"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Cidade" [(visible)]="displayDelete" [modal]="true" [responsive]="true"
+  [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <br>
+  <span>
+    <p>Deseja realmente excluir este Ano Modelo?</p>
+  </span>
+  <br>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="deletar(cidade)" label="Deletar"></button>
+    <button type="button" pButton icon="pi pi-close" (click)="displayDelete=false" label="Cancelar"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>

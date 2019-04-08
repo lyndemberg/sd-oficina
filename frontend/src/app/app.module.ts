@@ -33,6 +33,8 @@ import {DropdownModule} from 'primeng/dropdown';
 import {InputMaskModule} from 'primeng/inputmask';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { HomeComponent } from './home/home.component';
+import { CadastrarAnoModeloComponent } from './customer/view/anoModelo/cadastrar-ano-modelo/cadastrar-ano-modelo.component';
+import { ListarAnoModeloComponent } from './customer/view/anoModelo/listar-ano-modelo/listar-ano-modelo.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { HomeComponent } from './home/home.component';
     CadastrarFornecedorComponent,
     ListarFornecedorComponent,
     HomeComponent,
+    CadastrarAnoModeloComponent,
+    ListarAnoModeloComponent,
   ],
   imports: [
     BrowserModule,
