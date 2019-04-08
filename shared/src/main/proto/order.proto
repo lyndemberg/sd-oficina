@@ -20,11 +20,14 @@ message OrdemProto{
 }
 
 message Item{
-    enum Tipo{
-        PRODUTO = 0;
-        SERVICO = 1;
-    }
-    Tipo tipoItem = 1;
+
+//    enum Tipo{
+//        PRODUTO = 0;
+//        SERVICO = 1;
+//    }
+//    Tipo tipoItem = 1;
+
+    string tipo = 1;
     string descricao = 2;
     float valor = 3;
     int32 quantidade = 4;

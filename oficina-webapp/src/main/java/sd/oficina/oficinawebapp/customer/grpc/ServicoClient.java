@@ -17,7 +17,7 @@ public class ServicoClient {
 
     public ServicoClient() {
         channel = ManagedChannelBuilder
-                .forAddress("localhost", 2223)
+                .forAddress("localhost", 3333)
                 .usePlaintext()
                 .build();
     }
