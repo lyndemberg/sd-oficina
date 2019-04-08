@@ -19,7 +19,6 @@ import {MessageModule} from 'primeng/message';
 import {TableModule} from 'primeng/table';
 import { ListarEstadoComponent } from './person1/view/estado/listar-estado/listar-estado.component';
 import {DialogModule} from 'primeng/dialog';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { CadastrarCidadeComponent } from './person1/view/cidade/cadastrar-cidade/cadastrar-cidade.component';
 import { ListarCidadeComponent } from './person1/view/cidade/listar-cidade/listar-cidade.component';
 import { CadastrarClienteComponent } from './person1/view/cliente/cadastrar-cliente/cadastrar-cliente.component';
