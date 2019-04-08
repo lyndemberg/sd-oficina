@@ -32,6 +32,11 @@ public class FornecedorDao {
     }
 
     public void deletar(Fornecedor fornecedor) {
+
+        fornecedor.setEstado(null);
+        fornecedor.setCidade(null);
+        fornecedor = atualizar(fornecedor);
+
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 

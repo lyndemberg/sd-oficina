@@ -1,3 +1,152 @@
-<p>
-  listar-fornecedor works!
-</p>
+<div class="p-grid">
+    <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
+        <h2 class="box">Fornecedores</h2>
+    </div>
+    <p-table [value]="fornecedores" class="p-sm-12 p-md-12 p-lg-12 p-xl-12">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nome Fantasia</th>
+                <th>Razão Social</th>
+                <th>Vendedor</th>
+                <th>Código</th>
+                <th>CNPJ</th>    
+                <th>Logradouro</th>
+                <th>Número</th>
+                <th>Telefone</th>
+                <th>Complemento</th>
+                <th>Bairro</th>
+                <th>CEP</th>
+                <th>Estado</th>
+                <th>Cidade</th>
+                <th>Ação</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fornecedor>
+            <tr style="text-align:center">
+                <td>{{fornecedor.nomeFantasia}}</td>
+                <td>{{fornecedor.razaoSocial}}</td>
+                <td>{{fornecedor.vendedor}}</td>
+                <td>{{fornecedor.codigo}}</td>
+                <td>{{fornecedor.cnpj}}</td>
+                <td>{{fornecedor.logradouro}}</td>
+                <td>{{fornecedor.numero}}</td>
+                <td>{{fornecedor.telefone}}</td>
+                <td>{{fornecedor.complemento}}</td>
+                <td>{{fornecedor.bairro}}</td>
+                <td>{{fornecedor.cep}}</td>
+                <td>{{fornecedor.estado.nome}}</td>
+                <td>{{fornecedor.cidade.nome}}</td>
+                <td>
+                    <p-button (click)="showDialogUpdate(fornecedor)" icon="pi pi-pencil"></p-button>&nbsp;
+                    <p-button (click)="showDialogDelete(fornecedor)" icon="pi pi-trash"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+  
+  <p-dialog header="Fornecedor" [(visible)]="displayUpdate" [modal]="true" [responsive]="true" [style]="{width: '900px', minWidth: '200px'}" [minY]="70" 
+    [maximizable]="true" [baseZIndex]="10000">
+    <br>
+    <div class="p-grid">
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="50" pInputText [(ngModel)]="fornecedor.nomeFantasia"> 
+                <label for="float-input">Nome Fantasia</label>
+            </span>
+        </div>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="50" pInputText [(ngModel)]="fornecedor.razaoSocial"> 
+                <label for="float-input">Razão Social</label>
+            </span>
+        </div>
+        <br><br><br>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="50" pInputText [(ngModel)]="fornecedor.vendedor"> 
+                <label for="float-input">Vendedor</label>
+            </span>
+        </div>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" pInputText pKeyFilter="int" [(ngModel)]="fornecedor.codigo"> 
+                <label for="float-input">Código</label>
+            </span>
+        </div>
+        <br><br><br>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <p-inputMask id="float-input" mask="99.999.999/9999-99" [(ngModel)]="fornecedor.cnpj" placeholder="99.999.999/9999-99"></p-inputMask>
+                <label for="float-input">CNPJ</label>
+            </span>
+        </div>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="100" pInputText [(ngModel)]="fornecedor.logradouro"> 
+                <label for="float-input">Logradouro</label>
+            </span>
+        </div>
+        <br><br><br>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" pInputText pKeyFilter="int" [(ngModel)]="fornecedor.numero"> 
+                <label for="float-input">Número</label>
+            </span>
+        </div>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <p-inputMask id="float-input" mask="(99) 9999-9999" [(ngModel)]="fornecedor.telefone" placeholder="(99) 9999-9999"></p-inputMask>
+                <label for="float-input">Telefone</label>
+            </span>
+        </div>
+        <br><br><br>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="100" pInputText [(ngModel)]="fornecedor.complemento"> 
+                <label for="float-input">Complemento</label>
+            </span>
+        </div>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="100" pInputText [(ngModel)]="fornecedor.bairro"> 
+                <label for="float-input">Bairro</label>
+            </span>
+        </div>
+        <br><br><br>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-float-label">
+                <p-inputMask id="float-input" mask="99999-999" [(ngModel)]="fornecedor.cep" placeholder="99999-999"></p-inputMask>
+                <label for="float-input">CEP</label>
+            </span>
+        </div>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-fluid">
+                <p-dropdown [options]="estados" [(ngModel)]="fornecedor.estado" placeholder="Selecione o Estado" optionLabel="nome" [showClear]="true"></p-dropdown>
+            </span>
+        </div>
+        <div class="p-sm-6 p-md-6 p-lg-6 p-xl-6 ui-fluid">
+            <span class="ui-fluid">
+                <p-dropdown [options]="cidades" [(ngModel)]="fornecedor.cidade" placeholder="Selecione a Cidade" optionLabel="nome" [showClear]="true"></p-dropdown>
+            </span>
+        </div>
+        <br><br><br>
+    </div>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="atualizar(fornecedor)" label="Atualizar"></button>
+        <button type="button" pButton icon="pi pi-close" (click)="displayUpdate=false" label="Cancelar" class="ui-button-secondary"></button>
+    </p-footer>
+  </p-dialog>
+  
+  <p-dialog header="Fornecedor" [(visible)]="displayDelete" [modal]="true" [responsive]="true" [style]="{width: '450px', minWidth: '200px'}" [minY]="70" 
+    [maximizable]="true" [baseZIndex]="10000">
+    <br>
+    <span>
+        <p>Deseja realmente excluir este fornecedor ?</p>
+    </span>
+    <br>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="deletar(fornecedor)" label="Deletar"></button>
+        <button type="button" pButton icon="pi pi-close" (click)="displayDelete=false" label="Cancelar" class="ui-button-secondary"></button>
+    </p-footer>
+  </p-dialog>  
