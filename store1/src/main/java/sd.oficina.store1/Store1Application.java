@@ -10,7 +10,7 @@ import java.io.IOException;
 class Store1Application {
     public static void main(String[] args) {
 
-        Server server = ServerBuilder.forPort(2223)
+        Server server = ServerBuilder.forPort(1111)
                 .addService(new ServicoImpl())
                 .addService(new EstoqueImpl())
                 .build();
