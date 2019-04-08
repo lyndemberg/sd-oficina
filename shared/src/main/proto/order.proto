@@ -5,10 +5,10 @@ option java_multiple_files = true;
 package sd.oficina.shared.proto.order;
 import "google/protobuf/empty.proto";
 
-message Cliente{
+message ClienteProto{
     int64 id = 1;
 }
-message Pedido{
+message OrdemProto{
     int64 idPedido = 1;
     bool concluido = 2;
     string dataRegistro = 3;
@@ -18,17 +18,42 @@ message Pedido{
     int64 idCliente = 7;
     repeated int64 servicos = 8;
 }
-message StatusExecution{
-    bool status = 1;
-    string message = 2;
+
+message Item{
+
+//    enum Tipo{
+//        PRODUTO = 0;
+//        SERVICO = 1;
+//    }
+//    Tipo tipoItem = 1;
+
+    string tipo = 1;
+    string descricao = 2;
+    float valor = 3;
+    int32 quantidade = 4;
+}
+message OrcamentoData{
+    string nomeInteressado = 1;
+    string cpfInteressado = 2;
+    repeated Item itens = 3;
+}
+message ResultOrcamento{
+    bytes file = 1;
 }
 
 //ações referente a ordem de serviço (ou seja, os pedidos)
 service OrderService{
-    rpc realizarPedido(Pedido) returns (StatusExecution);
-    rpc realizarPagamento(Pedido) returns (StatusExecution);
-    rpc concluirPedido(Pedido) returns (StatusExecution);
-    rpc buscarPedidosPorCliente(Cliente) returns (stream Pedido);
+    rpc cadastrarNovaOrdem(OrdemProto) returns (google.protobuf.Empty);
+    //o valor no encaminhamento deve ser só com id preenchido
+    //retorno: objecto atualizado
+    rpc realizarPagamento(OrdemProto) returns (OrdemProto);
+    //o valor no encaminhamento deve ser só com id preenchido
+    //retorno: objecto atualizado
+    rpc concluirOrdem(OrdemProto) returns (OrdemProto);
+    rpc buscarOrdensPorCliente(ClienteProto) returns (stream OrdemProto);
+}
+service OrcamentoService{
+    rpc fazerOrcamento(OrcamentoData) returns (ResultOrcamento);
 }
 
 

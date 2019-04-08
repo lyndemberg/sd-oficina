@@ -19,7 +19,7 @@ public class FabricanteClient {
     public FabricanteClient() {
         retorno = new Fabricante();
         channel = ManagedChannelBuilder
-                .forAddress("localhost", 2222)
+                .forAddress("localhost", 3333)
                 .usePlaintext()
                 .build();
     }
