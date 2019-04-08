@@ -17,7 +17,7 @@ public class EstoqueClient {
 
     public EstoqueClient() {
         channel = ManagedChannelBuilder
-                .forAddress("localhost", 2223)
+                .forAddress("localhost", 3333)
                 .usePlaintext()
                 .build();
     }
