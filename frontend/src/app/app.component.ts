@@ -82,25 +82,32 @@ export class AppComponent implements OnInit {
                             { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarAnoModelo' }]
                     },
                     {
+                        label: 'Cor',
+                        icon: 'pi pi-fw pi-plus',
+                        items: [
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCor' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCor' }]
+                    },
+                    {
                         label: 'Fabricante',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCidade' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCidade' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarFabricante' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarFabricante' }]
                     },
                     {
                         label: 'Modelo',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCliente' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCliente' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarModelo' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarModelo' }]
                     },
                     {
                         label: 'Veiculo',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarFornecedor' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarFornecedor' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarVeiculo' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarVeiculo' }]
                     }
                 ]
             },
