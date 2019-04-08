@@ -19,6 +19,25 @@ message OrdemProto{
     repeated int64 servicos = 8;
 }
 
+message Item{
+    enum Tipo{
+        PRODUTO = 0;
+        SERVICO = 1;
+    }
+    Tipo tipoItem = 1;
+    string descricao = 2;
+    float valor = 3;
+    int32 quantidade = 4;
+}
+message OrcamentoData{
+    string nomeInteressado = 1;
+    string cpfInteressado = 2;
+    repeated Item itens = 3;
+}
+message ResultOrcamento{
+    bytes file = 1;
+}
+
 //ações referente a ordem de serviço (ou seja, os pedidos)
 service OrderService{
     rpc cadastrarNovaOrdem(OrdemProto) returns (google.protobuf.Empty);
@@ -29,6 +48,9 @@ service OrderService{
     //retorno: objecto atualizado
     rpc concluirOrdem(OrdemProto) returns (OrdemProto);
     rpc buscarOrdensPorCliente(ClienteProto) returns (stream OrdemProto);
+}
+service OrcamentoService{
+    rpc fazerOrcamento(OrcamentoData) returns (ResultOrcamento);
 }
 
 
