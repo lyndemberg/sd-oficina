@@ -1,12 +1,14 @@
 package sd.oficina.shared.model.store;
 
 import lombok.Data;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@RedisHash("Servico")
 public class Servico {
 
     @Id

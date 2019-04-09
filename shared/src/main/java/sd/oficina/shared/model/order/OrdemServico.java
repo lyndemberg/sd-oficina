@@ -1,6 +1,7 @@
 package sd.oficina.shared.model.order;
 
 import lombok.Data;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
+@RedisHash("OrdemServico")
 public class OrdemServico implements Serializable {
 
     @Id

@@ -2,12 +2,14 @@ package sd.oficina.shared.model.person;
 
 import lombok.Data;
 import org.omg.PortableServer.ServantActivator;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Data
+@RedisHash("Fornecedor")
 public class Fornecedor implements Serializable {
 
     @Id
