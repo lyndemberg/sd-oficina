@@ -14,7 +14,7 @@ public class ProtoConverterStore {
     public static EstoqueProto modelToProto(Estoque model) {
         return EstoqueProto.newBuilder()
                 .setCodigoPeca(model.getCodigoPeca() != 0 ? model.getCodigoPeca() : 0)
-                .setIdPeca(model.getIdPeca() != 0 ? model.getIdPeca() : 0)
+                .setIdPeca(model.getIdPeca() != null ? model.getIdPeca() : 0)
                 .setNomePeca(model.getNomePeca() != null ? model.getNomePeca() : "")
                 .setQtdPeca(model.getQtdPeca() != 0 ? model.getQtdPeca() : 0)
                 .setValorPeca(model.getValorPeca() != 0 ? model.getValorPeca() : 0)
