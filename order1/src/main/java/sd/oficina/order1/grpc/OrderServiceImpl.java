@@ -2,6 +2,9 @@ package sd.oficina.order1.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import sd.oficina.order1.cache.ConnectionFactory;
 import sd.oficina.order1.dao.OrdemServicoDao;
 import sd.oficina.shared.converter.ProtoConverterOrder;
 import sd.oficina.shared.model.order.OrdemServico;
@@ -14,9 +17,14 @@ import java.util.List;
 public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
 
     private final OrdemServicoDao ordemServicoDao;
+    //CACHE
+    private final RedisTemplate<String,Object> redisTemplate;
+    private final HashOperations<String,Object, Object> hashOperations;
 
     public OrderServiceImpl(){
-        ordemServicoDao = new OrdemServicoDao();
+        this.ordemServicoDao = new OrdemServicoDao();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override

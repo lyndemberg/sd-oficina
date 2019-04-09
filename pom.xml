@@ -32,7 +32,7 @@
                     <archive>
                         <manifest>
                             <!--esse projeto e so o pom, por isso essa propriedade esta definida
-                            como vazio na seçao <properties>, no entanto os projetos que fazem parte desse modulo geral
+                            como vazio na seçao <config>, no entanto os projetos que fazem parte desse modulo geral
                             devem definir essa propriedade-->
                             <mainClass>${class.main}</mainClass>
                         </manifest>
