@@ -1,0 +1,33 @@
+<div class="p-grid">
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
+    <h2 class="box">Cadastrar Modelo</h2>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <span class="ui-float-label">
+        <input id="float-input" type="text" size="50" pInputText [(ngModel)]="modelo.nome">
+        <label for="float-input">Nome</label>
+      </span>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <span class="ui-float-label">
+        <input id="float-input" type="text" size="50" pInputText [(ngModel)]="modelo.tipo">
+        <label for="float-input">Tipo</label>
+      </span>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <p-dropdown [options]="fabricantes" [(ngModel)]="modelo.fabricante" placeholder="Selecione o fabricante" optionLabel="nome" [showClear]="true"></p-dropdown>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-2 p-md-2 p-lg-2 p-xl-2 ui-fluid p-offset-5">
+      <button (click)="salvar(modelo)" pButton type="button" label="Salvar"></button>
+    </div>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

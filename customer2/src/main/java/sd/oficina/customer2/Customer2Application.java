@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Customer2Application {
         public static void main(String[] args) {
 
-            Server server = ServerBuilder.forPort(2222)
+            Server server = ServerBuilder.forPort(3333)
                     .addService(new FabricanteImpl())
                     .addService(new VeiculoImpl())
                     .addService(new AnoModeloImpl())

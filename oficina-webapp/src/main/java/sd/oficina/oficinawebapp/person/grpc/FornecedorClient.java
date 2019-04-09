@@ -17,7 +17,7 @@ public class FornecedorClient {
 
     public FornecedorClient() {
         this.channel = ManagedChannelBuilder
-                .forAddress("localhost", 3333)
+                .forAddress("localhost", 2222)
                 .usePlaintext()
                 .build();
     }

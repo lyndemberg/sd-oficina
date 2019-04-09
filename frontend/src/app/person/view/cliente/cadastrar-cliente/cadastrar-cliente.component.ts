@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from 'src/app/person1/model/cliente.model';
-import { ClienteService } from 'src/app/person1/service/cliente/cliente.service';
+import { Cliente } from 'src/app/person/model/cliente.model';
+import { ClienteService } from 'src/app/person/service/cliente/cliente.service';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { EstadoService } from 'src/app/person1/service/estado/estado.service';
-import { Estado } from 'src/app/person1/model/estado.model';
-import { Cidade } from 'src/app/person1/model/cidade.model';
-import { CidadeService } from 'src/app/person1/service/cidade/cidade.service';
+import { EstadoService } from 'src/app/person/service/estado/estado.service';
+import { Estado } from 'src/app/person/model/estado.model';
+import { Cidade } from 'src/app/person/model/cidade.model';
+import { CidadeService } from 'src/app/person/service/cidade/cidade.service';
 
 @Component({
   selector: 'app-cadastrar-cliente',
@@ -26,7 +26,6 @@ export class CadastrarClienteComponent implements OnInit {
   ngOnInit() {
     this.cliente = new Cliente();
     this.listarEstados();
-    this.listarCidades();
   }
 
   salvar(cliente) {
@@ -65,8 +64,8 @@ listarEstados() {
   });
 }
 
-listarCidades() {
-  this.cidadeService.listar().subscribe(data => {
+listarCidadesPorEstado() {
+  this.cidadeService.listarPorEstado(this.cliente.estado.id).subscribe(data => {
     this.cidades = data;
   });
 }

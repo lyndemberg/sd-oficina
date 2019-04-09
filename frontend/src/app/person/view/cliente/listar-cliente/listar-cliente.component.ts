@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from 'src/app/person1/model/cliente.model';
-import { ClienteService } from 'src/app/person1/service/cliente/cliente.service';
-import { Estado } from 'src/app/person1/model/estado.model';
-import { EstadoService } from 'src/app/person1/service/estado/estado.service';
-import { CidadeService } from 'src/app/person1/service/cidade/cidade.service';
-import { Cidade } from 'src/app/person1/model/cidade.model';
+import { Cliente } from 'src/app/person/model/cliente.model';
+import { ClienteService } from 'src/app/person/service/cliente/cliente.service';
+import { Estado } from 'src/app/person/model/estado.model';
+import { EstadoService } from 'src/app/person/service/estado/estado.service';
+import { CidadeService } from 'src/app/person/service/cidade/cidade.service';
+import { Cidade } from 'src/app/person/model/cidade.model';
 
 @Component({
   selector: 'app-listar-cliente',
@@ -32,7 +32,6 @@ export class ListarClienteComponent implements OnInit {
     this.cliente = new Cliente();
     this.listar();
     this.listarEstados();
-    this.listarCidades();
   }
 
   listar() {
@@ -56,6 +55,9 @@ export class ListarClienteComponent implements OnInit {
 
   showDialogUpdate(cliente) {
     this.cliente = cliente;
+
+    this.listarCidadesPorEstado();
+
     this.displayUpdate = true;
   }
 
@@ -70,8 +72,8 @@ export class ListarClienteComponent implements OnInit {
     });
   }
 
-  listarCidades() {
-    this.cidadeService.listar().subscribe(data => {
+  listarCidadesPorEstado() {
+    this.cidadeService.listarPorEstado(this.cliente.estado.id).subscribe(data => {
       this.cidades = data;
     });
   }

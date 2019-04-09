@@ -78,7 +78,7 @@
   <br><br><br>
 
   <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-2">
-    <p-dropdown [options]="estados" [(ngModel)]="cliente.estado" placeholder="Selecione o Estado" optionLabel="nome" [showClear]="true"></p-dropdown>
+    <p-dropdown [options]="estados" [(ngModel)]="cliente.estado" (click)="listarCidadesPorEstado()" placeholder="Selecione o Estado" optionLabel="nome" [showClear]="true"></p-dropdown>
   </div>
   <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid">
     <p-dropdown [options]="cidades" [(ngModel)]="cliente.cidade" placeholder="Selecione a Cidade" optionLabel="nome" [showClear]="true"></p-dropdown>

@@ -19,20 +19,6 @@ export class AppComponent implements OnInit {
                 icon: 'pi pi-fw pi-cog',
                 items: [
                     {
-                        label: 'Estado',
-                        icon: 'pi pi-fw pi-plus',
-                        items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado' }]
-                    },
-                    {
-                        label: 'Cidade',
-                        icon: 'pi pi-fw pi-plus',
-                        items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCidade' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCidade' }]
-                    },
-                    {
                         label: 'Cliente',
                         icon: 'pi pi-fw pi-plus',
                         items: [
@@ -78,29 +64,36 @@ export class AppComponent implements OnInit {
                         label: 'Ano Modelo',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarAnoModelo' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarAnoModelo' }]
+                    },
+                    {
+                        label: 'Cor',
+                        icon: 'pi pi-fw pi-plus',
+                        items: [
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCor' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCor' }]
                     },
                     {
                         label: 'Fabricante',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCidade' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCidade' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarFabricante' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarFabricante' }]
                     },
                     {
                         label: 'Modelo',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCliente' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCliente' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarModelo' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarModelo' }]
                     },
                     {
                         label: 'Veiculo',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarFornecedor' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarFornecedor' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarVeiculo' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarVeiculo' }]
                     }
                 ]
             },
@@ -109,13 +102,6 @@ export class AppComponent implements OnInit {
                 label: 'Order',
                 icon: 'pi pi-fw pi-cog',
                 items: [
-                    {
-                        label: 'Orçamento',
-                        icon: 'pi pi-fw pi-plus',
-                        items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado' }]
-                    },
                     {
                         label: 'Ordem de serviço',
                         icon: 'pi pi-fw pi-plus',

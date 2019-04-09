@@ -48,4 +48,10 @@ public class CidadeController {
     public ResponseEntity<List<Cidade>> listar() {
         return ResponseEntity.ok().body(cidadeService.listar());
     }
+
+    @GetMapping("/listarPorEstado/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<List<Cidade>> listarPorEstado(@PathVariable("id") int idDoEstado) {
+        return ResponseEntity.ok().body(cidadeService.listarPorEstado(idDoEstado));
+    }
 }

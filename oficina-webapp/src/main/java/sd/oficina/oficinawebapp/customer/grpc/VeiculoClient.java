@@ -19,7 +19,7 @@ public class VeiculoClient {
     public VeiculoClient() {
         retorno = new Veiculo();
         channel = ManagedChannelBuilder
-                .forAddress("localhost", 2222)
+                .forAddress("localhost", 3333)
                 .usePlaintext()
                 .build();
     }

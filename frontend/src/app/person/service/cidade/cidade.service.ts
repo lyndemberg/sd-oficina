@@ -25,4 +25,8 @@ export class CidadeService {
   listar(): Observable<Cidade[]> {
     return this.http.get<Cidade[]>('//localhost:8080/api/cidade');
   }
+
+  listarPorEstado(id): Observable<Cidade[]> {
+    return this.http.get<Cidade[]>('//localhost:8080/api/cidade/listarPorEstado/' + id);
+  }
 }
