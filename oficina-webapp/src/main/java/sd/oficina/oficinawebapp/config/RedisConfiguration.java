@@ -2,6 +2,7 @@ package sd.oficina.oficinawebapp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,6 +16,7 @@ public class RedisConfiguration {
         this.cacheProperties = cacheProperties;
     }
 
+    @Primary
     @Bean(name = "redisOrderService")
     public RedisConnectionFactory redisConnectionOrder() {
         JedisConnectionFactory jedisConFactory = new JedisConnectionFactory();
@@ -47,27 +49,29 @@ public class RedisConfiguration {
         return jedisConFactory;
     }
 
+
+
     @Bean(name="redisTemplateOrder")
-    public RedisTemplate<Long, Object> redisTemplateOrder() {
-        RedisTemplate<Long, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplateOrder() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionOrder());
         return template;
     }
     @Bean(name="redisTemplatePerson")
-    public RedisTemplate<Long, Object> redisTemplatePerson() {
-        RedisTemplate<Long, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplatePerson() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionPerson());
         return template;
     }
     @Bean(name="redisTemplateStore")
-    public RedisTemplate<Long, Object> redisTemplateStore() {
-        RedisTemplate<Long, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplateStore() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionStore());
         return template;
     }
     @Bean(name="redisTemplateCustomer")
-    public RedisTemplate<Long, Object> redisTemplateCustomer() {
-        RedisTemplate<Long, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplateCustomer() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionCustomer());
         return template;
     }
