@@ -12,7 +12,7 @@ public class Fornecedor implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String nomeFantasia;
     private String razaoSocial;
     private String vendedor;

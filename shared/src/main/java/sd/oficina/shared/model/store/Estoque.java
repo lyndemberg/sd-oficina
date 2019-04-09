@@ -13,7 +13,7 @@ public class Estoque {
 
     @Id
     @GeneratedValue
-    private int idPeca;
+    private Long idPeca;
     private long qtdPeca;
     private int codigoPeca;
     private String validade;

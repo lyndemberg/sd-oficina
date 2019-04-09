@@ -19,6 +19,13 @@ services:
                         - "8080:8080"
                 networks:
                         - private_network
+        cache-order:
+                image: redis
+                container_name: cache-order
+                ports:
+                        - "7171:6379"
+                networks:
+                        - private_network
 networks:
         private_network:
                 driver: bridge

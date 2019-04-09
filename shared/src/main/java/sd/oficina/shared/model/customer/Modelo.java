@@ -16,7 +16,7 @@ public class Modelo {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String nome;
     private String tipo;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})

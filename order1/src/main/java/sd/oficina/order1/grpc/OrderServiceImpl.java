@@ -28,7 +28,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
 
     @Override
     public void realizarPagamento(OrdemProto request, StreamObserver<OrdemProto> responseObserver) {
-        OrdemServico ordemServico = ordemServicoDao.buscarPorId(request.getIdPedido());
+        OrdemServico ordemServico = ordemServicoDao.buscarPorId(request.getIdOrdem());
         ordemServico.setPago(true);
         OrdemServico atualizado = ordemServicoDao.atualizar(ordemServico);
         responseObserver.onNext(ProtoConverterOrder.modelToProto(atualizado));
@@ -37,7 +37,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
 
     @Override
     public void concluirOrdem(OrdemProto request, StreamObserver<OrdemProto> responseObserver) {
-        OrdemServico ordemServico = ordemServicoDao.buscarPorId(request.getIdPedido());
+        OrdemServico ordemServico = ordemServicoDao.buscarPorId(request.getIdOrdem());
         ordemServico.setConcluida(true);
         OrdemServico atualizado = ordemServicoDao.atualizar(ordemServico);
         responseObserver.onNext(ProtoConverterOrder.modelToProto(atualizado));

@@ -19,11 +19,11 @@ public class ServicoService {
         return grpc.salvar(Servico);
     }
 
-    public Servico buscar(int id) {
+    public Servico buscar(Long id) {
         return grpc.buscar(id);
     }
 
-    public void deletar(int id) {
+    public void deletar(Long id) {
         grpc.deletar(id);
     }
 

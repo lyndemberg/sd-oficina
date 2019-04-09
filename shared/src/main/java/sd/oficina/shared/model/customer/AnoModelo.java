@@ -16,7 +16,7 @@ public class AnoModelo {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String nome;
     private String tipo;
     private double valor;

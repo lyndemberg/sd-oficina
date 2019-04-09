@@ -5,13 +5,13 @@ package sd.oficina.shared.proto.person;
 
 //ESTADO
 message EstadoProto {
-    int32 id = 1;
+    int64 id = 1;
     string nome = 2;
 }
 
 message EstadoResult {
     EstadoProto estado = 1;
-    int32 codigo = 2;
+    int64 codigo = 2;
 }
 
 message EstadoList {
@@ -20,14 +20,14 @@ message EstadoList {
 
 //CIDADE
 message CidadeProto {
-    int32 id = 1;
+    int64 id = 1;
     string nome = 2;
     EstadoProto estado = 3;
 }
 
 message CidadeResult {
     CidadeProto cidade = 1;
-    int32 codigo = 2;
+    int64 codigo = 2;
 }
 
 message CidadeList {
@@ -36,7 +36,7 @@ message CidadeList {
 
 //CLIENTE
 message ClienteProto {
-    int32 id = 1;
+    int64 id = 1;
     string telefoneFixo = 2;
     string CEP = 3;
     int32 numero = 4;
@@ -53,7 +53,7 @@ message ClienteProto {
 
 message ClienteResult {
     ClienteProto cliente = 1;
-    int32 codigo = 2;
+    int64 codigo = 2;
 }
 
 message ClienteList {
@@ -62,7 +62,7 @@ message ClienteList {
 
 //FORNECEDOR
 message FornecedorProto {
-    int32 id = 1;
+    int64 id = 1;
     string nomeFantasia = 2;
     string razaoSocial = 3;
     string vendedor = 4;
@@ -80,7 +80,7 @@ message FornecedorProto {
 
 message FornecedorResult {
     FornecedorProto fornecedor = 1;
-    int32 codigo = 2;
+    int64 codigo = 2;
 }
 
 message FornecedorList {

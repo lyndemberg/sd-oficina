@@ -8,7 +8,7 @@ package sd.oficina.shared.proto.customer;
 
 // FABRICANTE
 message FabricanteProto {
-    int32 id = 1;
+    int64 id = 1;
     string nome = 2;
 }
 
@@ -18,12 +18,12 @@ message FabricanteProtoList {
 
 message FabricanteResult {
     FabricanteProto fabricante = 1;
-    int32 codigo = 2;
+    int64 codigo = 2;
 }
 
 // MODELO
 message ModeloProto {
-    int32 id = 1;
+    int64 id = 1;
     string nome = 2;
     string tipo = 3;
     FabricanteProto fabricante = 4;
@@ -35,23 +35,23 @@ message ModeloProtoList {
 
 message ModeloResult {
     ModeloProto modelo = 1;
-    int32 codigo = 2;
+    int64 codigo = 2;
 }
 
 // COR
 message CorProto {
-    int32 id = 1;
+    int64 id = 1;
     string nome = 2;
 }
 
 message CorProtoResult{
     CorProto cor = 1;
-    int32 codigo = 2;
+    int64 codigo = 2;
 }
 
 // VEICULO
 message VeiculoProto {
-    int32 id = 1;
+    int64 id = 1;
     string placa = 2;
     double quilometragem = 3;
     CorProto cor = 4;
@@ -63,14 +63,14 @@ message VeiculoProtoList {
 }
 
 message VeiculoResult {
-    int32 codigo = 1;
+    int64 codigo = 1;
     VeiculoProto veiculo = 2;
 }
 
 
 // ANOMODELO
 message AnoModeloProto {
-    int32 id = 1;
+    int64 id = 1;
     string nome = 2;
     string tipo = 3;
     double valor = 4;
@@ -83,7 +83,7 @@ message AnoModeloProtoList{
 
 message AnoModeloResult{
     AnoModeloProto anoModelo = 1;
-    int32 codigo = 2;
+    int64 codigo = 2;
 }
 
 

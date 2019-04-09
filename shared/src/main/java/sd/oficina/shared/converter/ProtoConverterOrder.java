@@ -7,7 +7,7 @@ import sd.oficina.shared.util.LocalDateUtil;
 public class ProtoConverterOrder {
     public static OrdemServico protoToModel(OrdemProto proto){
         OrdemServico ordemServico = new OrdemServico();
-        ordemServico.setId(proto.getIdPedido());
+        ordemServico.setId(proto.getIdOrdem());
         ordemServico.setIdCliente(proto.getIdCliente());
         ordemServico.setIdVeiculo(proto.getIdVeiculo());
         ordemServico.setDataPagamento(LocalDateUtil.toLocalDate(proto.getDataPagamento()));
@@ -26,7 +26,7 @@ public class ProtoConverterOrder {
                 .setPago(ordemServico.isPago())
                 .setIdCliente(ordemServico.getIdCliente())
                 .setIdVeiculo(ordemServico.getIdVeiculo())
-                .setIdPedido(ordemServico.getId())
+                .setIdOrdem(ordemServico.getId())
                 .addAllServicos(ordemServico.getServicos())
                 .build();
     }
