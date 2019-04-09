@@ -26,6 +26,13 @@ services:
                         - "7171:6379"
                 networks:
                         - private_network
+        cache-customer:
+          image: redis
+          container_name: cache-customer
+          ports:
+          - "7172:6379"
+          networks:
+          - private_network
 networks:
         private_network:
                 driver: bridge

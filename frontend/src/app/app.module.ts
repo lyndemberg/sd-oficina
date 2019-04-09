@@ -42,6 +42,8 @@ import { ListarModeloComponent } from './customer/view/modelo/listar-modelo/list
 import { CadastrarModeloComponent } from './customer/view/modelo/cadastrar-modelo/cadastrar-modelo.component';
 import { ListarVeiculoComponent } from './customer/view/veiculo/listar-veiculo/listar-veiculo.component';
 import { CadastrarVeiculoComponent } from './customer/view/veiculo/cadastrar-veiculo/cadastrar-veiculo.component';
+import { ListarEstoqueComponent } from './store/view/estoque/listar-estoque/listar-estoque.component';
+import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoque/cadastrar-estoque.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { CadastrarVeiculoComponent } from './customer/view/veiculo/cadastrar-vei
     CadastrarModeloComponent,
     ListarVeiculoComponent,
     CadastrarVeiculoComponent,
+    ListarEstoqueComponent,
+    CadastrarEstoqueComponent,
   ],
   imports: [
     BrowserModule,

@@ -23,7 +23,7 @@ public class VeiculoController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Veiculo> buscarVeiculo(@PathVariable("id") int id) {
+    private ResponseEntity<Veiculo> buscarVeiculo(@PathVariable("id") Long id) {
         Veiculo veiculo = service.buscar(id);
         return veiculo.getId() != 0? ResponseEntity.ok(veiculo) : ResponseEntity.notFound().build();
     }
@@ -34,7 +34,7 @@ public class VeiculoController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deletar(@PathVariable int id) {
+    private ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.ok().build();
     }
