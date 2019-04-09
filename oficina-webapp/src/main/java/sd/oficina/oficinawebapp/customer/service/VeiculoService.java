@@ -19,11 +19,11 @@ public class VeiculoService {
         return grpc.salvar(veiculo);
     }
 
-    public Veiculo buscar(int id) {
+    public Veiculo buscar(Long id) {
         return grpc.buscar(id);
     }
 
-    public void deletar(int id) {
+    public void deletar(Long id) {
         grpc.deletar(id);
     }
 

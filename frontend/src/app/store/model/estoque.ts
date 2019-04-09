@@ -4,4 +4,5 @@ export class Estoque{
     validade ?: string;
     valorPeca ?: number;
     nomePeca ?: string;
+    idPeca ?: number;
 }

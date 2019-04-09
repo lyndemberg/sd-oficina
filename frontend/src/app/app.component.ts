@@ -43,8 +43,8 @@ export class AppComponent implements OnInit {
                         label: 'Estoque',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstado' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstado' }]
+                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarEstoque' },
+                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarEstoque' }]
                     },
                     {
                         label: 'Serviço',
@@ -67,13 +67,14 @@ export class AppComponent implements OnInit {
                             { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarAnoModelo' },
                             { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarAnoModelo' }]
                     },
+                    /*
                     {
                         label: 'Cor',
                         icon: 'pi pi-fw pi-plus',
                         items: [
                             { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCor' },
                             { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCor' }]
-                    },
+                    },*/
                     {
                         label: 'Fabricante',
                         icon: 'pi pi-fw pi-plus',
@@ -106,10 +107,11 @@ export class AppComponent implements OnInit {
                         label: 'Ordem de serviço',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCidade' },
-                            { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCidade' }]
+                            { label: 'Nova Ordem', icon: 'pi pi-fw pi-save', routerLink: 'cadastroOrdem' }
+                        ]
+                    
                     }
-                ]
+                ],
             },
             { separator: true }
         ];

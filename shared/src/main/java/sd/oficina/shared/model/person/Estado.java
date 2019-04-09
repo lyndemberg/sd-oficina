@@ -11,7 +11,7 @@ public class Estado implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @Column(nullable = false)
     private String nome;
 }

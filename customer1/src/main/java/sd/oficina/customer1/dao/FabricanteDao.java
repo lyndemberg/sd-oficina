@@ -53,7 +53,7 @@ public final class FabricanteDao implements Serializable {
         );
     }
 
-    public Optional<Fabricante> buscarPorId(final Integer id) {
+    public Optional<Fabricante> buscarPorId(final Long id) {
 
         if (id == null || id <= 0) throw new AtributoIdInvalidoException();
 
@@ -70,7 +70,7 @@ public final class FabricanteDao implements Serializable {
 
     }
 
-    public Boolean remover(Integer idFabricante) {
+    public Boolean remover(Long idFabricante) {
 
         if (idFabricante == null || idFabricante <= 0) throw new AtributoIdInvalidoException();
 

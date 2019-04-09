@@ -23,11 +23,11 @@ public class ClienteService {
         return clienteClient.atualizar(cliente);
     }
 
-    public void deletar(int idDoCliente) {
+    public void deletar(Long idDoCliente) {
         clienteClient.deletar(idDoCliente);
     }
 
-    public Cliente buscar(int idDoCliente) {
+    public Cliente buscar(Long idDoCliente) {
         return clienteClient.buscar(idDoCliente);
     }
 

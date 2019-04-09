@@ -53,7 +53,7 @@ public final class AnoModeloDao implements Serializable {
         );
     }
 
-    public Optional<AnoModelo> buscarPorId(final Integer id) {
+    public Optional<AnoModelo> buscarPorId(final Long id) {
 
         if (id == null || id <= 0) throw new AtributoIdInvalidoException();
 
@@ -70,7 +70,7 @@ public final class AnoModeloDao implements Serializable {
 
     }
 
-    public Boolean remover(Integer idAnoModelo) {
+    public Boolean remover(Long idAnoModelo) {
 
         if (idAnoModelo == null || idAnoModelo <= 0) throw new AtributoIdInvalidoException();
 

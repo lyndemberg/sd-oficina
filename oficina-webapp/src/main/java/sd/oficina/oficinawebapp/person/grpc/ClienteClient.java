@@ -47,7 +47,7 @@ public class ClienteClient {
         return clienteAtualizado;
     }
 
-    public void deletar(int idDoCliente) {
+    public void deletar(Long idDoCliente) {
         ClienteServiceGrpc
                 .newBlockingStub(channel)
                 .deletar(ClienteProto
@@ -55,7 +55,7 @@ public class ClienteClient {
                         .build());
     }
 
-    public Cliente buscar(int idDoCliente) {
+    public Cliente buscar(Long idDoCliente) {
 
         Cliente cliente = ProtoConverterPerson
                 .protoToModel(ClienteServiceGrpc

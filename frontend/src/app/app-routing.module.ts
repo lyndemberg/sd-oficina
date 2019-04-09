@@ -15,6 +15,9 @@ import { CadastrarModeloComponent} from  './customer/view/modelo/cadastrar-model
 import { ListarModeloComponent} from './customer/view/modelo/listar-modelo/listar-modelo.component';
 import { CadastrarVeiculoComponent} from  './customer/view/veiculo/cadastrar-veiculo/cadastrar-veiculo.component';
 import { ListarVeiculoComponent} from './customer/view/veiculo/listar-veiculo/listar-veiculo.component';
+import { CadastroOrdemComponent } from './cadastro-ordem/cadastro-ordem.component';
+import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoque/cadastrar-estoque.component';
+import { ListarEstoqueComponent } from './store/view/estoque/listar-estoque/listar-estoque.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -31,7 +34,10 @@ const routes: Routes = [
   { path: 'cadastrarVeiculo', component: CadastrarVeiculoComponent},
   { path: 'listarVeiculo', component: ListarVeiculoComponent},
   { path: 'cadastrarModelo', component: CadastrarModeloComponent},
-  { path: 'listarModelo', component: ListarModeloComponent}
+  { path: 'listarModelo', component: ListarModeloComponent},
+  { path:'cadastroOrdem',component: CadastroOrdemComponent},
+  { path: 'cadastrarEstoque', component: CadastrarEstoqueComponent},
+  { path: 'listarEstoque', component: ListarEstoqueComponent},
 ];
 
 @NgModule({

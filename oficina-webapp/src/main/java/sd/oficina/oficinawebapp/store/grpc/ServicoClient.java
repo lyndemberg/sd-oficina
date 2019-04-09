@@ -40,7 +40,7 @@ public class ServicoClient {
                         .getServico());
     }
 
-    public Servico buscar(int id) {
+    public Servico buscar(Long id) {
 
         ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channel);
         ServicoProto proto = ServicoProto.newBuilder().setId(id).build();
@@ -54,7 +54,7 @@ public class ServicoClient {
                         .atualizar(ProtoConverterStore.modelToProto(Servico)).getServico());
     }
 
-    public void deletar(int id) {
+    public void deletar(Long id) {
 
         ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channel);
         stub.deletar(ServicoProto.newBuilder().setId(id).build());

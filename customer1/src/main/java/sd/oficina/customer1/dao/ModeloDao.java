@@ -53,7 +53,7 @@ public final class ModeloDao implements Serializable {
         );
     }
 
-    public Optional<Modelo> buscarPorId(final Integer id) {
+    public Optional<Modelo> buscarPorId(final Long id) {
 
         if (id == null || id <= 0) throw new AtributoIdInvalidoException();
 
@@ -70,7 +70,7 @@ public final class ModeloDao implements Serializable {
 
     }
 
-    public Boolean remover(Integer idModelo) {
+    public Boolean remover(Long idModelo) {
 
         if (idModelo == null || idModelo <= 0) throw new AtributoIdInvalidoException();
 

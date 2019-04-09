@@ -47,7 +47,7 @@ public class VeiculoClient {
                         .getVeiculo());
     }
 
-    public Veiculo buscar(int id) {
+    public Veiculo buscar(Long id) {
 
         VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channel);
         VeiculoProto proto = VeiculoProto.newBuilder().setId(id).build();
@@ -61,7 +61,7 @@ public class VeiculoClient {
                         .atualizar(ProtoConverterCustomer.modelToProto(veiculo)).getVeiculo());
     }
 
-    public void deletar(int id) {
+    public void deletar(Long id) {
 
         VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channel);
         stub.deletar(VeiculoProto.newBuilder().setId(id).build());
