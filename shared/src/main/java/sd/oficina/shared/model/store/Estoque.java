@@ -1,7 +1,6 @@
 package sd.oficina.shared.model.store;
 
 import lombok.Data;
-import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +9,6 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@RedisHash("Estoque")
 public class Estoque {
 
     @Id
