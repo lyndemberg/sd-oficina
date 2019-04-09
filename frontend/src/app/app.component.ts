@@ -67,13 +67,14 @@ export class AppComponent implements OnInit {
                             { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarAnoModelo' },
                             { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarAnoModelo' }]
                     },
+                    /*
                     {
                         label: 'Cor',
                         icon: 'pi pi-fw pi-plus',
                         items: [
                             { label: 'Cadastrar', icon: 'pi pi-fw pi-save', routerLink: 'cadastrarCor' },
                             { label: 'Visualizar', icon: 'pi pi-fw pi-list', routerLink: 'listarCor' }]
-                    },
+                    },*/
                     {
                         label: 'Fabricante',
                         icon: 'pi pi-fw pi-plus',
