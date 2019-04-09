@@ -1,13 +1,13 @@
 package sd.oficina.oficinawebapp.order.service;
 
 import org.springframework.stereotype.Service;
-import sd.oficina.oficinawebapp.customer.service.ServicoService;
 import sd.oficina.oficinawebapp.customer.service.VeiculoService;
 import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.oficinawebapp.order.grpc.IOrderClient;
 import sd.oficina.oficinawebapp.order.grpc.OrderClientImpl;
 import sd.oficina.oficinawebapp.order.valueobject.OrdemServicoValue;
 import sd.oficina.oficinawebapp.person.services.ClienteService;
+import sd.oficina.oficinawebapp.store.service.ServicoService;
 import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.model.person.Cliente;
 import sd.oficina.shared.model.store.Servico;

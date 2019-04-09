@@ -24,7 +24,7 @@ public class ServicoController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Servico> buscarServico(@PathVariable("id") int id) {
+    private ResponseEntity<Servico> buscarServico(@PathVariable("id") Long id) {
         Servico Servico = service.buscar(id);
         return Servico.getId() != 0 ? ResponseEntity.ok(Servico) : ResponseEntity.notFound().build();
     }
@@ -35,7 +35,7 @@ public class ServicoController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deletar(@PathVariable int id) {
+    private ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.ok().build();
     }

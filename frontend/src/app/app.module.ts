@@ -42,6 +42,7 @@ import { ListarModeloComponent } from './customer/view/modelo/listar-modelo/list
 import { CadastrarModeloComponent } from './customer/view/modelo/cadastrar-modelo/cadastrar-modelo.component';
 import { ListarVeiculoComponent } from './customer/view/veiculo/listar-veiculo/listar-veiculo.component';
 import { CadastrarVeiculoComponent } from './customer/view/veiculo/cadastrar-veiculo/cadastrar-veiculo.component';
+import { CadastroOrdemComponent } from './cadastro-ordem/cadastro-ordem.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { CadastrarVeiculoComponent } from './customer/view/veiculo/cadastrar-vei
     CadastrarModeloComponent,
     ListarVeiculoComponent,
     CadastrarVeiculoComponent,
+    CadastroOrdemComponent,
   ],
   imports: [
     BrowserModule,

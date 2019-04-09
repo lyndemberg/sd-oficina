@@ -3,6 +3,7 @@ import { Veiculo } from 'src/app/customer/model/veiculo';
 import { Servico } from 'src/app/store/model/servico';
 
 export class OrdemServico{
+    id ?: number;
     cliente ?: Cliente;
     veiculo ?: Veiculo;
     dataRegistro ?: Date;

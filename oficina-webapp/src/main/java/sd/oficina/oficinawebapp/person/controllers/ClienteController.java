@@ -31,14 +31,14 @@ public class ClienteController {
 
     @DeleteMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Void> deletar(@PathVariable("id") int idDoCliente) {
+    public ResponseEntity<Void> deletar(@PathVariable("id") Long idDoCliente) {
         clienteService.deletar(idDoCliente);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/buscar/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Cliente> buscar(@PathVariable("id") int idDoCliente) {
+    public ResponseEntity<Cliente> buscar(@PathVariable("id") Long idDoCliente) {
         Cliente cliente = clienteService.buscar(idDoCliente);
         return ResponseEntity.ok().body(cliente);
     }
