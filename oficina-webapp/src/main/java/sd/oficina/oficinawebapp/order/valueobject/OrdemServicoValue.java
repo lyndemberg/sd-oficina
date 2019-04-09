@@ -1,5 +1,6 @@
 package sd.oficina.oficinawebapp.order.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.model.person.Cliente;
@@ -44,6 +45,7 @@ public class OrdemServicoValue {
         this.servicos.remove(servicoValue);
     }
 
+    @JsonIgnore
     public List<Long> getIdServicos(){
         List<Long> servicosId = new ArrayList<>();
         for(Servico s : this.servicos){
@@ -54,7 +56,11 @@ public class OrdemServicoValue {
     }
 
 
+    public List<Servico> getServicos() {
+        return servicos;
+    }
 
-
-
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
+    }
 }

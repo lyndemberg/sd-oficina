@@ -1,5 +1,8 @@
 package sd.oficina.oficinawebapp.order.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import sd.oficina.oficinawebapp.customer.service.VeiculoService;
 import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
@@ -25,16 +28,28 @@ public class OrdemServicoService {
     private final VeiculoService veiculoService;
     private final ServicoService servicoService;
 
-    public OrdemServicoService(ClienteService clienteService, VeiculoService veiculoService, ServicoService servicoService) {
+    //CACHE
+    private final RedisTemplate<String,Object> redisTemplate;
+    private final HashOperations<String,Object, Object> hashOperations;
+
+    public OrdemServicoService(ClienteService clienteService, VeiculoService veiculoService, ServicoService servicoService, @Qualifier("redisTemplateOrder") RedisTemplate<String,Object> redisTemplate) {
         this.veiculoService = veiculoService;
         this.clienteService = clienteService;
         this.servicoService = servicoService;
         clientOrderGrpc = new OrderClientImpl();
+        this.redisTemplate = redisTemplate;
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     public void salvar(OrdemServicoValue value){
         try {
             clientOrderGrpc.cadastrarNovaOrdem(value);
+
+            //SALVANDO NO CACHE
+            //hashOperations.put(OrdemServicoValue.class.getSimpleName(),value.getId(),value);
+            //RECUPERANDO NO CACHE
+            //OrdemServicoValue ordemServicoValue = (OrdemServicoValue) hashOperations
+            //                                          .get(OrdemServicoValue.class.getSimpleName(),id);
         } catch (FalhaGrpcException e) {
             e.printStackTrace();
         }

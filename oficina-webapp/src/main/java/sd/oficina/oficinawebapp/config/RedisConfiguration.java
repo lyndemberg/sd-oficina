@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfiguration {
@@ -50,29 +52,40 @@ public class RedisConfiguration {
     }
 
 
-
     @Bean(name="redisTemplateOrder")
     public RedisTemplate<String, Object> redisTemplateOrder() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionOrder());
+        template.setKeySerializer( new StringRedisSerializer() );
+        template.setHashValueSerializer( new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer( new GenericJackson2JsonRedisSerializer());
         return template;
     }
     @Bean(name="redisTemplatePerson")
     public RedisTemplate<String, Object> redisTemplatePerson() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionPerson());
+        template.setKeySerializer( new StringRedisSerializer() );
+        template.setHashValueSerializer( new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer( new GenericJackson2JsonRedisSerializer());
         return template;
     }
     @Bean(name="redisTemplateStore")
     public RedisTemplate<String, Object> redisTemplateStore() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionStore());
+        template.setKeySerializer( new StringRedisSerializer() );
+        template.setHashValueSerializer( new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer( new GenericJackson2JsonRedisSerializer());
         return template;
     }
     @Bean(name="redisTemplateCustomer")
     public RedisTemplate<String, Object> redisTemplateCustomer() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionCustomer());
+        template.setKeySerializer( new StringRedisSerializer() );
+        template.setHashValueSerializer( new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer( new GenericJackson2JsonRedisSerializer());
         return template;
     }
 
