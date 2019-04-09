@@ -63,7 +63,6 @@ public class RedisConfiguration {
     public RedisTemplate<Long, Object> redisTemplateStore() {
         RedisTemplate<Long, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionStore());
-        template.
         return template;
     }
     @Bean(name="redisTemplateCustomer")
