@@ -8,7 +8,7 @@ public class ProtoConverterPerson {
     // CONVERSÃO DE PROTOS PARA CLASSES DE MODELO
     public static Cidade protoToModel(CidadeProto proto) {
         Cidade cidade = new Cidade();
-        cidade.setId(proto.getId() != 0 ? proto.getId() : 0);
+        cidade.setId(proto.getId());
         cidade.setNome(proto.getNome() != null ? proto.getNome() : "");
         cidade.setEstado(protoToModel(proto.getEstado()));
         return cidade;
@@ -16,14 +16,14 @@ public class ProtoConverterPerson {
 
     public static Estado protoToModel(EstadoProto proto) {
         Estado estado = new Estado();
-        estado.setId(proto.getId() != 0 ? proto.getId() : 0);
+        estado.setId(proto.getId());
         estado.setNome(proto.getNome() != null ? proto.getNome() : "");
         return estado;
     }
 
     public static Cliente protoToModel(ClienteProto proto) {
         Cliente cliente = new Cliente();
-        cliente.setId(proto.getId() != 0 ? proto.getId() : 0);
+        cliente.setId(proto.getId());
         cliente.setTelefoneFixo(proto.getTelefoneFixo() != null ? proto.getTelefoneFixo() : "");
         cliente.setCEP(proto.getCEP() != null ? proto.getCEP() : "");
         cliente.setNumero(proto.getNumero() != 0 ? proto.getNumero() : 0);
@@ -41,7 +41,7 @@ public class ProtoConverterPerson {
 
     public static Fornecedor protoToModel(FornecedorProto proto) {
         Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setId(proto.getId() != 0 ? proto.getId() : 0);
+        fornecedor.setId(proto.getId());
         fornecedor.setNomeFantasia(proto.getNomeFantasia() != null ? proto.getNomeFantasia() : "");
         fornecedor.setRazaoSocial(proto.getRazaoSocial() != null ? proto.getRazaoSocial() : "");
         fornecedor.setVendedor(proto.getVendedor() != null ? proto.getVendedor() : "");
@@ -61,7 +61,7 @@ public class ProtoConverterPerson {
     // CONVERSÃO DE CLASSES DE MODELO PARA PROTO
     public static CidadeProto modelToProto(Cidade model) {
         return CidadeProto.newBuilder()
-                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setId(model.getId())
                 .setNome(model.getNome() != null ? model.getNome() : "")
                 .setEstado(modelToProto(model.getEstado()))
                 .build();
@@ -69,18 +69,18 @@ public class ProtoConverterPerson {
 
     public static EstadoProto modelToProto(Estado model) {
         return EstadoProto.newBuilder()
-                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setId(model.getId())
                 .setNome(model.getNome() != null ? model.getNome() : "")
                 .build();
     }
 
     public static FornecedorProto modelToProto(Fornecedor model) {
         return FornecedorProto.newBuilder()
-                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setId(model.getId())
                 .setNomeFantasia(model.getNomeFantasia() != null ? model.getNomeFantasia() : "")
                 .setRazaoSocial(model.getRazaoSocial() != null ? model.getRazaoSocial() : "")
                 .setVendedor(model.getVendedor() != null ? model.getVendedor() : "")
-                .setCodigo(model.getCodigo() != 0 ? model.getCodigo() : 0)
+                .setCodigo(model.getCodigo())
                 .setCNPJ(model.getCNPJ() != null ? model.getCNPJ() : "")
                 .setLogradouro(model.getLogradouro() != null ? model.getLogradouro() : "")
                 .setNumero(model.getNumero() != 0 ? model.getNumero() : 0)
@@ -95,7 +95,7 @@ public class ProtoConverterPerson {
 
     public static ClienteProto modelToProto(Cliente model) {
         return ClienteProto.newBuilder()
-                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setId(model.getId())
                 .setTelefoneFixo(model.getTelefoneFixo() != null ? model.getTelefoneFixo() : "")
                 .setCEP(model.getCEP() != null ? model.getCEP() : "")
                 .setNumero(model.getNumero() != 0 ? model.getNumero() : 0)

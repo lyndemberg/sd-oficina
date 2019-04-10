@@ -53,9 +53,9 @@ public final class VeiculoDao implements Serializable {
         );
     }
 
-    public Optional<Veiculo> buscarPorId(final Integer id) {
+    public Optional<Veiculo> buscarPorId(final long id) {
 
-        if (id == null || id <= 0) throw new AtributoIdInvalidoException();
+        if (id <= 0) throw new AtributoIdInvalidoException();
 
         try {
             return Optional.ofNullable(
@@ -70,9 +70,9 @@ public final class VeiculoDao implements Serializable {
 
     }
 
-    public Boolean remover(Integer idVeiculo) {
+    public Boolean remover(long idVeiculo) {
 
-        if (idVeiculo == null || idVeiculo <= 0) throw new AtributoIdInvalidoException();
+        if (idVeiculo <= 0) throw new AtributoIdInvalidoException();
 
         Veiculo veiculo = null;
 

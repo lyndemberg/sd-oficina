@@ -10,7 +10,7 @@ package sd.oficina.shared.proto.customer;
 //  ESTOQUE
 message EstoqueProto {
     int64 idPeca = 1;
-    int64 qtdPeca = 2;
+    int32 qtdPeca = 2;
     int32 codigoPeca = 3;
     string validade = 4;
     double valorPeca = 5;
