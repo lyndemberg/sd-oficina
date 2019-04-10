@@ -62,8 +62,8 @@ public class RedisConfiguration {
         return template;
     }
     @Bean(name="redisTemplatePerson")
-    public RedisTemplate<String, Object> redisTemplatePerson() {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+    public <T> RedisTemplate<String, T> redisTemplatePerson() {
+        RedisTemplate<String, T> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionPerson());
         template.setKeySerializer( new StringRedisSerializer() );
         template.setHashValueSerializer( new GenericJackson2JsonRedisSerializer());

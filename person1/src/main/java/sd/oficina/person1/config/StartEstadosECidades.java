@@ -1,66 +1,53 @@
-package sd.oficina.oficinawebapp.person.config;
+package sd.oficina.person1.config;
 
 import com.google.gson.Gson;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import sd.oficina.oficinawebapp.person.services.CidadeService;
-import sd.oficina.oficinawebapp.person.services.EstadoService;
+import sd.oficina.person1.Person1Application;
+import sd.oficina.person1.daos.CidadeDao;
+import sd.oficina.person1.daos.EstadoDao;
 import sd.oficina.shared.model.person.Cidade;
 import sd.oficina.shared.model.person.Estado;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Configuration
 public class StartEstadosECidades {
 
-//    private Long idEstado = 0L;
-//    private Long idCidade = 0L;
+    public static void start() {
 
-    private EstadoService estadoService;
-    private CidadeService cidadeService;
-
-    public StartEstadosECidades(EstadoService estadoService, CidadeService cidadeService) {
-        this.estadoService = estadoService;
-        this.cidadeService = cidadeService;
-    }
-
-    @Bean
-    public void start() {
+        EstadoDao estadoDao = new EstadoDao();
+        CidadeDao cidadeDao = new CidadeDao();
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
 
         Gson gson = new Gson();
 
         try {
+            if (estadoDao.listar().isEmpty()) {
 
-            if (estadoService.listar().isEmpty()) {
+                File file = new File(Person1Application.class.getClassLoader().getResource("estados-cidades.json").toURI());
 
-                BufferedReader bufferedReader = new BufferedReader(new FileReader("oficina-webapp/estados-cidades.json"));
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
                 //Converte String JSON para objeto Java
                 Estados estados = gson.fromJson(bufferedReader, Estados.class);
-
-                Estado estado = new Estado();
-                Cidade cidade = new Cidade();
 
                 System.out.println("INSERINDO ESTADOS E CIDADES, POR FAVOR AGUARDE!");
 
                 Runnable runnable = () -> {
                     for (EstadoJSON estadoJSON : estados.getEstados()) {
-//                        idEstado++;
-//                        estado.setId(idEstado);
+                        Estado estado = new Estado();
                         estado.setNome(estadoJSON.getNome());
-                        Estado estadoParaSalvar = estadoService.salvar(estado);
+                        Estado estadoParaSalvar = estadoDao.salvar(estado);
                         for (String cidadeJSON : estadoJSON.getCidades()) {
-//                            idCidade++;
-//                            cidade.setId(idCidade);
+                            Cidade cidade = new Cidade();
                             cidade.setNome(cidadeJSON);
                             cidade.setEstado(estadoParaSalvar);
-                            cidadeService.salvar(cidade);
+                            cidadeDao.salvar(cidade);
                         }
                     }
                 };
@@ -71,7 +58,7 @@ public class StartEstadosECidades {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
     }

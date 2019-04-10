@@ -1,4 +1,4 @@
-package sd.oficina.oficinawebapp.person.config;
+package sd.oficina.person1.config;
 
 import lombok.Data;
 

@@ -1,5 +1,8 @@
 package sd.oficina.oficinawebapp.person.services;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import sd.oficina.oficinawebapp.person.grpc.ClienteClient;
 import sd.oficina.shared.model.person.Cliente;
@@ -11,12 +14,22 @@ public class ClienteService {
 
     private ClienteClient clienteClient;
 
-    public ClienteService() {
+    //CACHE
+    private final HashOperations<String,Object, Cliente> hashOperations;
+    private final RedisTemplate<String, Cliente> redisTemplate;
+
+    public ClienteService(@Qualifier("redisTemplatePerson")  RedisTemplate<String, Cliente> redisTemplate) {
         this.clienteClient = new ClienteClient();
+        this.redisTemplate = redisTemplate;
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     public Cliente salvar (Cliente cliente) {
-        return clienteClient.salvar(cliente);
+        //return clienteClient.salvar(cliente);
+
+        //SALVANDO NO CACHE
+        hashOperations.put(Cliente.class.getSimpleName(),cliente.getId(),cliente);
+        return null;
     }
 
     public Cliente atualizar(Cliente cliente) {
@@ -32,6 +45,9 @@ public class ClienteService {
     }
 
     public List<Cliente> listar() {
-        return clienteClient.listar();
+        //RECUPERANDO NO CACHE
+         return hashOperations.values(Cliente.class.getSimpleName());
+
+        //return clienteClient.listar();
     }
 }
