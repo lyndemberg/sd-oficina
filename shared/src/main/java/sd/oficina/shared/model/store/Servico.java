@@ -11,7 +11,7 @@ public class Servico {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String descricao;
     private double valor;
     @ManyToMany(cascade = {

@@ -18,6 +18,6 @@ public class Cor {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String nome;
 }

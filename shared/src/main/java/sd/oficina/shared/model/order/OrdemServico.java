@@ -14,7 +14,7 @@ public class OrdemServico implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private Long idCliente;
     private Long idVeiculo;
     private LocalDate dataRegistro;

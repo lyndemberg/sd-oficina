@@ -11,7 +11,7 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String telefoneFixo;
     private String CEP;
     private int numero;
