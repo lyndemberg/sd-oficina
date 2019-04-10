@@ -6,11 +6,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import sd.oficina.order1.Order1Application;
 import sd.oficina.order1.config.PropertiesApplication;
-
-import java.io.File;
-import java.net.URISyntaxException;
 
 public class ConnectionFactory {
 
