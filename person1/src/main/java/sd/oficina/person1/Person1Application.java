@@ -10,8 +10,13 @@ import sd.oficina.person1.grpc.FornecedorService;
 
 import java.io.IOException;
 
+import static sd.oficina.person1.config.StartEstadosECidades.start;
+
 public class Person1Application {
     public static void main(String[] args) {
+
+        //Inicia as inserções de estados e cidades
+        start();
 
         //
         System.out.println("Servidor Person 1 inicializado");
