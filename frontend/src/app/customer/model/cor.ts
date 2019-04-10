@@ -1,3 +1,4 @@
 export class Cor{
-    nome ?: string
+    id ?: number;
+    nome ?: string;
 }
