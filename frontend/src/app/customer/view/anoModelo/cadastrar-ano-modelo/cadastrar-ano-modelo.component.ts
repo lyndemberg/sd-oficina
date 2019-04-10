@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AnoModelo } from 'src/app/customer/model/anoModelo';
+import { AnoModeloService } from 'src/app/customer/service/anoModelo/ano-modelo.service';
 
 @Component({
   selector: 'app-cadastrar-ano-modelo',
@@ -15,9 +16,17 @@ export class CadastrarAnoModeloComponent implements OnInit {
     valor : 0
   }
 
-  constructor() { }
+  constructor( private anoModeloService : AnoModeloService) { }
 
   ngOnInit() {
   }
 
+  salvar() {
+    this.anoModeloService.salvar(this.anoModelo).subscribe(res => {
+      console.log("salvando");
+      if (res.status == 200) {
+        alert("Ano Modelo cadastrado!");
+      }
+    });
+  }
 }
