@@ -27,7 +27,6 @@ public class OrdemServicoService {
     private final ClienteService clienteService;
     private final VeiculoService veiculoService;
     private final ServicoService servicoService;
-
     //CACHE
     private final RedisTemplate<String,Object> redisTemplate;
     private final HashOperations<String,Object, Object> hashOperations;
@@ -45,6 +44,7 @@ public class OrdemServicoService {
         try {
             clientOrderGrpc.cadastrarNovaOrdem(value);
 
+//            List<Object> values = hashOperations.values(OrdemServicoValue.class.getSimpleName());
             //SALVANDO NO CACHE
             //hashOperations.put(OrdemServicoValue.class.getSimpleName(),value.getId(),value);
             //RECUPERANDO NO CACHE
