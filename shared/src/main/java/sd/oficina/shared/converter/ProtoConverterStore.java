@@ -13,11 +13,11 @@ public class ProtoConverterStore {
 
     public static EstoqueProto modelToProto(Estoque model) {
         return EstoqueProto.newBuilder()
-                .setCodigoPeca(model.getCodigoPeca() != 0 ? model.getCodigoPeca() : 0)
-                .setIdPeca(model.getIdPeca() != null ? model.getIdPeca() : 0)
+                .setCodigoPeca(model.getCodigoPeca())
+                .setIdPeca(model.getIdPeca())
                 .setNomePeca(model.getNomePeca() != null ? model.getNomePeca() : "")
-                .setQtdPeca(model.getQtdPeca() != 0 ? model.getQtdPeca() : 0)
-                .setValorPeca(model.getValorPeca() != 0 ? model.getValorPeca() : 0)
+                .setQtdPeca(model.getQtdPeca())
+                .setValorPeca(model.getValorPeca())
                 .setValidade(model.getValidade() != null ? model.getValidade() : "")
                 .build();
     }
@@ -29,8 +29,8 @@ public class ProtoConverterStore {
         }
         return ServicoProto.newBuilder()
                 .setDescricao(model.getDescricao() != null ? model.getDescricao() : "")
-                .setId(model.getId() != 0 ? model.getId() : 0)
-                .setValor(model.getValor() != 0 ? model.getValor() : 0)
+                .setId(model.getId())
+                .setValor(model.getValor())
                 .setEstoques(builder.build())
                 .build();
     }
@@ -38,19 +38,19 @@ public class ProtoConverterStore {
     public static Estoque protoToModel(EstoqueProto proto) {
 
         Estoque estoque = new Estoque();
-        estoque.setIdPeca(proto.getIdPeca() != 0 ? proto.getIdPeca() : 0);
-        estoque.setQtdPeca(proto.getQtdPeca() != 0 ? proto.getQtdPeca() : 0);
-        estoque.setValorPeca(proto.getValorPeca() != 0 ? proto.getValorPeca() : 0);
+        estoque.setIdPeca(proto.getIdPeca());
+        estoque.setQtdPeca(proto.getQtdPeca());
+        estoque.setValorPeca(proto.getValorPeca());
         estoque.setNomePeca(proto.getNomePeca() != null ? proto.getNomePeca() : "");
         estoque.setValidade(proto.getValidade() != null ? proto.getValidade() : "");
-        estoque.setCodigoPeca(proto.getCodigoPeca() != 0 ? proto.getCodigoPeca() : 0);
+        estoque.setCodigoPeca(proto.getCodigoPeca());
         return estoque;
     }
 
     public static Servico protoToModel(ServicoProto proto) {
         Servico servico = new Servico();
-        servico.setId(proto.getId() != 0 ? proto.getId() : 0);
-        servico.setValor(proto.getValor() != 0 ? proto.getValor() : 0);
+        servico.setId(proto.getId());
+        servico.setValor(proto.getValor());
         servico.setDescricao(proto.getDescricao() != null ? proto.getDescricao() : "");
         servico.setEstoques(proto.getEstoques().getEstoqueList().stream().map(e ->
                 protoToModel(e)).collect(Collectors.toList()));

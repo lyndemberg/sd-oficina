@@ -1,32 +1,34 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AnoModelo } from '../../model/anoModelo';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnoModeloService {
 
+  private url: string = environment.API_URL + 'anoModelo/';
   constructor(private http: HttpClient) { }
 
-  salvar(AnoModelo): Observable<AnoModelo> {
-    return this.http.post<AnoModelo>('https://localhost:8080/api/anoModelo', AnoModelo);
+  salvar(anoModelo : AnoModelo): Observable<HttpResponse<AnoModelo>> {
+    return this.http.post<AnoModelo>( this.url , anoModelo, { observe: 'response' });
   }
 
-  atualizar(AnoModelo): Observable<AnoModelo> {
-    return this.http.put<AnoModelo>('https://localhost:8080/api/anoModelo', AnoModelo);
+  atualizar( anoModelo : AnoModelo): Observable<HttpResponse<AnoModelo>> {
+    return this.http.put<AnoModelo>( this.url , anoModelo, { observe: 'response' });
   }
 
-  deletar(id): Observable<any> {
-    return this.http.delete<any>('https://localhost:8080/api/anoModelo/' + id);
+  deletar(id : number): Observable<HttpResponse<AnoModelo>> {
+    return this.http.delete<any>( this.url + id, { observe: 'response' });
   }
 
-  listarTodos(): Observable<AnoModelo[]> {
-    return this.http.get<AnoModelo[]>('https://localhost:8080/api/anoModelo');
+  listarTodos():Observable<HttpResponse<AnoModelo[]>> {
+    return this.http.get<AnoModelo[]>( this.url, { observe: 'response' });
   }
 
-  listarPorId(id): Observable<AnoModelo[]> {
-    return this.http.get<AnoModelo[]>('https://localhost:8080/api/anoModelo/' + id);
+  listarPorId(id : number): Observable<HttpResponse<AnoModelo>> {
+    return this.http.get<AnoModelo>( this.url + id, { observe: 'response' } );
   }
 }

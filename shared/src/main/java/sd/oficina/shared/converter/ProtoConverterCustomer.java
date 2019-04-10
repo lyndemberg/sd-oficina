@@ -9,7 +9,7 @@ public class ProtoConverterCustomer {
     // CONVERSÃO DE PROTOS PARA CLASSES DE MODELO
     public static Fabricante protoToModel(FabricanteProto proto) {
         Fabricante fabricante = new Fabricante();
-        fabricante.setId(proto.getId() != 0 ? proto.getId() : 0);
+        fabricante.setId(proto.getId());
         fabricante.setNome(proto.getNome() != null ? proto.getNome() : null);
         return fabricante;
     }
@@ -18,7 +18,7 @@ public class ProtoConverterCustomer {
 
         Veiculo veiculo = new Veiculo();
         veiculo.setPlaca(proto.getPlaca() != null ? proto.getPlaca() : "");
-        veiculo.setQuilometragem(proto.getQuilometragem() != 0 ? proto.getQuilometragem() : 0);
+        veiculo.setQuilometragem(proto.getQuilometragem());
         veiculo.setCor(protoToModel(proto.getCor()));
         veiculo.setModelo(protoToModel(proto.getModelo()));
         return veiculo;
@@ -27,7 +27,7 @@ public class ProtoConverterCustomer {
     public static Cor protoToModel(CorProto proto) {
         Cor cor = new Cor();
         cor.setNome(proto.getNome() != null ? proto.getNome() : "");
-        cor.setId(proto.getId() != 0 ? proto.getId() : 0);
+        cor.setId(proto.getId());
         return cor;
     }
 
@@ -37,7 +37,7 @@ public class ProtoConverterCustomer {
         modelo.setTipo(proto.getTipo() != null ? proto.getTipo() : "");
         modelo.setNome(proto.getNome() != null ? proto.getNome() : "");
         modelo.setFabricante(protoToModel(proto.getFabricante()));
-        modelo.setId(proto.getId() != 0 ? proto.getId() : 0);
+        modelo.setId(proto.getId());
         return modelo;
     }
 
@@ -46,8 +46,8 @@ public class ProtoConverterCustomer {
         AnoModelo anoModelo = new AnoModelo();
         anoModelo.setTipo(proto.getTipo() != null ? proto.getTipo() : "");
         anoModelo.setNome(proto.getNome() != null ? proto.getNome() : "");
-        anoModelo.setId(proto.getId() != 0 ? proto.getId() : 0);
-        anoModelo.setValor(proto.getValor() != 0 ? proto.getValor() : 0);
+        anoModelo.setId(proto.getId());
+        anoModelo.setValor(proto.getValor());
         anoModelo.setModelo(protoToModel(proto.getModelo()));
         return anoModelo;
     }
@@ -55,7 +55,7 @@ public class ProtoConverterCustomer {
     // CONVERSÃO DE CLASSES DE MODELO PARA PROTO
     public static FabricanteProto modelToProto(Fabricante model) {
         return FabricanteProto.newBuilder()
-                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setId(model.getId())
                 .setNome(model.getNome() != null ? model.getNome() : "")
                 .build();
     }
@@ -64,22 +64,22 @@ public class ProtoConverterCustomer {
         return VeiculoProto.newBuilder()
                 .setCor(modelToProto(model.getCor()))
                 .setModelo(modelToProto(model.getModelo()))
-                .setId(model.getId() != 0 ? model.getId() : 0)
-                .setQuilometragem(model.getQuilometragem() != 0 ? model.getQuilometragem() : 0)
+                .setId(model.getId())
+                .setQuilometragem(model.getQuilometragem())
                 .setPlaca(model.getPlaca() != null ? model.getPlaca() : "")
                 .build();
     }
 
     public static CorProto modelToProto(Cor model) {
         return CorProto.newBuilder()
-                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setId(model.getId())
                 .setNome(model.getNome() != null ? model.getNome() : "")
                 .build();
     }
 
     public static ModeloProto modelToProto(Modelo model) {
         return ModeloProto.newBuilder()
-                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setId(model.getId())
                 .setNome(model.getNome() != null ? model.getNome() : "")
                 .setTipo(model.getTipo() != null ? model.getTipo() : "")
                 .setFabricante(modelToProto(model.getFabricante()))
@@ -88,11 +88,11 @@ public class ProtoConverterCustomer {
 
     public static AnoModeloProto modelToProto(AnoModelo model) {
         return AnoModeloProto.newBuilder()
-                .setId(model.getId() != 0 ? model.getId() : 0)
+                .setId(model.getId())
                 .setNome(model.getNome() != null ? model.getNome() : "")
                 .setTipo(model.getTipo() != null ? model.getTipo() : "")
                 .setModelo(modelToProto(model.getModelo()))
-                .setValor(model.getValor() != 0 ? model.getValor() : 0)
+                .setValor(model.getValor())
                 .build();
     }
 }

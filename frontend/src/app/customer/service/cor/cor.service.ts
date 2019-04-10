@@ -1,32 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cor } from '../../model/cor';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CorService {
 
+  private url: string = environment.API_URL + 'cor/';
   constructor(private http: HttpClient) { }
 
-  salvar(Cor): Observable<Cor> {
-    return this.http.post<Cor>('https://localhost:8080/api/cor', Cor);
+  salvar(cor : Cor): Observable<HttpResponse<Cor>> {
+    return this.http.post<Cor>( this.url , cor, { observe: 'response' });
   }
 
-  atualizar(Cor): Observable<Cor> {
-    return this.http.put<Cor>('https://localhost:8080/api/cor', Cor);
+  atualizar(cor : Cor): Observable<HttpResponse<Cor>> {
+    return this.http.put<Cor>( this.url , cor, { observe: 'response' });
   }
 
-  deletar(id): Observable<any> {
-    return this.http.delete<any>('https://localhost:8080/api/cor/' + id);
+  deletar(id : number): Observable<HttpResponse<Cor>> {
+    return this.http.delete<any>( this.url + id, { observe: 'response' });
   }
 
-  listarTodos(): Observable<Cor[]> {
-    return this.http.get<Cor[]>('https://localhost:8080/api/cor');
+  listarTodos():Observable<HttpResponse<Cor[]>> {
+    return this.http.get<Cor[]>( this.url, { observe: 'response' });
   }
 
-  listarPorId(id): Observable<Cor[]> {
-    return this.http.get<Cor[]>('https://localhost:8080/api/cor/' + id);
+  listarPorId(id : number): Observable<HttpResponse<Cor>> {
+    return this.http.get<Cor>( this.url + id, { observe: 'response' } );
   }
 }

@@ -1,3 +1,4 @@
 export class Fabricante{
-    nome ?: string
+    id ?: number;
+    nome ?: string;
 }

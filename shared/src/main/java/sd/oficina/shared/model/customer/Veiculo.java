@@ -16,7 +16,7 @@ public class Veiculo {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     private String placa;
     private double quilometragem;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
