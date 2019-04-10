@@ -15,11 +15,10 @@ public class ConnectionFactory {
         try {
             jedisConFactory.setHostName(PropertiesApplication.getConfig().getString("cache.order.host"));
             jedisConFactory.setPort(PropertiesApplication.getConfig().getInt("cache.order.port"));
-            return jedisConFactory;
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
-        return null;
+        return jedisConFactory;
     }
 
     public static RedisTemplate<String, Object> getRedisTemplate() {
