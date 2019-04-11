@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Customer3Application {
     public static void main(String[] args) throws IOException, InterruptedException {
-        Server server = ServerBuilder.forPort(2222)
+        Server server = ServerBuilder.forPort(3333)
                 .addService(new FabricanteService())
                 .addService(new VeiculoService())
                 .addService(new AnoModeloService())
