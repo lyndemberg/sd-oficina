@@ -11,7 +11,6 @@ import java.io.Serializable;
 public class Fornecedor implements Serializable {
 
     @Id
-    @GeneratedValue
     private long id;
     private String nomeFantasia;
     private String razaoSocial;

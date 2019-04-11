@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class Cidade implements Serializable {
 
     @Id
-    @GeneratedValue
     private long id;
     @Column(nullable = false)
     private String nome;

@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class AnoModelo {
 
     @Id
-    @GeneratedValue
     private long id;
     private String nome;
     private String tipo;

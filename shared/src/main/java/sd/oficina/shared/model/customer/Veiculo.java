@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class Veiculo {
 
     @Id
-    @GeneratedValue
     private long id;
     private String placa;
     private double quilometragem;

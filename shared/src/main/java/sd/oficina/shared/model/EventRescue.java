@@ -1,4 +1,4 @@
-package sd.oficina.shared.model.rescue;
+package sd.oficina.shared.model;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
-public class TableRescue implements Serializable {
+public class EventRescue implements Serializable {
 
     /*
         Essa entidade é genérica o suficiente para que o determinado serviço execute
