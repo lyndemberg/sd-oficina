@@ -13,7 +13,6 @@ import java.util.List;
 public class OrdemServico implements Serializable {
 
     @Id
-    @GeneratedValue
     private long id;
     private Long idCliente;
     private Long idVeiculo;
@@ -23,18 +22,5 @@ public class OrdemServico implements Serializable {
     private boolean concluida;
     @ElementCollection
     private List<Long> servicos;
-
-
-    public OrdemServico() {
-        this.servicos = new ArrayList<>();
-    }
-
-    public void addServico(Long idServico){
-        this.servicos.add(idServico);
-    }
-
-    public void removeServico(Long idServico){
-        this.servicos.remove(idServico);
-    }
 
 }

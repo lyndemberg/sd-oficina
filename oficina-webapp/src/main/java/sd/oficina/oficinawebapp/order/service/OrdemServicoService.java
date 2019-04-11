@@ -12,11 +12,13 @@ import sd.oficina.oficinawebapp.order.valueobject.OrdemServicoValue;
 import sd.oficina.oficinawebapp.person.services.ClienteService;
 import sd.oficina.oficinawebapp.store.service.ServicoService;
 import sd.oficina.shared.model.customer.Veiculo;
+import sd.oficina.shared.model.order.OrdemServico;
 import sd.oficina.shared.model.person.Cliente;
 import sd.oficina.shared.model.store.Servico;
 import sd.oficina.shared.proto.order.OrdemProto;
 import sd.oficina.shared.util.LocalDateUtil;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +30,10 @@ public class OrdemServicoService {
     private final VeiculoService veiculoService;
     private final ServicoService servicoService;
     //CACHE
-    private final RedisTemplate<String,Object> redisTemplate;
-    private final HashOperations<String,Object, Object> hashOperations;
+    private final RedisTemplate<String, OrdemServico> redisTemplate;
+    private final HashOperations<String,Object, OrdemServico> hashOperations;
 
-    public OrdemServicoService(ClienteService clienteService, VeiculoService veiculoService, ServicoService servicoService, @Qualifier("redisTemplateOrder") RedisTemplate<String,Object> redisTemplate) {
+    public OrdemServicoService(ClienteService clienteService, VeiculoService veiculoService, ServicoService servicoService, @Qualifier("redisTemplateOrder") RedisTemplate<String,OrdemServico> redisTemplate) {
         this.veiculoService = veiculoService;
         this.clienteService = clienteService;
         this.servicoService = servicoService;
@@ -41,18 +43,24 @@ public class OrdemServicoService {
     }
 
     public void salvar(OrdemServicoValue value){
-        try {
-            clientOrderGrpc.cadastrarNovaOrdem(value);
+//        try {
+//            clientOrderGrpc.cadastrarNovaOrdem(value);
 
 //            List<Object> values = hashOperations.values(OrdemServicoValue.class.getSimpleName());
             //SALVANDO NO CACHE
-            //hashOperations.put(OrdemServicoValue.class.getSimpleName(),value.getId(),value);
+            OrdemServico ordemServico = new OrdemServico();
+            ordemServico.setConcluida(true);
+            ordemServico.setPago(true);
+            ordemServico.setDataRegistro(LocalDate.now());
+            ordemServico.setDataPagamento(LocalDate.now());
+            ordemServico.setIdVeiculo(2l);
+            hashOperations.put(OrdemServico.class.getSimpleName(),value.getId(),ordemServico);
             //RECUPERANDO NO CACHE
             //OrdemServicoValue ordemServicoValue = (OrdemServicoValue) hashOperations
             //                                          .get(OrdemServicoValue.class.getSimpleName(),id);
-        } catch (FalhaGrpcException e) {
-            e.printStackTrace();
-        }
+//        } catch (FalhaGrpcException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void realizarPagamento(OrdemServicoValue value){

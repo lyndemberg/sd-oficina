@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class Cliente implements Serializable {
 
     @Id
-    @GeneratedValue
     private long id;
     private String telefoneFixo;
     private String CEP;

@@ -1,4 +1,4 @@
-package sd.oficina.shared.model.rescue;
+package sd.oficina.shared.model;
 
 public enum ServiceEnum {
     ORDER,

@@ -17,7 +17,6 @@ import javax.persistence.Id;
 public class Fabricante {
 
     @Id
-    @GeneratedValue
     private long id;
     private String nome;
 }

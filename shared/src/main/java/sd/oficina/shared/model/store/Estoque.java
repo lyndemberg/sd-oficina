@@ -12,7 +12,6 @@ import java.time.LocalDate;
 public class Estoque {
 
     @Id
-    @GeneratedValue
     private long idPeca;
     private int qtdPeca;
     private int codigoPeca;

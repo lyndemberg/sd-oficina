@@ -10,7 +10,6 @@ import java.util.List;
 public class Servico {
 
     @Id
-    @GeneratedValue
     private long id;
     private String descricao;
     private double valor;

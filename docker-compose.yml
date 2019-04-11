@@ -10,15 +10,15 @@ services:
                         - "5433:5432"
                 networks:
                         - private_network
-        oficina-webapp:
-                build:
-                        dockerfile: ./Dockerfile
-                        context: ./oficina-webapp
-                container_name: oficina-app
-                ports:
-                        - "8080:8080"
-                networks:
-                        - private_network
+#        oficina-webapp:
+#                build:
+#                        dockerfile: ./Dockerfile
+#                        context: ./oficina-webapp
+#                container_name: oficina-app
+#                ports:
+#                        - "8080:8080"
+#                networks:
+#                        - private_network
         cache-order:
                 image: redis
                 container_name: cache-order
