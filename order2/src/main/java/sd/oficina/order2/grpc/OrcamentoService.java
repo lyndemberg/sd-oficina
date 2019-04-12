@@ -12,8 +12,8 @@ public class OrcamentoService extends OrcamentoServiceGrpc.OrcamentoServiceImplB
 
     private final OrcamentoReportService reportService;
 
-    public OrcamentoService(OrcamentoReportService reportService) {
-        this.reportService = reportService;
+    public OrcamentoService() {
+        this.reportService = new OrcamentoReportService();
     }
 
     @Override
