@@ -36,7 +36,7 @@ export class ListarClienteComponent implements OnInit {
 
   listar() {
     this.clienteService.listar().subscribe(data => {
-      this.clientes = data;
+      this.clientes = data.body;
     });
   }
 
