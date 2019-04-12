@@ -107,7 +107,8 @@ export class AppComponent implements OnInit {
                         label: 'Ordem de serviço',
                         icon: 'pi pi-fw pi-plus',
                         items: [
-                            { label: 'Nova Ordem', icon: 'pi pi-fw pi-save', routerLink: 'cadastroOrdem' }
+                            { label: 'Nova Ordem', icon: 'pi pi-fw pi-save', routerLink: 'cadastroOrdem' },
+                            { label: 'Buscar Ordem', icon: 'pi pi-fw pi-search', routerLink: 'listarOrdem' }
                         ]
                     
                     }

@@ -43,4 +43,25 @@ public class OrdemServicoController {
         return ResponseEntity.ok(ordemServicoValueList);
     }
 
+    @PutMapping("/pagamento")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Void> realizarPagamento(@RequestBody OrdemServicoValue value){
+        if (value == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        //
+        ordemServicoService.realizarPagamento(value);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @PutMapping("/concluir")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Void> concluirOrdem(@RequestBody OrdemServicoValue value){
+        if (value == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        //
+        ordemServicoService.concluirOrdem(value);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }
