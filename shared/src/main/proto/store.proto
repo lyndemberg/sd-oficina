@@ -43,6 +43,25 @@ message ServicoResult {
     ServicoProto servico = 2;
 }
 
+//  NOTA
+message NotaProto {
+    int64 id = 1;
+    string dataCompra = 2;
+    string dataVencimento = 3;
+    int32 numero = 4;
+    int64 idFornecedor = 5;
+    EstoqueProtoList estoques = 6;
+}
+
+message NotaProtoList {
+    repeated NotaProto nota = 1;
+}
+
+message NotaResult {
+    int64 codigo = 1;
+    NotaProto nota = 2;
+}
+
 service EstoqueService {
     rpc salvar(EstoqueProto) returns (EstoqueResult){};
     rpc atualizar(EstoqueProto) returns (EstoqueResult){};
@@ -57,4 +76,12 @@ service ServicoService {
     rpc deletar(ServicoProto) returns (ServicoResult){};
     rpc buscar(ServicoProto) returns (ServicoResult) {};
     rpc buscarTodos(google.protobuf.Empty) returns (ServicoProtoList){};
+}
+
+service NotaService {
+    rpc salvar(NotaProto) returns (NotaResult){};
+    rpc atualizar(NotaProto) returns (NotaResult){};
+    rpc deletar(NotaProto) returns (NotaResult){};
+    rpc buscar(NotaProto) returns (NotaResult) {};
+    rpc buscarTodos(google.protobuf.Empty) returns (NotaProtoList){};
 }

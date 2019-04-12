@@ -1,12 +1,11 @@
 package sd.oficina.shared.converter;
 
 import sd.oficina.shared.model.store.Estoque;
+import sd.oficina.shared.model.store.Nota;
 import sd.oficina.shared.model.store.Servico;
-import sd.oficina.shared.proto.customer.EstoqueProto;
-import sd.oficina.shared.proto.customer.EstoqueProtoList;
-import sd.oficina.shared.proto.customer.EstoqueProtoListOrBuilder;
-import sd.oficina.shared.proto.customer.ServicoProto;
+import sd.oficina.shared.proto.customer.*;
 
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 public class ProtoConverterStore {
@@ -55,5 +54,32 @@ public class ProtoConverterStore {
         servico.setEstoques(proto.getEstoques().getEstoqueList().stream().map(e ->
                 protoToModel(e)).collect(Collectors.toList()));
         return servico;
+    }
+
+    public static Nota protoToModel(NotaProto proto) {
+        Nota nota = new Nota();
+        nota.setDataCompra(LocalDate.parse(proto.getDataCompra()));
+        nota.setDataVencimento(LocalDate.parse(proto.getDataVencimento()));
+        nota.setEstoques(proto.getEstoques().getEstoqueList().stream().map(e ->
+                protoToModel(e)).collect(Collectors.toList()));
+        nota.setId(proto.getId());
+        nota.setIdFornecedor(proto.getIdFornecedor());
+        nota.setNumero(proto.getNumero());
+        return nota;
+    }
+
+    public static NotaProto modelToProto(Nota model) {
+        EstoqueProtoList.Builder builder = EstoqueProtoList.newBuilder();
+        if (model.getEstoques() != null) {
+            model.getEstoques().forEach(e -> builder.addEstoque(modelToProto(e)));
+        }
+
+        return NotaProto.newBuilder()
+                .setDataCompra(model.getDataCompra().toString())
+                .setDataVencimento(model.getDataVencimento().toString())
+                .setEstoques(builder.build())
+                .setId(model.getId())
+                .setNumero(model.getNumero())
+                .build();
     }
 }
