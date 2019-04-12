@@ -3,36 +3,33 @@ package sd.oficina.store2.grpc;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import sd.oficina.shared.converter.ProtoConverterStore;
-import sd.oficina.shared.model.store.Estoque;
-import sd.oficina.shared.proto.customer.EstoqueProto;
-import sd.oficina.shared.proto.customer.EstoqueProtoList;
-import sd.oficina.shared.proto.customer.EstoqueResult;
-import sd.oficina.shared.proto.customer.EstoqueServiceGrpc;
-import sd.oficina.store2.daos.EstoqueDao;
+import sd.oficina.shared.model.store.Nota;
+import sd.oficina.shared.proto.customer.*;
+import sd.oficina.store2.daos.NotaDao;
 
 import java.util.List;
 
-public class NotaService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
+public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
 
-    private EstoqueDao estoqueDao;
+    private NotaDao notaDao;
 
     public NotaService() {
-        this.estoqueDao = new EstoqueDao();
+        this.notaDao = new NotaDao();
     }
 
     @Override
-    public void salvar(EstoqueProto request, StreamObserver<EstoqueResult> responseObserver) {
-        Estoque estoque = this.estoqueDao.salvar(ProtoConverterStore.protoToModel(request));
+    public void salvar(NotaProto request, StreamObserver<NotaResult> responseObserver) {
+        Nota nota = this.notaDao.salvar(ProtoConverterStore.protoToModel(request));
 
-        if (!estoque.equals(null)) {
+        if (!nota.equals(null)) {
             responseObserver.onNext(
-                    EstoqueResult.newBuilder()
+                    NotaResult.newBuilder()
                             .setCodigo(200)
-                            .setEstoque(ProtoConverterStore.modelToProto(estoque))
+                            .setNota(ProtoConverterStore.modelToProto(nota))
                             .build());
         } else {
             responseObserver.onNext(
-                    EstoqueResult.newBuilder()
+                    NotaResult.newBuilder()
                             .setCodigo(400)
                             .build());
         }
@@ -41,17 +38,17 @@ public class NotaService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
     }
 
     @Override
-    public void atualizar(EstoqueProto request, StreamObserver<EstoqueResult> responseObserver) {
-        Estoque estoque = this.estoqueDao.atualizar(ProtoConverterStore.protoToModel(request));
+    public void atualizar(NotaProto request, StreamObserver<NotaResult> responseObserver) {
+        Nota nota = this.notaDao.atualizar(ProtoConverterStore.protoToModel(request));
 
-        if (!estoque.equals(null)) {
+        if (!nota.equals(null)) {
             responseObserver
-                    .onNext(EstoqueResult.newBuilder()
+                    .onNext(NotaResult.newBuilder()
                             .setCodigo(200)
-                            .setEstoque(ProtoConverterStore.modelToProto(estoque)).build());
+                            .setNota(ProtoConverterStore.modelToProto(nota)).build());
         } else {
             responseObserver
-                    .onNext(EstoqueResult.newBuilder()
+                    .onNext(NotaResult.newBuilder()
                             .setCodigo(400)
                             .build());
         }
@@ -60,28 +57,28 @@ public class NotaService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
     }
 
     @Override
-    public void deletar(EstoqueProto request, StreamObserver<EstoqueResult> responseObserver) {
-        this.estoqueDao.deletar(ProtoConverterStore.protoToModel(request));
+    public void deletar(NotaProto request, StreamObserver<NotaResult> responseObserver) {
+        this.notaDao.deletar(ProtoConverterStore.protoToModel(request));
         responseObserver.
-                onNext(EstoqueResult.newBuilder()
+                onNext(NotaResult.newBuilder()
                         .setCodigo(200)
                         .build());
         responseObserver.onCompleted();
     }
 
     @Override
-    public void buscar(EstoqueProto request, StreamObserver<EstoqueResult> responseObserver) {
-        Estoque estoque = this.estoqueDao.buscar(ProtoConverterStore.protoToModel(request));
+    public void buscar(NotaProto request, StreamObserver<NotaResult> responseObserver) {
+        Nota nota = this.notaDao.buscar(ProtoConverterStore.protoToModel(request));
 
-        if (!estoque.equals(null)) {
-            responseObserver.onNext(EstoqueResult
+        if (!nota.equals(null)) {
+            responseObserver.onNext(NotaResult
                     .newBuilder()
                     .setCodigo(200)
-                    .setEstoque(
-                            ProtoConverterStore.modelToProto(estoque))
+                    .setNota(
+                            ProtoConverterStore.modelToProto(nota))
                     .build());
         } else {
-            responseObserver.onNext(EstoqueResult
+            responseObserver.onNext(NotaResult
                     .newBuilder()
                     .setCodigo(400)
                     .build());
@@ -91,12 +88,12 @@ public class NotaService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
     }
 
     @Override
-    public void buscarTodos(Empty request, StreamObserver<EstoqueProtoList> responseObserver) {
-        List<Estoque> estoques = this.estoqueDao.listar();
+    public void buscarTodos(Empty request, StreamObserver<NotaProtoList> responseObserver) {
+        List<Nota> notas = this.notaDao.listar();
 
-        EstoqueProtoList.Builder builder = EstoqueProtoList.newBuilder();
-        for (Estoque estoque : estoques) {
-            builder.addEstoque(ProtoConverterStore.modelToProto(estoque));
+        NotaProtoList.Builder builder = NotaProtoList.newBuilder();
+        for (Nota nota : notas) {
+            builder.addNota(ProtoConverterStore.modelToProto(nota));
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
