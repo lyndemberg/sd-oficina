@@ -1,6 +1,6 @@
 package sd.oficina.store2.daos;
 
-import sd.oficina.shared.model.store.Estoque;
+import sd.oficina.shared.model.store.Nota;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -15,50 +15,50 @@ public class NotaDao {
             Persistence.createEntityManagerFactory("persistencia")
                     .createEntityManager();
 
-    public Estoque salvar(Estoque estoque) {
+    public Nota salvar(Nota nota) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.persist(estoque);
+        entityManager.persist(nota);
         transaction.commit();
-        return estoque;
+        return nota;
     }
 
-    public Estoque atualizar(Estoque estoque) {
+    public Nota atualizar(Nota nota) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.merge(estoque);
+        entityManager.merge(nota);
         transaction.commit();
-        return estoque;
+        return nota;
     }
 
-    public void deletar(Estoque estoque) {
+    public void deletar(Nota nota) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        if (!entityManager.contains(estoque)) {
-            estoque = entityManager.merge(estoque);
+        if (!entityManager.contains(nota)) {
+            nota = entityManager.merge(nota);
         }
 
-        entityManager.remove(estoque);
+        entityManager.remove(nota);
         transaction.commit();
     }
 
-    public Estoque buscar(Estoque estoque) {
-        return entityManager.find(Estoque.class, estoque.getIdPeca());
+    public Nota buscar(Nota nota) {
+        return entityManager.find(Nota.class, nota.getId());
     }
 
-    public List<Estoque> listar() {
-        TypedQuery<Estoque> query = entityManager
-                .createQuery("SELECT estoque FROM Estoque estoque", Estoque.class);
-        List<Estoque> estoques = query.getResultList();
-        if (estoques == null) {
+    public List<Nota> listar() {
+        TypedQuery<Nota> query = entityManager
+                .createQuery("SELECT nota FROM Nota nota", Nota.class);
+        List<Nota> notas = query.getResultList();
+        if (notas == null) {
             return new ArrayList<>();
         }
-        List<Estoque> estoquesRecuperados= new ArrayList<>();
-        for (Estoque estoque : estoques) {
-            estoquesRecuperados.add(estoque);
+        List<Nota> notasRecuperadas= new ArrayList<>();
+        for (Nota nota : notas) {
+            notasRecuperadas.add(nota);
 
         }
-        return estoquesRecuperados;
+        return notasRecuperadas;
     }
 }
