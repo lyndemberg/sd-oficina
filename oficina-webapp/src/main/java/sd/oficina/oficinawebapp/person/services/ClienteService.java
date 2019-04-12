@@ -127,7 +127,7 @@ public class ClienteService {
     public List<Cliente> listar() {
         List<Cliente> clientesList = new ArrayList<>();
         try {
-            clienteClient.listarClientes();
+            clientesList = clienteClient.listarClientes();
         } catch (FalhaGrpcException e) {
             clientesList =  hashOperations.values(Cliente.class.getSimpleName());
         }
