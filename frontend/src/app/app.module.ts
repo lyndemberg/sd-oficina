@@ -46,6 +46,7 @@ import { ListarEstoqueComponent } from './store/view/estoque/listar-estoque/list
 import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoque/cadastrar-estoque.component';
 import { CadastroOrderComponent } from './order/view/cadastro-order/cadastro-order.component';
 import {MultiSelectModule} from 'primeng/multiselect';
+import { ListarOrderComponent } from './order/view/listar-order/listar-order.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
     CadastrarVeiculoComponent,
     ListarEstoqueComponent,
     CadastrarEstoqueComponent,
-    CadastroOrderComponent
+    CadastroOrderComponent,
+    ListarOrderComponent
   ],
   imports: [
     BrowserModule,

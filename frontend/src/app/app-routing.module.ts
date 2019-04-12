@@ -18,6 +18,7 @@ import { ListarVeiculoComponent} from './customer/view/veiculo/listar-veiculo/li
 import { CadastroOrderComponent } from './order/view/cadastro-order/cadastro-order.component';
 import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoque/cadastrar-estoque.component';
 import { ListarEstoqueComponent } from './store/view/estoque/listar-estoque/listar-estoque.component';
+import { ListarOrderComponent } from './order/view/listar-order/listar-order.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'cadastroOrdem',component: CadastroOrderComponent},
   { path: 'cadastrarEstoque', component: CadastrarEstoqueComponent},
   { path: 'listarEstoque', component: ListarEstoqueComponent},
+  { path: 'listarOrdem', component: ListarOrderComponent}
 ];
 
 @NgModule({
