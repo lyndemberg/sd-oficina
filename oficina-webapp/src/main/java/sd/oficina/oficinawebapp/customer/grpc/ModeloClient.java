@@ -11,12 +11,12 @@ import sd.oficina.shared.proto.customer.ModeloServiceGrpc;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class ModeloClient {
 
     private ManagedChannel channel;
 
     public ModeloClient() {
-
         channel = ManagedChannelBuilder
                 .forAddress("localhost", 3333)
                 .usePlaintext()

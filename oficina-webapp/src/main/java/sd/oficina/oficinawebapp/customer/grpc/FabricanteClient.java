@@ -11,6 +11,7 @@ import sd.oficina.shared.proto.customer.FabricanteServiceGrpc;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class FabricanteClient {
 
     private Fabricante retorno;

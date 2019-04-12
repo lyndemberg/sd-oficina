@@ -11,6 +11,7 @@ import sd.oficina.shared.proto.customer.AnoModeloServiceGrpc;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class AnoModeloClient {
 
     private ManagedChannel channel;
@@ -38,6 +39,7 @@ public class AnoModeloClient {
     }
 
     public void deletar(int id) {
+
         AnoModeloServiceGrpc.newBlockingStub(channel).deletar(AnoModeloProto.newBuilder().setId(id).build());
     }
 

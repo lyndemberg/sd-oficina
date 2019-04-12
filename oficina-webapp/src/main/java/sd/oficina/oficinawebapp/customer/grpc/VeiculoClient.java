@@ -11,6 +11,7 @@ import sd.oficina.shared.proto.customer.VeiculoServiceGrpc;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class VeiculoClient {
 
     private Veiculo retorno;

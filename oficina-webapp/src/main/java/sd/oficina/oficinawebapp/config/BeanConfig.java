@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import sd.oficina.oficinawebapp.customer.grpc.CustomerClient;
 import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.order.grpc.OrderClient;
 import sd.oficina.oficinawebapp.person.grpc.PersonClient;
@@ -41,6 +42,11 @@ public class BeanConfig {
     @Bean
     public PersonClient providePersonClient(){
         return new PersonClient(hostsProperties);
+    }
+
+    @Bean
+    public CustomerClient provideCustomerClient(){
+        return new CustomerClient(hostsProperties);
     }
 
 
