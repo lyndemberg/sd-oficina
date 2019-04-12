@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cliente } from '../../model/cliente.model';
 
@@ -22,7 +22,7 @@ export class ClienteService {
     return this.http.delete<any>('//localhost:8080/api/cliente/' + id);
   }
 
-  listar(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>('//localhost:8080/api/cliente');
+  listar(): Observable<HttpResponse<Cliente[]>> {
+    return this.http.get<Cliente[]>('//localhost:8080/api/cliente', { observe: 'response' });
   }
 }

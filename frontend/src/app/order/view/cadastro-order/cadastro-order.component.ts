@@ -28,7 +28,7 @@ export class CadastroOrderComponent implements OnInit {
     this.service.salvar(this.ordem).subscribe( res => {
       console.log("salvando");
       if (res.status == 200) {
-        alert("Ano Modelo cadastrado!");
+        alert("Ordem cadastrada!");
       }
     })
   }

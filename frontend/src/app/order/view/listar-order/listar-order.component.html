@@ -27,14 +27,16 @@
     </ng-template>
     <ng-template pTemplate="body" let-ordem>
       <tr style="text-align:center">
-        <td>{{ordem.cliente.name}}</td>
-        <td>{{ordem.ceiculo.id}}</td>
+        <td>{{ordem.cliente.nome}}</td>
+        <td>{{ordem.veiculo}}</td>
+        <td>{{ordem.dataRegistro}}</td>
         <td>{{ordem.dataPagamento}}</td>
         <td>{{ordem.paga}}</td>
         <td>{{ordem.concluida}}</td>
         <td>
-          <p-button (click)="realizarPagamento()" label="Pagar"></p-button>&nbsp;
-          <p-button (click)="concluir()" label="Concluir"></p-button>
+          <p-button (click)="realizarPagamento(ordem)" label="Pagar"></p-button>
+          <br/><br/>
+          <p-button (click)="concluirOrdem(ordem)" label="Concluir"></p-button>
         </td>
       </tr>
     </ng-template>

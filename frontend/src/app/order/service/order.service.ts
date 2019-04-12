@@ -17,10 +17,12 @@ export class OrderService {
   }
 
   realizarPagamento(ordem : OrdemServico): Observable<HttpResponse<OrdemServico>> {
+    ordem.pago = true;
     return this.http.put<OrdemServico>( this.url + "pagamento/", ordem, { observe: 'response' });
   }
 
   concluirOrdem(ordem : OrdemServico): Observable<HttpResponse<OrdemServico>> {
+    ordem.concluida = true;
     return this.http.put<OrdemServico>( this.url + "concluir/", ordem, { observe: 'response' });
   }
 
