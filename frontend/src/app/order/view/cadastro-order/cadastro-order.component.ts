@@ -6,6 +6,7 @@ import { VeiculoService } from 'src/app/customer/service/veiculo/veiculo.service
 import { Cliente } from 'src/app/person/model/cliente.model';
 import { Veiculo } from 'src/app/customer/model/veiculo';
 import { Servico } from 'src/app/store/model/servico';
+import { ServicoService } from 'src/app/store/service/servico.service';
 
 @Component({
   selector: 'app-cadastro-order',
@@ -30,11 +31,13 @@ export class CadastroOrderComponent implements OnInit {
 
   constructor(private service : OrderService,
     private clienteService : ClienteService,
-    private veiculoService : VeiculoService) { }
+    private veiculoService : VeiculoService,
+    private servicoService : ServicoService) { }
 
   ngOnInit() {
     this.getClientes();
     this.getVeiculos();
+    this.getServicos();
   }
 
   salvar() : void{
@@ -55,6 +58,12 @@ export class CadastroOrderComponent implements OnInit {
   getVeiculos(){
     this.veiculoService.listarTodos().subscribe( res => {
       this.veiculos = res.body;
+    })
+  }
+
+  getServicos(){
+    this.servicoService.buscarTodos().subscribe( res => {
+      this.servicos = res.body;
     })
   }
 }
