@@ -35,9 +35,9 @@ public class HostsProperties {
     @Value("${person2.port}")
     private int person2Port;
     @Value("${person3.host}")
-    private String store3Host;
+    private String person3Host;
     @Value("${person3.port}")
-    private int store3Port;
+    private int person3Port;
 
 //    CUSTOMER
     @Value("${customer1.host}")
@@ -150,20 +150,20 @@ public class HostsProperties {
         this.person2Port = person2Port;
     }
 
-    public String getStore3Host() {
-        return store3Host;
+    public String getPerson3Host() {
+        return person3Host;
     }
 
-    public void setStore3Host(String store3Host) {
-        this.store3Host = store3Host;
+    public void setPerson3Host(String person3Host) {
+        this.person3Host = person3Host;
     }
 
-    public int getStore3Port() {
-        return store3Port;
+    public int getPerson3Port() {
+        return person3Port;
     }
 
-    public void setStore3Port(int store3Port) {
-        this.store3Port = store3Port;
+    public void setPerson3Port(int person3Port) {
+        this.person3Port = person3Port;
     }
 
     public String getCustomer1Host() {
