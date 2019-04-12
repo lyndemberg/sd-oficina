@@ -3,6 +3,7 @@ package sd.oficina.oficinawebapp.order.valueobject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import sd.oficina.shared.model.customer.Veiculo;
+import sd.oficina.shared.model.order.OrdemServico;
 import sd.oficina.shared.model.person.Cliente;
 import sd.oficina.shared.model.store.Servico;
 
@@ -63,4 +64,17 @@ public class OrdemServicoValue {
     public void setServicos(List<Servico> servicos) {
         this.servicos = servicos;
     }
+
+    public OrdemServico toEntity(){
+        OrdemServico entity = new OrdemServico();
+        entity.setDataRegistro(this.getDataRegistro());
+        entity.setDataPagamento(this.getDataPagamento());
+        entity.setPago(this.isPago());
+        entity.setConcluida(this.isConcluida());
+        entity.setIdCliente(this.getCliente().getId());
+        entity.setIdVeiculo(this.getVeiculo().getId());
+        entity.setServicos(this.getIdServicos());
+        return entity;
+    }
+
 }

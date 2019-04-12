@@ -1,14 +1,24 @@
 package sd.oficina.oficinawebapp.config;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import sd.oficina.oficinawebapp.identity.IdentityManager;
+import sd.oficina.oficinawebapp.order.grpc.OrderClient;
 import sd.oficina.oficinawebapp.shared.RescueService;
 
 @Configuration
+@EntityScan("sd.oficina.shared.model")
 public class BeanConfig {
+
+    private final HostsProperties hostsProperties;
+
+    public BeanConfig(HostsProperties hostsProperties){
+        this.hostsProperties = hostsProperties;
+    }
 
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -21,5 +31,11 @@ public class BeanConfig {
     public IdentityManager provideSingletonIdentityManager(){
         return new IdentityManager();
     }
+
+    @Bean
+    public OrderClient provideOrderClient(){
+        return new OrderClient(hostsProperties);
+    }
+
 
 }
