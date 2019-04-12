@@ -30,6 +30,14 @@ export class ListarOrderComponent implements OnInit {
     )
   }
 
+  listarPorClinte(){
+    this.orderService.listarPorCliente(this.buscar.id).subscribe(
+      res => {
+        this.ordens = res.body;
+      }
+    )
+  }
+
   realizarPagamento(ordemValue) {
     this.orderService.realizarPagamento(ordemValue).subscribe(
       res => {
