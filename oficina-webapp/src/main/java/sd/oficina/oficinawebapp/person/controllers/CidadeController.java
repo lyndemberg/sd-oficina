@@ -11,29 +11,10 @@ import java.util.List;
 @RequestMapping("/api/cidade")
 public class CidadeController {
 
-    private CidadeService cidadeService;
+    private final CidadeService cidadeService;
 
     public CidadeController(CidadeService cidadeService) {
         this.cidadeService = cidadeService;
-    }
-
-    @PostMapping
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Cidade> salvar(@RequestBody Cidade cidade) {
-        return ResponseEntity.ok().body(cidadeService.salvar(cidade));
-    }
-
-    @PutMapping
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Cidade> atualizar(@RequestBody Cidade cidade) {
-        return ResponseEntity.ok().body(cidadeService.atualizar(cidade));
-    }
-
-    @DeleteMapping("/{id}")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Void> deletar(@PathVariable("id") int idDaCidade) {
-        cidadeService.deletar(idDaCidade);
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/buscar/{id}")
