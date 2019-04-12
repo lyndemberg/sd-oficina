@@ -10,7 +10,7 @@ import sd.oficina.shared.proto.person.ClienteServiceGrpc;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Deprecated
 public class ClienteClient {
 
     private ManagedChannel channel;

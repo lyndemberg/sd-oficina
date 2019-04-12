@@ -11,6 +11,7 @@ import sd.oficina.shared.proto.person.EstadoServiceGrpc;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class EstadoClient {
 
     private ManagedChannel channel;

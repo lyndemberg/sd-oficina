@@ -11,6 +11,7 @@ import sd.oficina.shared.proto.person.FornecedorServiceGrpc;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class FornecedorClient {
 
     private ManagedChannel channel;

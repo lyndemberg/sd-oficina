@@ -10,7 +10,7 @@ import sd.oficina.shared.proto.person.CidadeServiceGrpc;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Deprecated
 public class CidadeClient {
 
     private ManagedChannel channel;
