@@ -28,32 +28,6 @@
   </div>
   <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
     <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
-      <label>Paga</label>
-      <div class="ui-g">
-        <div class="ui-g-12">
-          <p-radioButton name="group1" value="true" label="Sim" [(ngModel)]="ordem.pago"></p-radioButton>
-        </div>
-        <div class="ui-g-12">
-          <p-radioButton name="group1" value="false" label="Não" [(ngModel)]="ordem.pago"></p-radioButton>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
-    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
-      <label>Concluida</label>
-      <div class="ui-g">
-        <div class="ui-g-12">
-          <p-radioButton name="group2" value="true" label="Sim" [(ngModel)]="ordem.concluida"></p-radioButton>
-        </div>
-        <div class="ui-g-12">
-          <p-radioButton name="group2" value="false" label="Não" [(ngModel)]="ordem.concluida"></p-radioButton>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
-    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
       <label>Serviços</label>
       <p-multiSelect [options]="servico" [(ngModel)]="ordem.servico" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
     </div>
