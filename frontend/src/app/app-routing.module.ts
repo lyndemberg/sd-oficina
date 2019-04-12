@@ -15,7 +15,7 @@ import { CadastrarModeloComponent} from  './customer/view/modelo/cadastrar-model
 import { ListarModeloComponent} from './customer/view/modelo/listar-modelo/listar-modelo.component';
 import { CadastrarVeiculoComponent} from  './customer/view/veiculo/cadastrar-veiculo/cadastrar-veiculo.component';
 import { ListarVeiculoComponent} from './customer/view/veiculo/listar-veiculo/listar-veiculo.component';
-import { CadastroOrdemComponent } from './cadastro-ordem/cadastro-ordem.component';
+import { CadastroOrderComponent } from './order/view/cadastro-order/cadastro-order.component';
 import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoque/cadastrar-estoque.component';
 import { ListarEstoqueComponent } from './store/view/estoque/listar-estoque/listar-estoque.component';
 
@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'listarVeiculo', component: ListarVeiculoComponent},
   { path: 'cadastrarModelo', component: CadastrarModeloComponent},
   { path: 'listarModelo', component: ListarModeloComponent},
-  { path:'cadastroOrdem',component: CadastroOrdemComponent},
+  { path: 'cadastroOrdem',component: CadastroOrderComponent},
   { path: 'cadastrarEstoque', component: CadastrarEstoqueComponent},
   { path: 'listarEstoque', component: ListarEstoqueComponent},
 ];

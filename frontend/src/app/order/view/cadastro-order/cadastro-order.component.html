@@ -1,0 +1,68 @@
+<div class="p-grid">
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
+    <h2 class="box">Cadastrar Ordem de Serviço</h2>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <p-dropdown [options]="cores" [(ngModel)]="ordem.cliente" placeholder="Selecione o cliente" optionLabel="nome"
+        [showClear]="true"></p-dropdown>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <p-dropdown [options]="cores" [(ngModel)]="ordem.veiculo" placeholder="Selecione o veiculo" optionLabel="nome"
+        [showClear]="true"></p-dropdown>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <label>Data de Registro</label>
+      <input id="float-input" type="date" size="50" pInputText [(ngModel)]="ordem.dataRegistro">
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <label>Data de Registro</label>
+      <input id="float-input" type="date" size="50" pInputText [(ngModel)]="ordem.dataPagamento">
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <label>Paga</label>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <p-radioButton name="group1" value="true" label="Sim" [(ngModel)]="ordem.pago"></p-radioButton>
+        </div>
+        <div class="ui-g-12">
+          <p-radioButton name="group1" value="false" label="Não" [(ngModel)]="ordem.pago"></p-radioButton>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <label>Concluida</label>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <p-radioButton name="group2" value="true" label="Sim" [(ngModel)]="ordem.concluida"></p-radioButton>
+        </div>
+        <div class="ui-g-12">
+          <p-radioButton name="group2" value="false" label="Não" [(ngModel)]="ordem.concluida"></p-radioButton>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <label>Serviços</label>
+      <p-multiSelect [options]="servico" [(ngModel)]="ordem.servico" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-2 p-md-2 p-lg-2 p-xl-2 ui-fluid p-offset-5">
+      <button (click)="salvar(ordem)" pButton type="button" label="Salvar"></button>
+    </div>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

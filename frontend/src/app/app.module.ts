@@ -42,9 +42,10 @@ import { ListarModeloComponent } from './customer/view/modelo/listar-modelo/list
 import { CadastrarModeloComponent } from './customer/view/modelo/cadastrar-modelo/cadastrar-modelo.component';
 import { ListarVeiculoComponent } from './customer/view/veiculo/listar-veiculo/listar-veiculo.component';
 import { CadastrarVeiculoComponent } from './customer/view/veiculo/cadastrar-veiculo/cadastrar-veiculo.component';
-import { CadastroOrdemComponent } from './cadastro-ordem/cadastro-ordem.component';
 import { ListarEstoqueComponent } from './store/view/estoque/listar-estoque/listar-estoque.component';
 import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoque/cadastrar-estoque.component';
+import { CadastroOrderComponent } from './order/view/cadastro-order/cadastro-order.component';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -68,9 +69,9 @@ import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoqu
     CadastrarModeloComponent,
     ListarVeiculoComponent,
     CadastrarVeiculoComponent,
-    CadastroOrdemComponent,
     ListarEstoqueComponent,
-    CadastrarEstoqueComponent
+    CadastrarEstoqueComponent,
+    CadastroOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +92,8 @@ import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoqu
     ToastModule,
     DropdownModule,
     InputMaskModule,
-    KeyFilterModule
+    KeyFilterModule,
+    MultiSelectModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
