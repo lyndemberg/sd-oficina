@@ -12,11 +12,16 @@ import sd.oficina.shared.model.ServiceEnum;
 import javax.persistence.Persistence;
 import java.io.IOException;
 
+import static sd.oficina.person2.config.StartEstadosECidades.start;
+
 public class Person2Application {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // Inicializa serviço de EventRescue
         new Thread(Person2Application::startEventRescue).start();
+
+        //Inicia as inserções de estados e cidades
+        start();
 
         Server server = ServerBuilder.forPort(2222)
                 .addService(new CidadeService())
