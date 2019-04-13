@@ -37,9 +37,6 @@ public class OrdemServicoDao {
 
             ex.printStackTrace();
             this.entityManager.getTransaction().rollback();
-        } finally {
-
-            this.entityManager.getTransaction().commit();
         }
 
         return optional;
@@ -66,6 +63,8 @@ public class OrdemServicoDao {
         try {
 
             this.entityManager.remove(ordemServico);
+            this.entityManager.getTransaction().commit();
+
         } catch (Exception ex) {
 
             ex.printStackTrace();
@@ -73,8 +72,6 @@ public class OrdemServicoDao {
             this.entityManager.getTransaction().rollback();
 
             return false;
-        } finally {
-            this.entityManager.getTransaction().commit();
         }
 
         return true;
@@ -92,6 +89,7 @@ public class OrdemServicoDao {
         try {
 
             optional = Optional.ofNullable(this.entityManager.merge(ordemServico));
+            this.entityManager.getTransaction().commit();
 
         } catch (Exception ex) {
 
@@ -99,8 +97,6 @@ public class OrdemServicoDao {
             this.entityManager.getTransaction().rollback();
 
             return Optional.empty();
-        } finally {
-            this.entityManager.getTransaction().commit();
         }
 
         return optional;
