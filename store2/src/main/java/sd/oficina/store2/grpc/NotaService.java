@@ -2,19 +2,28 @@ package sd.oficina.store2.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.shared.converter.ProtoConverterStore;
 import sd.oficina.shared.model.store.Nota;
 import sd.oficina.shared.proto.customer.*;
 import sd.oficina.store2.daos.NotaDao;
+import sd.oficina.store2.infra.cache.ConnectionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
 
     private NotaDao notaDao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public NotaService() {
         this.notaDao = new NotaDao();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -77,6 +86,10 @@ public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
                     .setNota(
                             ProtoConverterStore.modelToProto(nota))
                     .build());
+
+            // Atualiza o cache
+            hashOperations.put(Nota.class.getSimpleName(), nota.getId(), nota);
+
         } else {
             responseObserver.onNext(NotaResult
                     .newBuilder()
@@ -97,5 +110,12 @@ public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Nota.class.getSimpleName(),
+                notas.stream().collect(
+                        Collectors.toMap(Nota::getId, nota -> nota)
+                ));
     }
 }
