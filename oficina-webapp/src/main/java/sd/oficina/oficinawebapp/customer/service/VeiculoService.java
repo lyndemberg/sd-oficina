@@ -9,6 +9,7 @@ import sd.oficina.oficinawebapp.customer.grpc.CustomerClient;
 import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.rescue.RescueRepository;
+import sd.oficina.shared.model.ActionEnum;
 import sd.oficina.shared.model.EventRescue;
 import sd.oficina.shared.model.ServiceEnum;
 import sd.oficina.shared.model.customer.Modelo;
@@ -47,7 +48,7 @@ public class VeiculoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Veiculo.class.getSimpleName());
             eventRescue.setService(ServiceEnum.CUSTOMER);
-            eventRescue.setAction("SAVE");
+            eventRescue.setAction(ActionEnum.INSERT);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(veiculo));
@@ -82,7 +83,7 @@ public class VeiculoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Veiculo.class.getSimpleName());
             eventRescue.setService(ServiceEnum.CUSTOMER);
-            eventRescue.setAction("DELETE");
+            eventRescue.setAction(ActionEnum.DELETE);
             Veiculo veiculo = new Veiculo();
             veiculo.setId(id);
             ObjectMapper mapper = new ObjectMapper();
@@ -107,7 +108,7 @@ public class VeiculoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Veiculo.class.getSimpleName());
             eventRescue.setService(ServiceEnum.CUSTOMER);
-            eventRescue.setAction("UPDATE");
+            eventRescue.setAction(ActionEnum.UPDATE);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(veiculo));

@@ -10,43 +10,43 @@ services:
                         - "5433:5432"
                 networks:
                         - private_network
-        oficina-webapp:
-                build:
-                        dockerfile: ./Dockerfile
-                        context: ./oficina-webapp
-                container_name: oficina-app
-                ports:
-                        - "8080:8080"
-                networks:
-                        - private_network
-        cache-order:
-                image: redis
-                container_name: cache-order
-                ports:
-                        - "7171:6379"
-                networks:
-                        - private_network
-        cache-store:
-                image: redis
-                container_name: cache-store
-                ports:
-                        - "7172:6379"
-                networks:
-                        - private_network
-        cache-person:
-                image: redis
-                container_name: cache-person
-                ports:
-                        - "7173:6379"
-                networks:
-                        - private_network
-        cache-customer:
-                image: redis
-                container_name: cache-customer
-                ports:
-                        - "7174:6379"
-                networks:
-                        - private_network
+#        oficina-webapp:
+#                build:
+#                        dockerfile: ./Dockerfile
+#                        context: ./oficina-webapp
+#                container_name: oficina-app
+#                ports:
+#                        - "8080:8080"
+#                networks:
+#                        - private_network
+#        cache-order:
+#                image: redis
+#                container_name: cache-order
+#                ports:
+#                        - "7171:6379"
+#                networks:
+#                        - private_network
+#        cache-store:
+#                image: redis
+#                container_name: cache-store
+#                ports:
+#                        - "7172:6379"
+#                networks:
+#                        - private_network
+#        cache-person:
+#                image: redis
+#                container_name: cache-person
+#                ports:
+#                        - "7173:6379"
+#                networks:
+#                        - private_network
+#        cache-customer:
+#                image: redis
+#                container_name: cache-customer
+#                ports:
+#                        - "7174:6379"
+#                networks:
+#                        - private_network
 networks:
         private_network:
                 driver: bridge

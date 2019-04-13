@@ -10,6 +10,7 @@ import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.rescue.RescueRepository;
 import sd.oficina.oficinawebapp.store.grpc.StoreClient;
+import sd.oficina.shared.model.ActionEnum;
 import sd.oficina.shared.model.EventRescue;
 import sd.oficina.shared.model.ServiceEnum;
 import sd.oficina.shared.model.store.Estoque;
@@ -45,7 +46,7 @@ public class NotaService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Nota.class.getSimpleName());
             eventRescue.setService(ServiceEnum.STORE);
-            eventRescue.setAction("SAVE");
+            eventRescue.setAction(ActionEnum.INSERT);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(nota));
@@ -78,7 +79,7 @@ public class NotaService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Nota.class.getSimpleName());
             eventRescue.setService(ServiceEnum.STORE);
-            eventRescue.setAction("DELETE");
+            eventRescue.setAction(ActionEnum.DELETE);
             Nota nota = new Nota();
             nota.setId(id);
             ObjectMapper mapper = new ObjectMapper();
@@ -103,7 +104,7 @@ public class NotaService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Nota.class.getSimpleName());
             eventRescue.setService(ServiceEnum.STORE);
-            eventRescue.setAction("UPDATE");
+            eventRescue.setAction(ActionEnum.UPDATE);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(nota));

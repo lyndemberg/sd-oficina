@@ -14,6 +14,7 @@ import sd.oficina.oficinawebapp.order.valueobject.OrdemServicoValue;
 import sd.oficina.oficinawebapp.person.services.ClienteService;
 import sd.oficina.oficinawebapp.rescue.RescueRepository;
 import sd.oficina.oficinawebapp.store.service.ServicoService;
+import sd.oficina.shared.model.ActionEnum;
 import sd.oficina.shared.model.EventRescue;
 import sd.oficina.shared.model.ServiceEnum;
 import sd.oficina.shared.model.customer.Veiculo;
@@ -64,7 +65,7 @@ public class OrdemServicoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(OrdemServico.class.getSimpleName());
             eventRescue.setService(ServiceEnum.ORDER);
-            eventRescue.setAction("SAVE");
+            eventRescue.setAction(ActionEnum.INSERT);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(ordemServico));
@@ -79,6 +80,7 @@ public class OrdemServicoService {
     }
 
     public void realizarPagamento(OrdemServicoValue value){
+        value.setPago(true);
         OrdemServico ordemServico = value.toEntity();
         try {
             clientOrderGrpc.realizarPagamento(ordemServico);
@@ -87,7 +89,7 @@ public class OrdemServicoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(OrdemServico.class.getSimpleName());
             eventRescue.setService(ServiceEnum.ORDER);
-            eventRescue.setAction("PAGAMENTO");
+            eventRescue.setAction(ActionEnum.UPDATE);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(ordemServico));
@@ -102,6 +104,7 @@ public class OrdemServicoService {
     }
 
     public void concluirOrdem(OrdemServicoValue value){
+        value.setPago(true);
         OrdemServico ordemServico = value.toEntity();
         try {
             clientOrderGrpc.concluirOrdem(ordemServico);
@@ -110,7 +113,7 @@ public class OrdemServicoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(OrdemServico.class.getSimpleName());
             eventRescue.setService(ServiceEnum.ORDER);
-            eventRescue.setAction("CONCLUIR");
+            eventRescue.setAction(ActionEnum.UPDATE);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(ordemServico));

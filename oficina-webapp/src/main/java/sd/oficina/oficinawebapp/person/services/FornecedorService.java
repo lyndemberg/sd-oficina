@@ -10,6 +10,7 @@ import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.person.grpc.PersonClient;
 import sd.oficina.oficinawebapp.rescue.RescueRepository;
+import sd.oficina.shared.model.ActionEnum;
 import sd.oficina.shared.model.EventRescue;
 import sd.oficina.shared.model.ServiceEnum;
 import sd.oficina.shared.model.person.Cliente;
@@ -48,7 +49,7 @@ public class FornecedorService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Cliente.class.getSimpleName());
             eventRescue.setService(ServiceEnum.PERSON);
-            eventRescue.setAction("SAVE");
+            eventRescue.setAction(ActionEnum.INSERT);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(fornecedor));
@@ -74,7 +75,7 @@ public class FornecedorService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Cliente.class.getSimpleName());
             eventRescue.setService(ServiceEnum.PERSON);
-            eventRescue.setAction("UPDATE");
+            eventRescue.setAction(ActionEnum.UPDATE);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(fornecedor));
@@ -99,7 +100,7 @@ public class FornecedorService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Cliente.class.getSimpleName());
             eventRescue.setService(ServiceEnum.PERSON);
-            eventRescue.setAction("DELETE");
+            eventRescue.setAction(ActionEnum.UPDATE);
             Fornecedor fornecedor = new Fornecedor();
             fornecedor.setId(idDoFornecedor);
             ObjectMapper mapper = new ObjectMapper();

@@ -2,6 +2,7 @@ package sd.oficina.oficinawebapp.store.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.rescue.RescueRepository;
 import sd.oficina.oficinawebapp.store.grpc.StoreClient;
+import sd.oficina.shared.model.ActionEnum;
 import sd.oficina.shared.model.EventRescue;
 import sd.oficina.shared.model.ServiceEnum;
 import sd.oficina.shared.model.store.Estoque;
@@ -26,7 +28,7 @@ public class ServicoService {
     private final StoreClient grpc;
     private final RedisTemplate<String,Servico> redisTemplate;
 
-    public ServicoService(IdentityManager identityManager, RescueRepository rescueRepository, StoreClient grpc, RedisTemplate<String, Servico> redisTemplate) {
+    public ServicoService(IdentityManager identityManager, RescueRepository rescueRepository, StoreClient grpc, @Qualifier("redisTemplateStore") RedisTemplate<String, Servico> redisTemplate) {
         this.identityManager = identityManager;
         this.rescueRepository = rescueRepository;
         this.grpc = grpc;
@@ -44,7 +46,7 @@ public class ServicoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Servico.class.getSimpleName());
             eventRescue.setService(ServiceEnum.STORE);
-            eventRescue.setAction("SAVE");
+            eventRescue.setAction(ActionEnum.INSERT);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(servico));
@@ -77,7 +79,7 @@ public class ServicoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Servico.class.getSimpleName());
             eventRescue.setService(ServiceEnum.STORE);
-            eventRescue.setAction("DELETE");
+            eventRescue.setAction(ActionEnum.DELETE);
             Servico servico = new Servico();
             servico.setId(id);
             ObjectMapper mapper = new ObjectMapper();
@@ -102,7 +104,7 @@ public class ServicoService {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Servico.class.getSimpleName());
             eventRescue.setService(ServiceEnum.STORE);
-            eventRescue.setAction("UPDATE");
+            eventRescue.setAction(ActionEnum.UPDATE);
             ObjectMapper mapper = new ObjectMapper();
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(servico));
