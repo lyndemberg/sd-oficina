@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.rescue.RescueRepository;
-import sd.oficina.oficinawebapp.store.grpc.EstoqueClient;
+import sd.oficina.oficinawebapp.store.grpc.StoreClient;
 import sd.oficina.shared.model.EventRescue;
 import sd.oficina.shared.model.ServiceEnum;
-import sd.oficina.shared.model.customer.Fabricante;
 import sd.oficina.shared.model.store.Estoque;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,12 +23,11 @@ public class EstoqueService {
     private final HashOperations<String, Object, Estoque> hashOperations;
     private final IdentityManager identityManager;
     private final sd.oficina.oficinawebapp.rescue.RescueRepository rescueRepository;
-    private EstoqueClient grpc;
-    private RedisTemplate<String,Estoque> redisTemplate;
+    private final StoreClient grpc;
+    private final RedisTemplate<String,Estoque> redisTemplate;
 
     public EstoqueService(@Qualifier("redisTemplateStore") RedisTemplate<String, Estoque> template,
-                          IdentityManager identityManager, RescueRepository rescueRepository,
-                          EstoqueClient grpc) {
+                          IdentityManager identityManager, RescueRepository rescueRepository, StoreClient grpc) {
         this.redisTemplate = template;
         this.hashOperations = template.opsForHash();
         this.identityManager = identityManager;
@@ -41,7 +40,7 @@ public class EstoqueService {
         long id = identityManager.gerarIdParaEntidade(Estoque.class.getSimpleName());
         estoque.setIdPeca(id);
         try {
-            persistido = grpc.salvar(estoque);
+            persistido = grpc.salvarEstoque(estoque);
         } catch (FalhaGrpcException ex) {
             EventRescue eventRescue = new EventRescue();
             eventRescue.setEntity(Estoque.class.getSimpleName());
@@ -51,7 +50,6 @@ public class EstoqueService {
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(estoque));
                 rescueRepository.save(eventRescue);
-
                 hashOperations.put(Estoque.class.getSimpleName(), estoque.getIdPeca(), estoque);
                 persistido = estoque;
             } catch (JsonProcessingException e1) {
@@ -62,18 +60,72 @@ public class EstoqueService {
     }
 
     public Estoque buscar(int id) {
-        return grpc.buscar(id);
+        Estoque estoque = null;
+        try {
+            estoque = grpc.buscarEstoque(id);
+        } catch (FalhaGrpcException e) {
+            //buscando no cache
+            estoque = hashOperations.get(Estoque.class.getSimpleName(),id);
+        }
+        return estoque;
     }
 
     public void deletar(int id) {
-        grpc.deletar(id);
+        try {
+            grpc.deletarEstoque(id);
+        } catch (FalhaGrpcException e) {
+            //CRIAR EVENTO NA TABELA
+            EventRescue eventRescue = new EventRescue();
+            eventRescue.setEntity(Estoque.class.getSimpleName());
+            eventRescue.setService(ServiceEnum.STORE);
+            eventRescue.setAction("DELETE");
+            Estoque estoque = new Estoque();
+            estoque.setIdPeca(id);
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                eventRescue.setPayload(mapper.writeValueAsString(estoque));
+                //salvando evento na tabela para o serviço executar no reinicio
+                rescueRepository.save(eventRescue);
+                //atualiza cache depois de inserir na tabela
+                hashOperations.delete(Estoque.class.getSimpleName(),id);
+            } catch (JsonProcessingException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
-    public Estoque atualizar(Estoque Estoque) {
-        return grpc.atualizar(Estoque);
+    public Estoque atualizar(Estoque estoque) {
+        Estoque atualizado = null;
+        try {
+            atualizado = grpc.atualizarEstoque(estoque);
+        } catch (FalhaGrpcException e) {
+            //CRIAR EVENTO NA TABELA
+            EventRescue eventRescue = new EventRescue();
+            eventRescue.setEntity(Estoque.class.getSimpleName());
+            eventRescue.setService(ServiceEnum.STORE);
+            eventRescue.setAction("UPDATE");
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                eventRescue.setPayload(mapper.writeValueAsString(estoque));
+                //salvando evento na tabela para o serviço executar no reinicio
+                rescueRepository.save(eventRescue);
+                //atualiza cache depois de inserir na tabela
+                hashOperations.put(Estoque.class.getSimpleName(),estoque.getIdPeca(),estoque);
+                atualizado = estoque;
+            } catch (JsonProcessingException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return atualizado;
     }
 
     public List<Estoque> todos() {
-        return grpc.buscarTodos();
+        List<Estoque> clientesList = new ArrayList<>();
+        try {
+            clientesList = grpc.buscarTodosEstoque();
+        } catch (FalhaGrpcException e) {
+            clientesList =  hashOperations.values(Estoque.class.getSimpleName());
+        }
+        return clientesList;
     }
 }

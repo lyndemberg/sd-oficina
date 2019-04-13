@@ -3,7 +3,6 @@ package sd.oficina.oficinawebapp.config;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import sd.oficina.oficinawebapp.customer.grpc.CustomerClient;
@@ -11,8 +10,7 @@ import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.order.grpc.OrderClient;
 import sd.oficina.oficinawebapp.person.grpc.PersonClient;
 import sd.oficina.oficinawebapp.shared.RescueService;
-import sd.oficina.oficinawebapp.store.grpc.EstoqueClient;
-import sd.oficina.shared.model.store.Estoque;
+import sd.oficina.oficinawebapp.store.grpc.StoreClient;
 
 @Configuration
 @EntityScan("sd.oficina.shared.model")
@@ -52,9 +50,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public EstoqueClient provideStoreClient(){
-        return new EstoqueClient(hostsProperties);
+    public StoreClient provideStoreClient(){
+        return new StoreClient(hostsProperties);
     }
-
 
 }
