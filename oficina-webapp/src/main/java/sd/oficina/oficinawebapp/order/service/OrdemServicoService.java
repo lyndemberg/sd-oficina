@@ -39,7 +39,7 @@ public class OrdemServicoService {
     private final RescueRepository rescueRepository;
     //CACHE
     private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String,Object, Object> hashOperations;
+    private final HashOperations<String, Object, Object> hashOperations;
 
     public OrdemServicoService(OrderClient clientOrderGrpc, ClienteService clienteService, VeiculoService veiculoService, ServicoService servicoService, IdentityManager identityManager, RescueRepository rescueRepository, @Qualifier("redisTemplateOrder") RedisTemplate<String, Object> redisTemplate) {
         this.clientOrderGrpc = clientOrderGrpc;
@@ -52,7 +52,7 @@ public class OrdemServicoService {
         this.hashOperations = redisTemplate.opsForHash();
     }
 
-    public void salvar(OrdemServicoValue value){
+    public void salvar(OrdemServicoValue value) {
         long id = identityManager.gerarIdParaEntidade(OrdemServico.class.getSimpleName());
         OrdemServico ordemServico = value.toEntity();
         ordemServico.setId(id);
@@ -72,14 +72,14 @@ public class OrdemServicoService {
                 //salvando evento na tabela para o serviço executar no reinicio
                 rescueRepository.save(eventRescue);
                 //atualiza cache depois de inserir na tabela
-                hashOperations.put(OrdemServico.class.getSimpleName(),ordemServico.getId(),ordemServico);
+                hashOperations.put(OrdemServico.class.getSimpleName(), ordemServico.getId(), ordemServico);
             } catch (JsonProcessingException e1) {
                 e1.printStackTrace();
             }
         }
     }
 
-    public void realizarPagamento(OrdemServicoValue value){
+    public void realizarPagamento(OrdemServicoValue value) {
         value.setPago(true);
         OrdemServico ordemServico = value.toEntity();
         try {
@@ -95,7 +95,7 @@ public class OrdemServicoService {
                 eventRescue.setPayload(mapper.writeValueAsString(ordemServico));
                 rescueRepository.save(eventRescue);
                 ordemServico.setPago(true);
-                hashOperations.put(OrdemServico.class.getSimpleName(),ordemServico.getId(),ordemServico);
+                hashOperations.put(OrdemServico.class.getSimpleName(), ordemServico.getId(), ordemServico);
             } catch (JsonProcessingException e1) {
                 e1.printStackTrace();
             }
@@ -103,7 +103,7 @@ public class OrdemServicoService {
         }
     }
 
-    public void concluirOrdem(OrdemServicoValue value){
+    public void concluirOrdem(OrdemServicoValue value) {
         value.setPago(true);
         OrdemServico ordemServico = value.toEntity();
         try {
@@ -119,24 +119,24 @@ public class OrdemServicoService {
                 eventRescue.setPayload(mapper.writeValueAsString(ordemServico));
                 rescueRepository.save(eventRescue);
                 ordemServico.setConcluida(true);
-                hashOperations.put(OrdemServico.class.getSimpleName(),ordemServico.getId(),ordemServico);
+                hashOperations.put(OrdemServico.class.getSimpleName(), ordemServico.getId(), ordemServico);
             } catch (JsonProcessingException e1) {
                 e1.printStackTrace();
             }
         }
     }
 
-    public List<OrdemServicoValue> buscarOrdensDeServicoPorCliente(Cliente cliente){
+    public List<OrdemServicoValue> buscarOrdensDeServicoPorCliente(Cliente cliente) {
         List<OrdemServicoValue> ordemServicoValueList = new ArrayList<>();
         try {
             List<OrdemProto> protos = clientOrderGrpc.buscarOrdensPorCliente(cliente);
-            protos.stream().forEach((ordem)->{
+            protos.forEach((ordem) -> {
                 //compõe Cliente
                 Cliente cli = clienteService.buscar(ordem.getIdCliente());
                 //compõe Veículo
                 Veiculo veiculo = veiculoService.buscar(ordem.getIdVeiculo());
                 List<Servico> servicosList = new ArrayList<>();
-                ordem.getServicosList().stream().forEach((servico)->{
+                ordem.getServicosList().forEach((servico) -> {
                     Servico s = servicoService.buscar(servico);
                     servicosList.add(s);
                 });
@@ -159,7 +159,7 @@ public class OrdemServicoService {
             if (cache != null) {
 
                 // Para cada OrdemServico no cache converte em OrdemServiceValue
-                cache.forEach((ordem)->{
+                cache.forEach((ordem) -> {
                     //compõe Cliente
                     Cliente cli = clienteService.buscar(ordem.getIdCliente());
 
@@ -168,7 +168,7 @@ public class OrdemServicoService {
 
                     List<Servico> servicosList = new ArrayList<>();
 
-                    ordem.getServicos().forEach((servico)->{
+                    ordem.getServicos().forEach((servico) -> {
                         Servico s = servicoService.buscar(servico);
                         servicosList.add(s);
                     });
