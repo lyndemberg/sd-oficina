@@ -1,22 +1,34 @@
 package sd.oficina.customer2.grpc;
 
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer2.dao.AnoModeloDAO;
+import sd.oficina.customer2.infra.cache.ConnectionFactory;
 import sd.oficina.shared.model.customer.AnoModelo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.stub.StreamObserver;
+import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.proto.customer.AnoModeloProto;
 import sd.oficina.shared.proto.customer.AnoModeloProtoList;
 import sd.oficina.shared.proto.customer.AnoModeloResult;
 import sd.oficina.shared.proto.customer.AnoModeloServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase {
 
     private AnoModeloDAO dao;
 
-    public AnoModeloImpl() { dao = new AnoModeloDAO();}
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
+    public AnoModeloImpl() {
+        this.dao = new AnoModeloDAO();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
+    }
 
 
     @Override
@@ -27,6 +39,13 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
         anoModelos.forEach(a -> builder.addAnoModelos(ProtoConverterCustomer.modelToProto(a)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                AnoModelo.class.getSimpleName(),
+                anoModelos.stream().collect(
+                        Collectors.toMap(AnoModelo::getId, anoModelo -> anoModelo)
+                ));
     }
 
     @Override
@@ -68,5 +87,12 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
                         anoModelo != null ? ProtoConverterCustomer.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o AnoModelo
+        if (anoModelo != null) {
+            // Atualiza o cache
+            hashOperations.put(Veiculo.class.getSimpleName(), anoModelo.getId(), anoModelo);
+        }
+
     }
 }

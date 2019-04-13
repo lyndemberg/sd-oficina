@@ -1,7 +1,10 @@
 package sd.oficina.customer2.grpc;
 
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer2.dao.FabricanteDAO;
 import com.google.protobuf.Empty;
+import sd.oficina.customer2.infra.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Fabricante;
 import io.grpc.stub.StreamObserver;
@@ -11,13 +14,19 @@ import sd.oficina.shared.proto.customer.FabricanteResult;
 import sd.oficina.shared.proto.customer.FabricanteServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplBase {
 
     private FabricanteDAO dao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public FabricanteImpl() {
         this.dao = new FabricanteDAO();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -27,6 +36,13 @@ public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplB
         fabricantes.forEach(f-> builder.addFabricantes(ProtoConverterCustomer.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Fabricante.class.getSimpleName(),
+                fabricantes.stream().collect(
+                        Collectors.toMap(Fabricante::getId, fabricante -> fabricante)
+                ));
     }
 
     @Override
@@ -69,6 +85,12 @@ public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplB
                         fabricante != null ? ProtoConverterCustomer.modelToProto(fabricante) : FabricanteProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o Fabricante
+        if (fabricante != null) {
+            // Atualiza o cache
+            hashOperations.put(Fabricante.class.getSimpleName(), fabricante.getId(), fabricante);
+        }
     }
 
 }

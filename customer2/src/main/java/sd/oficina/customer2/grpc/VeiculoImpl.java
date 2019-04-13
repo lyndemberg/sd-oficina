@@ -1,6 +1,9 @@
 package sd.oficina.customer2.grpc;
 
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer2.dao.VeiculoDAO;
+import sd.oficina.customer2.infra.cache.ConnectionFactory;
 import sd.oficina.shared.model.customer.Veiculo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
@@ -11,13 +14,19 @@ import sd.oficina.shared.proto.customer.VeiculoResult;
 import sd.oficina.shared.proto.customer.VeiculoServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
 
     private VeiculoDAO dao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public VeiculoImpl() {
         this.dao = new VeiculoDAO();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -27,6 +36,13 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
         veiculos.forEach(f -> builder.addVeiculos(ProtoConverterCustomer.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Veiculo.class.getSimpleName(),
+                veiculos.stream().collect(
+                        Collectors.toMap(Veiculo::getId, veiculo -> veiculo)
+                ));
     }
 
     @Override
@@ -66,5 +82,11 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
                 .setVeiculo(veiculo != null ? ProtoConverterCustomer.modelToProto(veiculo) : VeiculoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o veiculo
+        if (veiculo != null) {
+            // Atualiza o cache
+            hashOperations.put(Veiculo.class.getSimpleName(), veiculo.getId(), veiculo);
+        }
     }
 }

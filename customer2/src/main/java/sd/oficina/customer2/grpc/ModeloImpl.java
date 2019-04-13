@@ -1,7 +1,10 @@
 package sd.oficina.customer2.grpc;
 
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer2.dao.ModeloDAO;
+import sd.oficina.customer2.infra.cache.ConnectionFactory;
 import sd.oficina.shared.model.customer.Modelo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
@@ -11,13 +14,19 @@ import sd.oficina.shared.proto.customer.ModeloResult;
 import sd.oficina.shared.proto.customer.ModeloServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModeloImpl extends ModeloServiceGrpc.ModeloServiceImplBase {
 
     private ModeloDAO dao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public ModeloImpl(){
         dao = new ModeloDAO();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -27,6 +36,13 @@ public class ModeloImpl extends ModeloServiceGrpc.ModeloServiceImplBase {
         modelos.forEach(f-> builder.addModelos(ProtoConverterCustomer.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Modelo.class.getSimpleName(),
+                modelos.stream().collect(
+                        Collectors.toMap(Modelo::getId, modelo -> modelo)
+                ));
     }
 
     @Override
@@ -68,5 +84,11 @@ public class ModeloImpl extends ModeloServiceGrpc.ModeloServiceImplBase {
                         modelo != null ? ProtoConverterCustomer.modelToProto(modelo) : ModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o Modelo
+        if (modelo != null) {
+            // Atualiza o cache
+            hashOperations.put(Modelo.class.getSimpleName(), modelo.getId(), modelo);
+        }
     }
 }
