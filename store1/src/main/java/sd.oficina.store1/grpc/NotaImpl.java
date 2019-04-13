@@ -2,6 +2,8 @@ package sd.oficina.store1.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.shared.converter.ProtoConverterStore;
 import sd.oficina.shared.model.store.Nota;
 import sd.oficina.shared.proto.customer.NotaProto;
@@ -9,15 +11,22 @@ import sd.oficina.shared.proto.customer.NotaProtoList;
 import sd.oficina.shared.proto.customer.NotaResult;
 import sd.oficina.shared.proto.customer.NotaServiceGrpc;
 import sd.oficina.store1.dao.NotaDAO;
+import sd.oficina.store1.infra.cache.ConnectionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
 
     private NotaDAO dao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public NotaImpl() {
         dao = new NotaDAO();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -62,6 +71,12 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
                                 NotaProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou a Nota
+        if (Estoque != null) {
+            // Atualiza o cache
+            hashOperations.put(Nota.class.getSimpleName(), Estoque.getId(), Estoque);
+        }
     }
 
     @Override
@@ -71,5 +86,12 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
         notas.forEach(f -> builder.addNota(ProtoConverterStore.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Nota.class.getSimpleName(),
+                notas.stream().collect(
+                        Collectors.toMap(Nota::getId, nota -> nota)
+                ));
     }
 }

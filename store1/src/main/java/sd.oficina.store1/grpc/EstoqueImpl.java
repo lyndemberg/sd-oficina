@@ -2,6 +2,8 @@ package sd.oficina.store1.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.shared.converter.ProtoConverterStore;
 import sd.oficina.shared.model.store.Estoque;
 import sd.oficina.shared.proto.customer.EstoqueProto;
@@ -9,15 +11,22 @@ import sd.oficina.shared.proto.customer.EstoqueProtoList;
 import sd.oficina.shared.proto.customer.EstoqueResult;
 import sd.oficina.shared.proto.customer.EstoqueServiceGrpc;
 import sd.oficina.store1.dao.EstoqueDAO;
+import sd.oficina.store1.infra.cache.ConnectionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EstoqueImpl extends EstoqueServiceGrpc.EstoqueServiceImplBase {
 
     private EstoqueDAO dao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public EstoqueImpl() {
         dao = new EstoqueDAO();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -62,6 +71,12 @@ public class EstoqueImpl extends EstoqueServiceGrpc.EstoqueServiceImplBase {
                                 EstoqueProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o Estoque
+        if (Estoque != null) {
+            // Atualiza o cache
+            hashOperations.put(Estoque.class.getSimpleName(), Estoque.getIdPeca(), Estoque);
+        }
     }
 
     @Override
@@ -71,5 +86,12 @@ public class EstoqueImpl extends EstoqueServiceGrpc.EstoqueServiceImplBase {
         Estoques.forEach(f -> builder.addEstoque(ProtoConverterStore.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Estoque.class.getSimpleName(),
+                Estoques.stream().collect(
+                        Collectors.toMap(Estoque::getIdPeca, estoque -> estoque)
+                ));
     }
 }
