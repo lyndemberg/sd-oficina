@@ -2,25 +2,36 @@ package sd.oficina.customer1.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer1.dao.AnoModeloDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
+import sd.oficina.customer1.infra.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.AnoModelo;
+import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.proto.customer.AnoModeloProto;
 import sd.oficina.shared.proto.customer.AnoModeloProtoList;
 import sd.oficina.shared.proto.customer.AnoModeloResult;
 import sd.oficina.shared.proto.customer.AnoModeloServiceGrpc;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplBase implements Serializable {
 
     private final AnoModeloDao anoModeloDao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public AnoModeloService() {
         this.anoModeloDao = new AnoModeloDao();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -28,13 +39,26 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
 
         final AnoModeloProtoList.Builder builder = AnoModeloProtoList.newBuilder();
 
-        anoModeloDao.listarTodos()
-                .forEach(anoModelo -> builder.addAnoModelos(
-                        ProtoConverterCustomer.modelToProto(anoModelo)
-                ));
+        // Recuper lista de veiculos do DB
+        List<AnoModelo> anosModelo = anoModeloDao.listarTodos();
 
+        // Gera a resposta
+        anosModelo.forEach(anoModelo -> builder.addAnoModelos(
+                ProtoConverterCustomer.modelToProto(anoModelo)
+        ));
+
+        // Envia Resposta ao cliente
         responseObserver.onNext(builder.build());
+
+        // Finaliza comunicaçao
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                AnoModelo.class.getSimpleName(),
+                anosModelo.stream().collect(
+                        Collectors.toMap(AnoModelo::getId, anoModelo -> anoModelo)
+                ));
     }
 
     @Override
@@ -222,6 +246,10 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
                                 )
                                 .build()
                 );
+
+                // Atualiza o cache
+                hashOperations.put(Veiculo.class.getSimpleName(), anoModelo.getId(), anoModelo);
+
             } else {
 
                 responseObserver.onNext(

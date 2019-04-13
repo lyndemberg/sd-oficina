@@ -2,25 +2,36 @@ package sd.oficina.customer1.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer1.dao.VeiculoDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
+import sd.oficina.customer1.infra.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Veiculo;
+import sd.oficina.shared.model.order.OrdemServico;
 import sd.oficina.shared.proto.customer.VeiculoProto;
 import sd.oficina.shared.proto.customer.VeiculoProtoList;
 import sd.oficina.shared.proto.customer.VeiculoResult;
 import sd.oficina.shared.proto.customer.VeiculoServiceGrpc;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase implements Serializable {
 
     private final VeiculoDao veiculoDao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public VeiculoService() {
         this.veiculoDao = new VeiculoDao();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -28,13 +39,26 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
 
         final VeiculoProtoList.Builder builder = VeiculoProtoList.newBuilder();
 
-        veiculoDao.listarTodos()
-                .forEach(veiculo -> builder.addVeiculos(
-                        ProtoConverterCustomer.modelToProto(veiculo)
-                ));
+        // Recuper lista de veiculos do DB
+        List<Veiculo> veiculos = veiculoDao.listarTodos();
 
+        // Gera a resposta
+        veiculos.forEach(veiculo -> builder.addVeiculos(
+                ProtoConverterCustomer.modelToProto(veiculo)
+        ));
+
+        // Envia Resposta ao cliente
         responseObserver.onNext(builder.build());
+
+        // Finaliza comunicaçao
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Veiculo.class.getSimpleName(),
+                veiculos.stream().collect(
+                Collectors.toMap(Veiculo::getId, veiculo -> veiculo)
+        ));
     }
 
     @Override
@@ -222,6 +246,10 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 )
                                 .build()
                 );
+
+                // Atualiza o cache
+                hashOperations.put(Veiculo.class.getSimpleName(), veiculo.getId(), veiculo);
+
             } else {
 
                 responseObserver.onNext(
