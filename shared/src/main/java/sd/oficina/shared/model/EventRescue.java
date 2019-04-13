@@ -1,12 +1,18 @@
 package sd.oficina.shared.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class EventRescue implements Serializable {
 
     /*
@@ -25,11 +31,16 @@ public class EventRescue implements Serializable {
     @Id
     @GeneratedValue
     private long id;
+
     @Enumerated(EnumType.STRING)
     private ServiceEnum service;
-    private String action;
-    private String entity;
-    private String payload;
 
+    @Enumerated(EnumType.STRING)
+    private ActionEnum action;
+
+    private String entity;
+
+    @Lob
+    private String payload;
 
 }
