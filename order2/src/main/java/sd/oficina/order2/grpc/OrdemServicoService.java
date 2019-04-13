@@ -1,0 +1,114 @@
+package sd.oficina.order2.grpc;
+
+import com.google.protobuf.Empty;
+import io.grpc.stub.StreamObserver;
+import sd.oficina.order2.dao.OrdemServicoDao;
+import sd.oficina.order2.exceptions.AtributoIdInvalidoException;
+import sd.oficina.order2.exceptions.TentaPersistirObjetoNullException;
+import sd.oficina.shared.converter.ProtoConverterCustomer;
+import sd.oficina.shared.converter.ProtoConverterOrder;
+import sd.oficina.shared.model.customer.AnoModelo;
+import sd.oficina.shared.model.order.OrdemServico;
+import sd.oficina.shared.proto.order.ClienteProto;
+import sd.oficina.shared.proto.order.OrdemProto;
+import sd.oficina.shared.proto.order.OrderServiceGrpc;
+
+import java.util.List;
+import java.util.Optional;
+
+public class OrdemServicoService extends OrderServiceGrpc.OrderServiceImplBase{
+
+    private OrdemServicoDao ordemServicoDao;
+
+    public OrdemServicoService() {
+        this.ordemServicoDao = new OrdemServicoDao();
+    }
+
+    @Override
+    public void cadastrarNovaOrdem(OrdemProto request, StreamObserver<Empty> responseObserver) {
+        OrdemServico ordemServico = ProtoConverterOrder.protoToModel(request);
+
+        try {
+            this.ordemServicoDao.salvar(ordemServico);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void realizarPagamento(OrdemProto request, StreamObserver<OrdemProto> responseObserver) {
+
+        Optional<OrdemServico> optional = Optional.empty();
+
+        try {
+            optional = ordemServicoDao.buscarPorId(request.getIdOrdem());
+
+        } catch (AtributoIdInvalidoException aiiEx) {
+            aiiEx.printStackTrace();
+        }
+
+        if (optional.isPresent()) {
+
+            OrdemServico ordemServico = optional.get();
+
+            ordemServico.setPago(true);
+
+            try {
+                Optional<OrdemServico> atualizado = this.ordemServicoDao.atualizar(ordemServico);
+
+                atualizado.ifPresent(ordemServico1 -> responseObserver.onNext(ProtoConverterOrder.modelToProto(ordemServico1)));
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void concluirOrdem(OrdemProto request, StreamObserver<OrdemProto> responseObserver) {
+
+        Optional<OrdemServico> optional = Optional.empty();
+
+        try {
+            optional = ordemServicoDao.buscarPorId(request.getIdOrdem());
+
+        } catch (AtributoIdInvalidoException aiiEx) {
+            aiiEx.printStackTrace();
+        }
+
+        if (optional.isPresent()) {
+
+            OrdemServico ordemServico = optional.get();
+
+            ordemServico.setConcluida(true);
+
+            try {
+                Optional<OrdemServico> atualizado = this.ordemServicoDao.atualizar(ordemServico);
+
+                atualizado.ifPresent(ordemServico1 -> responseObserver.onNext(ProtoConverterOrder.modelToProto(ordemServico1)));
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void buscarOrdensPorCliente(ClienteProto request, StreamObserver<OrdemProto> responseObserver) {
+        this.ordemServicoDao
+                .buscarPorClienteId(request.getId())
+                .forEach(ordemServico -> responseObserver.onNext(ProtoConverterOrder.modelToProto(ordemServico)));
+
+        responseObserver.onCompleted();
+    }
+
+}

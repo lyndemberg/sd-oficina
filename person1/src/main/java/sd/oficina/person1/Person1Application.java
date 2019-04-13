@@ -7,7 +7,10 @@ import sd.oficina.person1.grpc.CidadeService;
 import sd.oficina.person1.grpc.ClienteService;
 import sd.oficina.person1.grpc.EstadoService;
 import sd.oficina.person1.grpc.FornecedorService;
+import sd.oficina.shared.eventsrescue.EventRescueManager;
+import sd.oficina.shared.model.ServiceEnum;
 
+import javax.persistence.Persistence;
 import java.io.IOException;
 
 import static sd.oficina.person1.config.StartEstadosECidades.start;
@@ -15,6 +18,9 @@ import static sd.oficina.person1.config.StartEstadosECidades.start;
 
 public class Person1Application {
     public static void main(String[] args) {
+
+        // Inicializa serviço de EventRescue
+        new Thread(Person1Application::startEventRescue).start();
 
         //Inicia as inserções de estados e cidades
         start();
@@ -39,4 +45,13 @@ public class Person1Application {
             e.printStackTrace();
         }
     }
+
+    private static void startEventRescue() {
+
+        new EventRescueManager(
+                ServiceEnum.PERSON,
+                Persistence.createEntityManagerFactory("persistencia").createEntityManager()
+        ).executeRescueEvents();
+    }
+
 }
