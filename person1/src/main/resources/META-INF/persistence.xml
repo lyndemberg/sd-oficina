@@ -7,7 +7,7 @@
         <class>sd.oficina.shared.model.person.Fornecedor</class>
         <class>sd.oficina.shared.model.person.Estado</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/db_person"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db-postgres:5432/db_person"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.password" value="postgres"/>
