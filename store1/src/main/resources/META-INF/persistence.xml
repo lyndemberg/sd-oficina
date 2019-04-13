@@ -8,7 +8,7 @@
 
         <properties>
             <property name="eclipselink.jdbc.batch-writing" value="Oracle-JDBC"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/db_customer"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/db_store"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.password" value="postgres"/>

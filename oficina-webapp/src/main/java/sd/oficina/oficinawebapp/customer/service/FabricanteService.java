@@ -11,7 +11,6 @@ import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.rescue.RescueRepository;
 import sd.oficina.shared.model.EventRescue;
 import sd.oficina.shared.model.ServiceEnum;
-import sd.oficina.shared.model.customer.AnoModelo;
 import sd.oficina.shared.model.customer.Fabricante;
 import org.springframework.stereotype.Service;
 import sd.oficina.shared.model.person.Cliente;
@@ -47,7 +46,7 @@ public class FabricanteService {
         } catch (FalhaGrpcException ex) {
             //CRIAR EVENTO NA TABELA
             EventRescue eventRescue = new EventRescue();
-            eventRescue.setEntity(AnoModelo.class.getSimpleName());
+            eventRescue.setEntity(Fabricante.class.getSimpleName());
             eventRescue.setService(ServiceEnum.CUSTOMER);
             eventRescue.setAction("SAVE");
             ObjectMapper mapper = new ObjectMapper();

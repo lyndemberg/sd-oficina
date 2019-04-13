@@ -44,6 +44,7 @@ export class ListarEstoqueComponent implements OnInit {
   deletar(estoque: Estoque) {
     this.service.deletar(estoque.idPeca).subscribe(res => {
       if (res.status == 200) {
+        this.todos();
         alert("Estoque deletado");
       }
     });

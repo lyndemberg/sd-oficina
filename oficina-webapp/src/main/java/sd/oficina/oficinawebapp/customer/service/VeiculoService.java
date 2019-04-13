@@ -114,7 +114,7 @@ public class VeiculoService {
                 //salvando evento na tabela para o serviço executar no reinicio
                 rescueRepository.save(eventRescue);
                 //atualiza cache depois de inserir na tabela
-                hashOperations.put(Modelo.class.getSimpleName(),veiculo.getId(),veiculo);
+                hashOperations.put(Veiculo.class.getSimpleName(),veiculo.getId(),veiculo);
                 atualizado = veiculo;
             } catch (JsonProcessingException e1) {
                 e1.printStackTrace();
