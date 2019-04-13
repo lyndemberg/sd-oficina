@@ -2,7 +2,10 @@ package sd.oficina.person2.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.person2.dao.CidadeDao;
+import sd.oficina.person2.infra.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterPerson;
 import sd.oficina.shared.model.person.Cidade;
 import sd.oficina.shared.proto.person.CidadeList;
@@ -11,13 +14,19 @@ import sd.oficina.shared.proto.person.CidadeResult;
 import sd.oficina.shared.proto.person.CidadeServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
 
     private CidadeDao dao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public CidadeService() {
         this.dao = new CidadeDao();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -63,6 +72,12 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
                         cidade != null ? ProtoConverterPerson.modelToProto(cidade) : CidadeProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou a Cidade
+        if (cidade != null) {
+            // Atualiza o cache
+            hashOperations.put(Cidade.class.getSimpleName(), cidade.getId(), cidade);
+        }
     }
 
     @Override
@@ -76,5 +91,12 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Cidade.class.getSimpleName(),
+                cidades.stream().collect(
+                        Collectors.toMap(Cidade::getId, cidade -> cidade)
+                ));
     }
 }
