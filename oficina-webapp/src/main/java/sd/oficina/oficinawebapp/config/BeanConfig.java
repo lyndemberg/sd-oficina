@@ -11,6 +11,8 @@ import sd.oficina.oficinawebapp.identity.IdentityManager;
 import sd.oficina.oficinawebapp.order.grpc.OrderClient;
 import sd.oficina.oficinawebapp.person.grpc.PersonClient;
 import sd.oficina.oficinawebapp.shared.RescueService;
+import sd.oficina.oficinawebapp.store.grpc.EstoqueClient;
+import sd.oficina.shared.model.store.Estoque;
 
 @Configuration
 @EntityScan("sd.oficina.shared.model")
@@ -47,6 +49,11 @@ public class BeanConfig {
     @Bean
     public CustomerClient provideCustomerClient(){
         return new CustomerClient(hostsProperties);
+    }
+
+    @Bean
+    public EstoqueClient provideStoreClient(){
+        return new EstoqueClient(hostsProperties);
     }
 
 

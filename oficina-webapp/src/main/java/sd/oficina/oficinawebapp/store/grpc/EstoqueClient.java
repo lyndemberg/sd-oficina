@@ -3,6 +3,9 @@ package sd.oficina.oficinawebapp.store.grpc;
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
+import sd.oficina.oficinawebapp.config.HostsProperties;
+import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.shared.converter.ProtoConverterStore;
 import sd.oficina.shared.model.store.Estoque;
 import sd.oficina.shared.proto.customer.EstoqueProto;
@@ -13,20 +16,42 @@ import java.util.List;
 
 public class EstoqueClient {
 
+    private final HostsProperties properties;
     private ManagedChannel channel;
 
-    public EstoqueClient() {
+    public EstoqueClient(HostsProperties hostsProperties) {
+        this.properties = hostsProperties;
         channel = ManagedChannelBuilder
-                .forAddress("localhost", 1111)
+                .forAddress(properties.getStore1Host(), properties.getStore1Port())
                 .usePlaintext()
                 .build();
     }
 
-    public Estoque salvar(Estoque estoque) {
-        return ProtoConverterStore
-                .protoToModel(EstoqueServiceGrpc.newBlockingStub(channel)
-                        .salvar(ProtoConverterStore.modelToProto(estoque))
-                        .getEstoque());
+    public Estoque salvar(Estoque estoque) throws FalhaGrpcException {
+
+        Estoque salvo = null;
+        try {
+            salvo = ProtoConverterStore
+                    .protoToModel(EstoqueServiceGrpc.newBlockingStub(channel)
+                            .salvar(ProtoConverterStore.modelToProto(estoque))
+                            .getEstoque());
+        } catch (StatusRuntimeException e) {
+            // STORE 2
+            try {
+                channel = ManagedChannelBuilder
+                        .forAddress(properties.getStore2Host(), properties.getStore2Port())
+                        .usePlaintext()
+                        .build();
+                salvo = ProtoConverterStore
+                        .protoToModel(EstoqueServiceGrpc.newBlockingStub(channel)
+                                .salvar(ProtoConverterStore.modelToProto(estoque))
+                                .getEstoque());
+
+            } catch (StatusRuntimeException ex) {
+                throw new FalhaGrpcException();
+            }
+        }
+        return salvo;
     }
 
     public Estoque atualizar(Estoque estoque) {
