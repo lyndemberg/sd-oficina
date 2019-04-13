@@ -12,7 +12,9 @@ import sd.oficina.shared.proto.order.ClienteProto;
 import sd.oficina.shared.proto.order.OrdemProto;
 import sd.oficina.shared.proto.order.OrderServiceGrpc;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
 
@@ -59,7 +61,12 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
             OrdemServico ordem = ordemServicos.get(i);
             responseObserver.onNext(ProtoConverterOrder.modelToProto(ordem));
         }
+
+        // Finaliza comunicaçao
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o Cache
+        hashOperations.put(OrdemServico.class.getSimpleName(), request.getId(), ordemServicos);
     }
 
 }
