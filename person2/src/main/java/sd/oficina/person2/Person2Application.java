@@ -6,11 +6,17 @@ import sd.oficina.person2.grpc.CidadeService;
 import sd.oficina.person2.grpc.ClienteService;
 import sd.oficina.person2.grpc.EstadoService;
 import sd.oficina.person2.grpc.FornecedorService;
+import sd.oficina.shared.eventsrescue.EventRescueManager;
+import sd.oficina.shared.model.ServiceEnum;
 
+import javax.persistence.Persistence;
 import java.io.IOException;
 
 public class Person2Application {
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        // Inicializa serviço de EventRescue
+        new Thread(Person2Application::startEventRescue).start();
 
         Server server = ServerBuilder.forPort(2222)
                 .addService(new CidadeService())
@@ -24,4 +30,13 @@ public class Person2Application {
         server.start();
         server.awaitTermination();
     }
+
+    private static void startEventRescue() {
+
+        new EventRescueManager(
+                ServiceEnum.PERSON,
+                Persistence.createEntityManagerFactory("person2").createEntityManager()
+        ).executeRescueEvents();
+    }
+
 }

@@ -6,12 +6,18 @@ import sd.oficina.customer1.grpc.AnoModeloService;
 import sd.oficina.customer1.grpc.FabricanteService;
 import sd.oficina.customer1.grpc.ModeloService;
 import sd.oficina.customer1.grpc.VeiculoService;
+import sd.oficina.shared.eventsrescue.EventRescueManager;
+import sd.oficina.shared.model.ServiceEnum;
 
+import javax.persistence.Persistence;
 import java.io.IOException;
 
 public class Customer1Loader {
 
     public static void main(String[] args) {
+
+        // Inicializa serviço de EventRescue
+        new Thread(Customer1Loader::startEventRescue).start();
 
         Server server = ServerBuilder.forPort(2222)
                 .addService(new ModeloService())
@@ -38,6 +44,14 @@ public class Customer1Loader {
 
         System.out.println("Finalizado Server - Customer 1");
 
+    }
+
+    private static void startEventRescue() {
+
+        new EventRescueManager(
+                ServiceEnum.CUSTOMER,
+                Persistence.createEntityManagerFactory("customer1-persistence").createEntityManager()
+        ).executeRescueEvents();
     }
 
 }
