@@ -21,8 +21,8 @@ public class ConnectionFactory {
         return jedisConFactory;
     }
 
-    public static RedisTemplate<String, Object> getRedisTemplate() {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+    public static <T> RedisTemplate<String, T> getRedisTemplate() {
+        RedisTemplate<String, T> template = new RedisTemplate<>();
         template.setConnectionFactory(getConnectionRedis());
         template.setKeySerializer( new StringRedisSerializer() );
         template.setHashValueSerializer( new GenericJackson2JsonRedisSerializer());
