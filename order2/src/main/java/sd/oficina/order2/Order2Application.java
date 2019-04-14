@@ -17,7 +17,7 @@ public class Order2Application {
         // Inicializa serviço de EventRescue
         new Thread(Order2Application::startEventRescue).start();
 
-        Server server = ServerBuilder.forPort(4444)
+        Server server = ServerBuilder.forPort(4442)
                 .addService(new OrdemServicoService())
                 .addService(new OrcamentoService())
                 .build();

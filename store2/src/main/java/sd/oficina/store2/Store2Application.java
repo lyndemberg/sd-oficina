@@ -23,7 +23,7 @@ public class Store2Application {
 
         //Inicializando o server
         Server server = ServerBuilder
-                .forPort(1111)
+                .forPort(1112)
                 .addService((BindableService) new EstoqueService())
                 .addService((BindableService) new ServicoService())
                 .build();

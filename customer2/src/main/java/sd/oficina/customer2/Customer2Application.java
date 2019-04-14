@@ -18,7 +18,7 @@ public class Customer2Application {
         // Inicializa serviço de EventRescue
         new Thread(Customer2Application::startEventRescue).start();
 
-        Server server = ServerBuilder.forPort(3333)
+        Server server = ServerBuilder.forPort(3332)
                 .addService(new FabricanteImpl())
                 .addService(new VeiculoImpl())
                 .addService(new AnoModeloImpl())

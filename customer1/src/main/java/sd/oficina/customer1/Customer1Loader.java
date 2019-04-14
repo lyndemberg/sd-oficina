@@ -19,7 +19,7 @@ public class Customer1Loader {
         // Inicializa serviço de EventRescue
         new Thread(Customer1Loader::startEventRescue).start();
 
-        Server server = ServerBuilder.forPort(2222)
+        Server server = ServerBuilder.forPort(3331)
                 .addService(new ModeloService())
                 .addService(new VeiculoService())
                 .addService(new AnoModeloService())

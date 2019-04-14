@@ -17,7 +17,7 @@ public class Order1Application {
         new Thread(Order1Application::startEventRescue).start();
 
         System.out.println("Iniciando Order1Application");
-        Server server = ServerBuilder.forPort(4444)
+        Server server = ServerBuilder.forPort(4441)
                 .addService(new OrderServiceImpl())
                 .addService(new OrcamentoServiceImpl())
                 .build();
