@@ -1,0 +1,97 @@
+version: '3.3'
+
+services:
+        order1:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./order1
+                container_name: order1
+                ports:
+                        - "4441:4441"
+                networks:
+                        - private_network
+        order2:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./order2
+                container_name: order2
+                ports:
+                        - "4442:4442"
+                networks:
+                        - private_network
+        customer1:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./customer1
+                container_name: customer1
+                ports:
+                        - "3331:3331"
+                networks:
+                        - private_network
+        customer2:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./customer2
+                container_name: customer2
+                ports:
+                        - "3332:3332"
+                networks:
+                        - private_network
+        customer3:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./customer3
+                container_name: customer3
+                ports:
+                        - "3333:3333"
+                networks:
+                        - private_network
+        person1:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./person1
+                container_name: person1
+                ports:
+                        - "2221:2221"
+                networks:
+                        - private_network
+        person2:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./person2
+                container_name: person2
+                ports:
+                        - "2222:2222"
+                networks:
+                        - private_network
+        person3:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./person3
+                container_name: person3
+                ports:
+                        - "2223:2223"
+                networks:
+                        - private_network
+        store1:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./store1
+                container_name: store1
+                ports:
+                        - "1111:1111"
+                networks:
+                        - private_network
+        store2:
+                build:
+                        dockerfile: ./Dockerfile
+                        context: ./store2
+                container_name: store2
+                ports:
+                        - "1112:1112"
+                networks:
+                        - private_network
+
+networks:
+        private_network:
+                driver: bridge
