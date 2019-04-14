@@ -1,26 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { OrdemServico } from '../../model/ordemServico';
-import { Cliente } from 'src/app/person/model/cliente.model';
 import { ClienteService } from 'src/app/person/service/cliente/cliente.service';
+import { Cliente } from 'src/app/person/model/cliente.model';
 import { OrderService } from '../../service/order.service';
 
 @Component({
-  selector: 'app-listar-order',
-  templateUrl: './listar-order.component.html',
-  styleUrls: ['./listar-order.component.css']
+  selector: 'app-listar-por-cliente',
+  templateUrl: './listar-por-cliente.component.html',
+  styleUrls: ['./listar-por-cliente.component.css']
 })
-export class ListarOrderComponent implements OnInit {
+export class ListarPorClienteComponent implements OnInit {
 
   ordens: OrdemServico[] = [];
+  buscar: any;
+  clientes: Cliente[] = [];
 
-  constructor(private orderService: OrderService) { }
+  constructor(private clienteService: ClienteService,
+    private orderService: OrderService) { }
 
   ngOnInit() {
-    this.getAll();
+    this.getClientes();
   }
 
-  getAll(){
-    this.orderService.listarTodos().subscribe(
+  getClientes() {
+    this.clienteService.listar().subscribe(
+      res => {
+        this.clientes = res.body;
+      }
+    )
+  }
+
+  listarPorClinte(){
+    this.orderService.listarPorCliente(this.buscar.id).subscribe(
       res => {
         this.ordens = res.body;
       }
@@ -48,4 +59,5 @@ export class ListarOrderComponent implements OnInit {
       }
     )
   }
+
 }

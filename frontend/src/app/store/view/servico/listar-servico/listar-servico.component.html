@@ -1,0 +1,60 @@
+<div class="p-grid">
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
+    <h2 class="box">Serviço</h2>
+  </div>
+  <p-table [value]="servicos" class="p-sm-12 p-md-12 p-lg-12 p-xl-12">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Descrição</th>
+        <th>Valor</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-servico>
+      <tr style="text-align:center">
+        <td>{{servico.descricao}}</td>
+        <td>{{servico.valor}}</td>
+        <td>
+          <p-button (click)="showDialogUpdate(servico)" icon="pi pi-pencil"></p-button>&nbsp;
+          <p-button (click)="showDialogDelete(servico)" icon="pi pi-trash"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Serviço" [(visible)]="displayUpdate" [modal]="true" [responsive]="true"
+  [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <br>
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="50" pInputText [value]="servico.descricao"
+      [(ngModel)]="servico.descricao">
+    <label for="float-input">Descrição</label>
+  </span>
+  <br>
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="50" pInputText [value]="servico.valor" [(ngModel)]="servico.valor">
+    <label for="float-input">Valor</label>
+  </span>
+  <br>
+
+  <br>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="atualizar(servico)" label="Atualizar"></button>
+    <button type="button" pButton icon="pi pi-close" (click)="displayUpdate=false" label="Cancelar"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Serviço" [(visible)]="displayDelete" [modal]="true" [responsive]="true"
+  [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <br>
+  <span>
+    <p>Deseja realmente excluir este Serviço?</p>
+  </span>
+  <br>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="deletar(servico)" label="Deletar"></button>
+    <button type="button" pButton icon="pi pi-close" (click)="displayDelete=false" label="Cancelar"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
