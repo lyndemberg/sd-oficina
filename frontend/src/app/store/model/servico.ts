@@ -4,4 +4,5 @@ export class Servico{
     descricao ?: string;
     valor ?: number;
     estoques ?: Estoque[];
+    id ?: number;
 }
