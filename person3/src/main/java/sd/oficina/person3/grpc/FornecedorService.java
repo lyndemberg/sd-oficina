@@ -2,7 +2,10 @@ package sd.oficina.person3.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.person3.daos.FornecedorDao;
+import sd.oficina.person3.infra.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterPerson;
 import sd.oficina.shared.model.person.Fornecedor;
 import sd.oficina.shared.proto.person.FornecedorList;
@@ -11,13 +14,19 @@ import sd.oficina.shared.proto.person.FornecedorResult;
 import sd.oficina.shared.proto.person.FornecedorServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceImplBase {
 
     private FornecedorDao fornecedorDao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public FornecedorService() {
         this.fornecedorDao = new FornecedorDao();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -81,6 +90,10 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
                     .setFornecedor(
                             ProtoConverterPerson.modelToProto(fornecedor))
                     .build());
+
+            // Atualiza o cache
+            hashOperations.put(Fornecedor.class.getSimpleName(), fornecedor.getId(), fornecedor);
+
         } else {
             responseObserver.onNext(FornecedorResult
                     .newBuilder()
@@ -101,5 +114,12 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Após finalizar a comunicação atualiza o cache
+        hashOperations.putAll(
+                Fornecedor.class.getSimpleName(),
+                fornecedores.stream().collect(
+                        Collectors.toMap(Fornecedor::getId, fornecedor -> fornecedor)
+                ));
     }
 }
