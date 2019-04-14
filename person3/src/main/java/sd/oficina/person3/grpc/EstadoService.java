@@ -2,7 +2,10 @@ package sd.oficina.person3.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.person3.daos.EstadoDao;
+import sd.oficina.person3.infra.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterPerson;
 import sd.oficina.shared.model.person.Estado;
 import sd.oficina.shared.proto.person.EstadoList;
@@ -11,13 +14,19 @@ import sd.oficina.shared.proto.person.EstadoResult;
 import sd.oficina.shared.proto.person.EstadoServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
 
     private EstadoDao estadoDao;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final HashOperations<String, Object, Object> hashOperations;
+
     public EstadoService() {
         this.estadoDao = new EstadoDao();
+        this.redisTemplate = ConnectionFactory.getRedisTemplate();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override
@@ -81,6 +90,10 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
                     .setEstado(
                             ProtoConverterPerson.modelToProto(estado))
                     .build());
+
+            // Atualiza o cache
+            hashOperations.put(Estado.class.getSimpleName(), estado.getId(), estado);
+
         } else {
             responseObserver.onNext(EstadoResult
                     .newBuilder()
@@ -101,5 +114,12 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Após finalizar a comunicação atualiza o cache
+        hashOperations.putAll(
+                Estado.class.getSimpleName(),
+                estados.stream().collect(
+                        Collectors.toMap(Estado::getId, estado -> estado)
+                ));
     }
 }
