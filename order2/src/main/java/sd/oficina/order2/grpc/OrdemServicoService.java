@@ -114,6 +114,19 @@ public class OrdemServicoService extends OrderServiceGrpc.OrderServiceImplBase {
     }
 
     @Override
+    public void listarOrdens(Empty request, StreamObserver<OrdemProto> responseObserver) {
+
+        // Recupera todos os OrdemServico pelo Dao e para cada resultado envia a
+        // informaçao pro cliente
+        this.ordemServicoDao
+                .listarTodos()
+                .forEach(ordemServico -> responseObserver.onNext(ProtoConverterOrder.modelToProto(ordemServico)));
+
+        // Finaliza comunicaçao
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void buscarOrdensPorCliente(ClienteProto request, StreamObserver<OrdemProto> responseObserver) {
         List<OrdemServico> ordemServicos = this.ordemServicoDao.buscarPorClienteId(request.getId());
 
