@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class Estado implements Serializable {
 
     @Id
+    @GeneratedValue
     private long id;
     @Column(nullable = false)
     private String nome;

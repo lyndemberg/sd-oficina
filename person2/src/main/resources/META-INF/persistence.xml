@@ -3,14 +3,13 @@
     <persistence-unit name="person2" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
-        <class>sd.oficina.shared.model.customer.Veiculo</class>
-        <class>sd.oficina.shared.model.customer.Cor</class>
-        <class>sd.oficina.shared.model.customer.AnoModelo</class>
-        <class>sd.oficina.shared.model.customer.Modelo</class>
-        <class>sd.oficina.shared.model.customer.Fabricante</class>
+        <class>sd.oficina.shared.model.person.Cliente</class>
+        <class>sd.oficina.shared.model.person.Fornecedor</class>
+        <class>sd.oficina.shared.model.person.Estado</class>
+        <class>sd.oficina.shared.model.person.Cidade</class>
         <properties>
             <property name="eclipselink.jdbc.batch-writing" value="Oracle-JDBC"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db-postgres:5432/person2"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db-postgres:5432/db_person"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.password" value="123"/>

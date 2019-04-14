@@ -63,6 +63,7 @@
 
         <module>person1</module>
         <module>person2</module>
+        <module>person3</module>
 
         <module>customer1</module>
         <module>customer2</module>
