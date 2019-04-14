@@ -1,4 +1,5 @@
 FROM openjdk:8-jdk-alpine
 WORKDIR /home
-COPY customer1/target/customer1-jar-with-dependencies.jar customer1-jar-with-dependencies.jar
-CMD ["java", "-jar", "customer1-jar-with-dependencies.jar"]
+COPY order2/target/order2-jar-with-dependencies.jar order2-jar-with-dependencies.jar
+EXPOSE 4442
+CMD ["java", "-jar", "order2-jar-with-dependencies.jar"]

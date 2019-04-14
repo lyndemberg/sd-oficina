@@ -30,7 +30,7 @@ public class Person3Application {
 
         //Inicializando o server
         Server server = ServerBuilder
-                .forPort(2222)
+                .forPort(2223)
                 .addService((BindableService) new CidadeService())
                 .addService((BindableService) new ClienteService())
                 .addService((BindableService) new EstadoService())
