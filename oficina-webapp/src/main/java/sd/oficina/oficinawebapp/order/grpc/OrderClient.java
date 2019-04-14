@@ -15,6 +15,7 @@ import sd.oficina.shared.proto.order.OrdemProto;
 import sd.oficina.shared.proto.order.OrderServiceGrpc;
 import sd.oficina.shared.util.LocalDateUtil;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
