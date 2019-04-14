@@ -20,8 +20,8 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
 
     private NotaDAO dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Nota> redisTemplate;
+    private final HashOperations<String, Object, Nota> hashOperations;
 
     public NotaImpl() {
         dao = new NotaDAO();
@@ -38,20 +38,22 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
                 .build();
         responseObserver.onNext(notaResult);
         responseObserver.onCompleted();
+        this.hashOperations.put(Nota.class.getSimpleName(),result.getId(),result);
     }
 
     @Override
     public void atualizar(NotaProto request, StreamObserver<NotaResult> responseObserver) {
-        Nota Estoque = dao.atualizar(ProtoConverterStore.protoToModel(request));
+        Nota nota = dao.atualizar(ProtoConverterStore.protoToModel(request));
         responseObserver.onNext(NotaResult
                 .newBuilder()
                 .setNota(
-                        Estoque != null ? ProtoConverterStore.modelToProto(Estoque) :
+                        nota != null ? ProtoConverterStore.modelToProto(nota) :
                                 NotaProto.newBuilder().build()
                 )
                 .setCodigo(200)
                 .build());
         responseObserver.onCompleted();
+        this.hashOperations.put(Nota.class.getSimpleName(),nota.getId(),nota);
     }
 
     @Override
@@ -59,6 +61,7 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
         this.dao.deletar(request.getId());
         responseObserver.onNext(NotaResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Nota.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -71,12 +74,6 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
                                 NotaProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou a Nota
-        if (Estoque != null) {
-            // Atualiza o cache
-            hashOperations.put(Nota.class.getSimpleName(), Estoque.getId(), Estoque);
-        }
     }
 
     @Override
@@ -86,12 +83,5 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
         notas.forEach(f -> builder.addNota(ProtoConverterStore.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Nota.class.getSimpleName(),
-                notas.stream().collect(
-                        Collectors.toMap(Nota::getId, nota -> nota)
-                ));
     }
 }

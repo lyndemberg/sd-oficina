@@ -17,8 +17,8 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
 
     private FornecedorDao fornecedorDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Fornecedor> redisTemplate;
+    private final HashOperations<String, Object, Fornecedor> hashOperations;
 
     public FornecedorService() {
         this.fornecedorDao = new FornecedorDao();
@@ -44,6 +44,7 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Fornecedor.class.getSimpleName(),fornecedor.getId(),fornecedor);
     }
 
     @Override
@@ -64,6 +65,7 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Fornecedor.class.getSimpleName(),fornecedor.getId(),fornecedor);
     }
 
     @Override
@@ -74,6 +76,7 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
                         .setCodigo(200)
                         .build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Fornecedor.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -87,9 +90,6 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
                     .setFornecedor(
                             ProtoConverterPerson.modelToProto(fornecedor))
                     .build());
-
-            // Atualiza o cache
-            hashOperations.put(Fornecedor.class.getSimpleName(), fornecedor.getId(), fornecedor);
 
         } else {
             responseObserver.onNext(FornecedorResult
@@ -111,12 +111,5 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Fornecedor.class.getSimpleName(),
-                fornecedores.stream().collect(
-                        Collectors.toMap(Fornecedor::getId, fornecedor -> fornecedor)
-                ));
     }
 }

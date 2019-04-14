@@ -25,8 +25,8 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
 
     private final ModeloDao modeloDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Modelo> redisTemplate;
+    private final HashOperations<String, Object, Modelo> hashOperations;
 
     public ModeloService() {
         this.modeloDao = new ModeloDao();
@@ -52,13 +52,6 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
 
         // Finaliza comunicaçao
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Modelo.class.getSimpleName(),
-                modelos.stream().collect(
-                        Collectors.toMap(Modelo::getId, modelo -> modelo)
-                ));
     }
 
     @Override
@@ -82,6 +75,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
                                 )
                                 .build()
                 );
+                this.hashOperations.put(Modelo.class.getSimpleName(),modelo.getId(),modelo);
 
             } else {
                 responseObserver.onNext(
@@ -138,6 +132,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
                                 )
                                 .build()
                 );
+                this.hashOperations.put(Modelo.class.getSimpleName(), modelo.getId(), modelo);
 
             } else {
                 responseObserver.onNext(
@@ -189,6 +184,7 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
                                 .setCodigo(200)
                                 .build()
                 );
+                this.hashOperations.delete(Modelo.class.getSimpleName(),modelo.getId());
             } else {
 
                 responseObserver.onNext(
@@ -246,9 +242,6 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
                                 )
                                 .build()
                 );
-
-                // Atualiza o cache
-                hashOperations.put(Modelo.class.getSimpleName(), modelo.getId(), modelo);
 
             } else {
 

@@ -25,8 +25,8 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
 
     private final AnoModeloDao anoModeloDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, AnoModelo> redisTemplate;
+    private final HashOperations<String, Object, AnoModelo> hashOperations;
 
     public AnoModeloService() {
         this.anoModeloDao = new AnoModeloDao();
@@ -82,6 +82,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
                                 )
                                 .build()
                 );
+                this.hashOperations.put(AnoModelo.class.getSimpleName(),anoModelo.getId(),anoModelo);
 
             } else {
                 responseObserver.onNext(
@@ -138,6 +139,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
                                 )
                                 .build()
                 );
+                this.hashOperations.put(AnoModelo.class.getSimpleName(),anoModelo.getId(),anoModelo);
 
             } else {
                 responseObserver.onNext(
@@ -189,6 +191,7 @@ public final class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServic
                                 .setCodigo(200)
                                 .build()
                 );
+                this.hashOperations.delete(AnoModelo.class.getSimpleName(),anoModelo.getId());
             } else {
 
                 responseObserver.onNext(

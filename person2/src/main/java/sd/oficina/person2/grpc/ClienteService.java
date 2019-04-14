@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.person2.dao.ClienteDao;
 import sd.oficina.person2.infra.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterPerson;
+import sd.oficina.shared.model.person.Cidade;
 import sd.oficina.shared.model.person.Cliente;
 import sd.oficina.shared.proto.person.ClienteList;
 import sd.oficina.shared.proto.person.ClienteProto;
@@ -20,8 +21,8 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
 
     private ClienteDao dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Cliente> redisTemplate;
+    private final HashOperations<String, Object, Cliente> hashOperations;
 
     public ClienteService() {
         this.dao = new ClienteDao();
@@ -40,6 +41,7 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
         //
         responseObserver.onNext(result);
         responseObserver.onCompleted();
+        this.hashOperations.put(Cliente.class.getSimpleName(),cliente.getId(),cliente);
     }
 
     @Override
@@ -47,6 +49,7 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
         this.dao.remover(request.getId());
         responseObserver.onNext(ClienteResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Cliente.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -61,6 +64,7 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
                 .build());
         //
         responseObserver.onCompleted();
+        this.hashOperations.put(Cliente.class.getSimpleName(),cliente.getId(),cliente);
     }
 
     @Override
@@ -72,12 +76,6 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
                         cliente != null ? ProtoConverterPerson.modelToProto(cliente) : ClienteProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o cliente
-        if (cliente != null) {
-            // Atualiza o cache
-            hashOperations.put(Cliente.class.getSimpleName(), cliente.getId(), cliente);
-        }
     }
 
     @Override
@@ -91,12 +89,5 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Cliente.class.getSimpleName(),
-                clientes.stream().collect(
-                        Collectors.toMap(Cliente::getId, cliente -> cliente)
-                ));
     }
 }

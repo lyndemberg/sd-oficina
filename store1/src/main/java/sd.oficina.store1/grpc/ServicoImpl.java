@@ -20,8 +20,8 @@ public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
 
     private ServicoDAO dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Servico> redisTemplate;
+    private final HashOperations<String, Object, Servico> hashOperations;
 
     public ServicoImpl() {
         dao = new ServicoDAO();
@@ -37,18 +37,10 @@ public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
         servicos.forEach(f -> builder.addServico(ProtoConverterStore.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Servico.class.getSimpleName(),
-                servicos.stream().collect(
-                        Collectors.toMap(Servico::getId, servico -> servico)
-                ));
     }
 
     @Override
     public void salvar(ServicoProto request, StreamObserver<ServicoResult> responseObserver) {
-
         Servico result = this.dao.salvar(ProtoConverterStore.protoToModel(request));
         ServicoResult fabricanteResult = ServicoResult.newBuilder()
                 .setCodigo(200)
@@ -56,6 +48,7 @@ public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
                 .build();
         responseObserver.onNext(fabricanteResult);
         responseObserver.onCompleted();
+        this.hashOperations.put(Servico.class.getSimpleName(),result.getId(),result);
     }
 
     @Override
@@ -70,6 +63,7 @@ public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
                 .setCodigo(200)
                 .build());
         responseObserver.onCompleted();
+        this.hashOperations.put(Servico.class.getSimpleName(),servico.getId(),servico);
     }
 
     @Override
@@ -77,6 +71,7 @@ public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
         this.dao.deletar(request.getId());
         responseObserver.onNext(ServicoResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Servico.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -89,11 +84,5 @@ public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
                                 ServicoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou a Nota
-        if (servico != null) {
-            // Atualiza o cache
-            hashOperations.put(Servico.class.getSimpleName(), servico.getId(), servico);
-        }
     }
 }

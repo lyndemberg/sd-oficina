@@ -17,8 +17,8 @@ public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
 
     private NotaDao notaDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Nota> redisTemplate;
+    private final HashOperations<String, Object, Nota> hashOperations;
 
     public NotaService() {
         this.notaDao = new NotaDao();
@@ -44,6 +44,7 @@ public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Nota.class.getSimpleName(),nota.getId(),nota);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Nota.class.getSimpleName(),nota.getId(),nota);
     }
 
     @Override
@@ -73,6 +75,7 @@ public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
                         .setCodigo(200)
                         .build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Nota.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -86,9 +89,6 @@ public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
                     .setNota(
                             ProtoConverterStore.modelToProto(nota))
                     .build());
-
-            // Atualiza o cache
-            hashOperations.put(Nota.class.getSimpleName(), nota.getId(), nota);
 
         } else {
             responseObserver.onNext(NotaResult
@@ -110,12 +110,5 @@ public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Nota.class.getSimpleName(),
-                notas.stream().collect(
-                        Collectors.toMap(Nota::getId, nota -> nota)
-                ));
     }
 }

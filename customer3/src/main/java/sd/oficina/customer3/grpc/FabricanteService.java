@@ -17,8 +17,8 @@ public class FabricanteService extends FabricanteServiceGrpc.FabricanteServiceIm
 
     private FabricanteDao dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Fabricante> redisTemplate;
+    private final HashOperations<String, Object, Fabricante> hashOperations;
 
     public FabricanteService() {
         this.dao = new FabricanteDao();
@@ -36,6 +36,7 @@ public class FabricanteService extends FabricanteServiceGrpc.FabricanteServiceIm
         //
         responseObserver.onNext(fabricante);
         responseObserver.onCompleted();
+        this.hashOperations.put(Fabricante.class.getSimpleName(), resultado.getId(),resultado);
     }
 
     @Override
@@ -43,6 +44,7 @@ public class FabricanteService extends FabricanteServiceGrpc.FabricanteServiceIm
         this.dao.remover(request.getId());
         responseObserver.onNext(FabricanteResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Fabricante.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -57,6 +59,7 @@ public class FabricanteService extends FabricanteServiceGrpc.FabricanteServiceIm
                 .build());
         //
         responseObserver.onCompleted();
+        this.hashOperations.put(Fabricante.class.getSimpleName(), fabricante.getId(),fabricante);
     }
 
     @Override
@@ -68,12 +71,6 @@ public class FabricanteService extends FabricanteServiceGrpc.FabricanteServiceIm
                         fabricante != null ? ProtoConverterCustomer.modelToProto(fabricante) : FabricanteProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o Fabricante
-        if (fabricante != null) {
-            // Atualiza o cache
-            hashOperations.put(Fabricante.class.getSimpleName(), fabricante.getId(), fabricante);
-        }
     }
 
     @Override
@@ -85,12 +82,5 @@ public class FabricanteService extends FabricanteServiceGrpc.FabricanteServiceIm
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Fabricante.class.getSimpleName(),
-                anos.stream().collect(
-                        Collectors.toMap(Fabricante::getId, fabricante -> fabricante)
-                ));
     }
 }

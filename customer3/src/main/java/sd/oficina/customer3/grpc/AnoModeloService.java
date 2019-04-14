@@ -18,8 +18,8 @@ public class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplB
 
     private AnoModeloDao dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, AnoModelo> redisTemplate;
+    private final HashOperations<String, Object, AnoModelo> hashOperations;
 
     public AnoModeloService() {
         this.dao = new AnoModeloDao();
@@ -38,6 +38,7 @@ public class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplB
         //
         responseObserver.onNext(anoModelo);
         responseObserver.onCompleted();
+        this.hashOperations.put(AnoModelo.class.getSimpleName(),resultado.getId(),resultado);
     }
 
     @Override
@@ -45,6 +46,7 @@ public class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplB
         this.dao.remover(request.getId());
         responseObserver.onNext(AnoModeloResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(AnoModelo.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -59,6 +61,7 @@ public class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplB
                 .build());
         //
         responseObserver.onCompleted();
+        this.hashOperations.put(AnoModelo.class.getSimpleName(),anoModelo.getId(),anoModelo);
     }
 
     @Override
@@ -70,12 +73,6 @@ public class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplB
                         anoModelo != null ? ProtoConverterCustomer.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o AnoModelo
-        if (anoModelo != null) {
-            // Atualiza o cache
-            hashOperations.put(Veiculo.class.getSimpleName(), anoModelo.getId(), anoModelo);
-        }
     }
 
     @Override
@@ -87,12 +84,5 @@ public class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplB
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                AnoModelo.class.getSimpleName(),
-                anos.stream().collect(
-                        Collectors.toMap(AnoModelo::getId, anoModelo -> anoModelo)
-                ));
     }
 }

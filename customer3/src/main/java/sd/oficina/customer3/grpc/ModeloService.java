@@ -20,8 +20,8 @@ public class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase {
 
     private ModeloDao dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Modelo> redisTemplate;
+    private final HashOperations<String, Object, Modelo> hashOperations;
 
     public ModeloService() {
         this.dao = new ModeloDao();
@@ -40,6 +40,7 @@ public class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase {
         //
         responseObserver.onNext(modelo);
         responseObserver.onCompleted();
+        this.hashOperations.put(Modelo.class.getSimpleName(),resultado.getId(),resultado);
     }
 
     @Override
@@ -54,6 +55,7 @@ public class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase {
                 .build());
         //
         responseObserver.onCompleted();
+        this.hashOperations.put(Modelo.class.getSimpleName(),modelo.getId(),modelo);
     }
 
     @Override
@@ -61,6 +63,7 @@ public class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase {
         this.dao.remover(request.getId());
         responseObserver.onNext(ModeloResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Modelo.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -72,12 +75,6 @@ public class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase {
                         modelo != null ? ProtoConverterCustomer.modelToProto(modelo) : ModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o Modelo
-        if (modelo != null) {
-            // Atualiza o cache
-            hashOperations.put(Modelo.class.getSimpleName(), modelo.getId(), modelo);
-        }
     }
 
     @Override
@@ -89,12 +86,5 @@ public class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Modelo.class.getSimpleName(),
-                anos.stream().collect(
-                        Collectors.toMap(Modelo::getId, modelo -> modelo)
-                ));
     }
 }

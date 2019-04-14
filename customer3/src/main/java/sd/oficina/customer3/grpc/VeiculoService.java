@@ -20,8 +20,8 @@ public class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase {
 
     private VeiculoDao dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Veiculo> redisTemplate;
+    private final HashOperations<String, Object, Veiculo> hashOperations;
 
     public VeiculoService() {
         this.dao = new VeiculoDao();
@@ -40,6 +40,7 @@ public class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase {
         //
         responseObserver.onNext(modelo);
         responseObserver.onCompleted();
+        this.hashOperations.put(Veiculo.class.getSimpleName(),resultado.getId(),resultado);
     }
 
     @Override
@@ -59,6 +60,7 @@ public class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase {
                 .build());
         //
         responseObserver.onCompleted();
+        this.hashOperations.put(Veiculo.class.getSimpleName(),veiculo.getId(),veiculo);
     }
 
     @Override
@@ -70,12 +72,6 @@ public class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase {
                         veiculo != null ? ProtoConverterCustomer.modelToProto(veiculo) : VeiculoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o veiculo
-        if (veiculo != null) {
-            // Atualiza o cache
-            hashOperations.put(Veiculo.class.getSimpleName(), veiculo.getId(), veiculo);
-        }
     }
 
     @Override
@@ -87,12 +83,5 @@ public class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Veiculo.class.getSimpleName(),
-                anos.stream().collect(
-                        Collectors.toMap(Veiculo::getId, veiculo -> veiculo)
-                ));
     }
 }

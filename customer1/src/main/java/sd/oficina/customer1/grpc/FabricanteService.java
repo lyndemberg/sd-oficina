@@ -24,8 +24,8 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
 
     private final FabricanteDao fabricanteDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Fabricante> redisTemplate;
+    private final HashOperations<String, Object, Fabricante> hashOperations;
 
     public FabricanteService() {
         this.fabricanteDao = new FabricanteDao();
@@ -81,6 +81,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
                                 )
                                 .build()
                 );
+                this.hashOperations.put(Fabricante.class.getSimpleName(),fabricante.getId(),fabricante);
 
             } else {
                 responseObserver.onNext(
@@ -137,6 +138,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
                                 )
                                 .build()
                 );
+                this.hashOperations.put(Fabricante.class.getSimpleName(),fabricante.getId(),fabricante);
 
             } else {
                 responseObserver.onNext(
@@ -188,6 +190,7 @@ public final class FabricanteService extends FabricanteServiceGrpc.FabricanteSer
                                 .setCodigo(200)
                                 .build()
                 );
+                this.hashOperations.delete(Fabricante.class.getSimpleName(),fabricante.getId());
             } else {
 
                 responseObserver.onNext(

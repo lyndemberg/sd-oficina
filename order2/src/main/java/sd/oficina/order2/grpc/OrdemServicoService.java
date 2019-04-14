@@ -19,8 +19,8 @@ import java.util.Optional;
 public class OrdemServicoService extends OrderServiceGrpc.OrderServiceImplBase {
 
     private OrdemServicoDao ordemServicoDao;
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, OrdemServico> redisTemplate;
+    private final HashOperations<String, Object, OrdemServico> hashOperations;
 
     public OrdemServicoService() {
         this.ordemServicoDao = new OrdemServicoDao();
@@ -40,6 +40,7 @@ public class OrdemServicoService extends OrderServiceGrpc.OrderServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(OrdemServico.class.getSimpleName(),ordemServico.getId(),ordemServico);
     }
 
     @Override
@@ -63,7 +64,10 @@ public class OrdemServicoService extends OrderServiceGrpc.OrderServiceImplBase {
             try {
                 Optional<OrdemServico> atualizado = this.ordemServicoDao.atualizar(ordemServico);
 
-                atualizado.ifPresent(ordemServico1 -> responseObserver.onNext(ProtoConverterOrder.modelToProto(ordemServico1)));
+                atualizado.ifPresent(ordemServico1 -> {
+                    responseObserver.onNext(ProtoConverterOrder.modelToProto(ordemServico1));
+                    this.hashOperations.put(OrdemServico.class.getSimpleName(),ordemServico1.getId(),ordemServico1);
+                });
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -95,7 +99,10 @@ public class OrdemServicoService extends OrderServiceGrpc.OrderServiceImplBase {
             try {
                 Optional<OrdemServico> atualizado = this.ordemServicoDao.atualizar(ordemServico);
 
-                atualizado.ifPresent(ordemServico1 -> responseObserver.onNext(ProtoConverterOrder.modelToProto(ordemServico1)));
+                atualizado.ifPresent(ordemServico1 -> {
+                    responseObserver.onNext(ProtoConverterOrder.modelToProto(ordemServico1));
+                    this.hashOperations.put(OrdemServico.class.getSimpleName(),ordemServico1.getId(),ordemServico1);
+                });
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -115,9 +122,6 @@ public class OrdemServicoService extends OrderServiceGrpc.OrderServiceImplBase {
 
         // Finaliza comunicaçao
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o Cache
-        hashOperations.put(OrdemServico.class.getSimpleName(), request.getId(), ordemServicos);
     }
 
 }

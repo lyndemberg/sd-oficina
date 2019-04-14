@@ -20,8 +20,8 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
 
     private CidadeDao cidadeDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Cidade> redisTemplate;
+    private final HashOperations<String, Object, Cidade> hashOperations;
 
     public CidadeService() {
         this.cidadeDao = new CidadeDao();
@@ -47,6 +47,7 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Cidade.class.getSimpleName(),cidade.getId(),cidade);
     }
 
     @Override
@@ -66,6 +67,7 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Cidade.class.getSimpleName(),cidade.getId(),cidade);
     }
 
     @Override
@@ -76,6 +78,7 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
                         .setCodigo(200)
                         .build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Cidade.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -89,9 +92,6 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
                     .setCidade(
                             ProtoConverterPerson.modelToProto(cidade))
                     .build());
-
-            // Atualiza o cache
-            hashOperations.put(Cidade.class.getSimpleName(), cidade.getId(), cidade);
 
         } else {
             responseObserver.onNext(CidadeResult
@@ -113,12 +113,5 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Após finalizar a comunicação atualiza o cache
-        hashOperations.putAll(
-                Cidade.class.getSimpleName(),
-                cidades.stream().collect(
-                        Collectors.toMap(Cidade::getId, cidade -> cidade)
-                ));
     }
 }

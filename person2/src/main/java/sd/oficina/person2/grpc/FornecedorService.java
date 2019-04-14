@@ -20,8 +20,8 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
 
     private FornecedorDao dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Fornecedor> redisTemplate;
+    private final HashOperations<String, Object, Fornecedor> hashOperations;
 
     public FornecedorService() {
         this.dao = new FornecedorDao();
@@ -40,6 +40,7 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
         //
         responseObserver.onNext(estado);
         responseObserver.onCompleted();
+        this.hashOperations.put(Fornecedor.class.getSimpleName(),resultado.getId(),resultado);
     }
 
     @Override
@@ -47,6 +48,7 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
         this.dao.remover(request.getId());
         responseObserver.onNext(FornecedorResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Fornecedor.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -61,6 +63,7 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
                 .build());
         //
         responseObserver.onCompleted();
+        this.hashOperations.put(Fornecedor.class.getSimpleName(),fornecedor.getId(),fornecedor);
     }
 
     @Override
@@ -72,12 +75,6 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
                         fornecedor != null ? ProtoConverterPerson.modelToProto(fornecedor) : FornecedorProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o Fornecedor
-        if (fornecedor != null) {
-            // Atualiza o cache
-            hashOperations.put(Fornecedor.class.getSimpleName(), fornecedor.getId(), fornecedor);
-        }
     }
 
     @Override
@@ -91,12 +88,5 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Fornecedor.class.getSimpleName(),
-                estados.stream().collect(
-                        Collectors.toMap(Fornecedor::getId, fornecedor -> fornecedor)
-                ));
     }
 }

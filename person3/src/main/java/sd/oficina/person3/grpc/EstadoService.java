@@ -20,8 +20,8 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
 
     private EstadoDao estadoDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Estado> redisTemplate;
+    private final HashOperations<String, Object, Estado> hashOperations;
 
     public EstadoService() {
         this.estadoDao = new EstadoDao();
@@ -47,6 +47,7 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Estado.class.getSimpleName(),estado.getId(),estado);
     }
 
     @Override
@@ -67,6 +68,7 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Estado.class.getSimpleName(),estado.getId(),estado);
     }
 
     @Override
@@ -77,6 +79,7 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
                         .setCodigo(200)
                         .build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Estado.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -90,10 +93,6 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
                     .setEstado(
                             ProtoConverterPerson.modelToProto(estado))
                     .build());
-
-            // Atualiza o cache
-            hashOperations.put(Estado.class.getSimpleName(), estado.getId(), estado);
-
         } else {
             responseObserver.onNext(EstadoResult
                     .newBuilder()
@@ -114,12 +113,5 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Após finalizar a comunicação atualiza o cache
-        hashOperations.putAll(
-                Estado.class.getSimpleName(),
-                estados.stream().collect(
-                        Collectors.toMap(Estado::getId, estado -> estado)
-                ));
     }
 }

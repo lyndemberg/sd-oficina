@@ -20,8 +20,8 @@ public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
 
     private EstoqueDao estoqueDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Estoque> redisTemplate;
+    private final HashOperations<String, Object, Estoque> hashOperations;
 
     public EstoqueService() {
         this.estoqueDao = new EstoqueDao();
@@ -47,6 +47,7 @@ public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Estoque.class.getSimpleName(),estoque.getIdPeca(),estoque);
     }
 
     @Override
@@ -66,6 +67,7 @@ public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Estoque.class.getSimpleName(),estoque.getIdPeca(),estoque);
     }
 
     @Override
@@ -76,6 +78,7 @@ public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
                         .setCodigo(200)
                         .build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Estoque.class.getSimpleName(),request.getIdPeca());
     }
 
     @Override
@@ -89,10 +92,6 @@ public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
                     .setEstoque(
                             ProtoConverterStore.modelToProto(estoque))
                     .build());
-
-            // Atualiza o cache
-            hashOperations.put(Estoque.class.getSimpleName(), estoque.getIdPeca(), estoque);
-
         } else {
             responseObserver.onNext(EstoqueResult
                     .newBuilder()
@@ -113,12 +112,5 @@ public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Estoque.class.getSimpleName(),
-                estoques.stream().collect(
-                        Collectors.toMap(Estoque::getIdPeca, estoque -> estoque)
-                ));
     }
 }

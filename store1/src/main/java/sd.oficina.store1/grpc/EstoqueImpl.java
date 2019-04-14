@@ -20,8 +20,8 @@ public class EstoqueImpl extends EstoqueServiceGrpc.EstoqueServiceImplBase {
 
     private EstoqueDAO dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Estoque> redisTemplate;
+    private final HashOperations<String, Object, Estoque> hashOperations;
 
     public EstoqueImpl() {
         dao = new EstoqueDAO();
@@ -38,20 +38,22 @@ public class EstoqueImpl extends EstoqueServiceGrpc.EstoqueServiceImplBase {
                 .build();
         responseObserver.onNext(fabricanteResult);
         responseObserver.onCompleted();
+        this.hashOperations.put(Estoque.class.getSimpleName(),result.getIdPeca(),result);
     }
 
     @Override
     public void atualizar(EstoqueProto request, StreamObserver<EstoqueResult> responseObserver) {
-        Estoque Estoque = dao.atualizar(ProtoConverterStore.protoToModel(request));
+        Estoque estoque = dao.atualizar(ProtoConverterStore.protoToModel(request));
         responseObserver.onNext(EstoqueResult
                 .newBuilder()
                 .setEstoque(
-                        Estoque != null ? ProtoConverterStore.modelToProto(Estoque) :
+                        estoque != null ? ProtoConverterStore.modelToProto(estoque) :
                                 EstoqueProto.newBuilder().build()
                 )
                 .setCodigo(200)
                 .build());
         responseObserver.onCompleted();
+        this.hashOperations.put(Estoque.class.getSimpleName(),estoque.getIdPeca(),estoque);
     }
 
     @Override
@@ -59,6 +61,7 @@ public class EstoqueImpl extends EstoqueServiceGrpc.EstoqueServiceImplBase {
         this.dao.deletar(request.getIdPeca());
         responseObserver.onNext(EstoqueResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Estoque.class.getSimpleName(),request.getIdPeca());
     }
 
     @Override
@@ -71,12 +74,6 @@ public class EstoqueImpl extends EstoqueServiceGrpc.EstoqueServiceImplBase {
                                 EstoqueProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o Estoque
-        if (Estoque != null) {
-            // Atualiza o cache
-            hashOperations.put(Estoque.class.getSimpleName(), Estoque.getIdPeca(), Estoque);
-        }
     }
 
     @Override
@@ -86,12 +83,5 @@ public class EstoqueImpl extends EstoqueServiceGrpc.EstoqueServiceImplBase {
         Estoques.forEach(f -> builder.addEstoque(ProtoConverterStore.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Estoque.class.getSimpleName(),
-                Estoques.stream().collect(
-                        Collectors.toMap(Estoque::getIdPeca, estoque -> estoque)
-                ));
     }
 }

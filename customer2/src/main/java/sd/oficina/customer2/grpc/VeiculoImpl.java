@@ -20,8 +20,8 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
 
     private VeiculoDAO dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Veiculo> redisTemplate;
+    private final HashOperations<String, Object, Veiculo> hashOperations;
 
     public VeiculoImpl() {
         this.dao = new VeiculoDAO();
@@ -36,13 +36,6 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
         veiculos.forEach(f -> builder.addVeiculos(ProtoConverterCustomer.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Veiculo.class.getSimpleName(),
-                veiculos.stream().collect(
-                        Collectors.toMap(Veiculo::getId, veiculo -> veiculo)
-                ));
     }
 
     @Override
@@ -54,6 +47,7 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
                 .build();
         responseObserver.onNext(veiculoResult);
         responseObserver.onCompleted();
+        this.hashOperations.put(Veiculo.class.getSimpleName(),result.getId(),result);
     }
 
     @Override
@@ -64,6 +58,7 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
                 .setVeiculo(veiculo != null ? ProtoConverterCustomer.modelToProto(veiculo) : VeiculoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+        this.hashOperations.put(Veiculo.class.getSimpleName(),veiculo.getId(),veiculo);
     }
 
     @Override
@@ -71,6 +66,7 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
         this.dao.deletar(request.getId());
         responseObserver.onNext(VeiculoResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Veiculo.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -82,11 +78,5 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
                 .setVeiculo(veiculo != null ? ProtoConverterCustomer.modelToProto(veiculo) : VeiculoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o veiculo
-        if (veiculo != null) {
-            // Atualiza o cache
-            hashOperations.put(Veiculo.class.getSimpleName(), veiculo.getId(), veiculo);
-        }
     }
 }

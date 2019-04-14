@@ -20,8 +20,8 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
 
     private EstadoDao dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Estado> redisTemplate;
+    private final HashOperations<String, Object, Estado> hashOperations;
 
     public EstadoService() {
         this.dao = new EstadoDao();
@@ -40,6 +40,7 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
         //
         responseObserver.onNext(estado);
         responseObserver.onCompleted();
+        this.hashOperations.put(Estado.class.getSimpleName(),resultado.getId(),resultado);
     }
 
     @Override
@@ -47,6 +48,7 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
         this.dao.remover(request.getId());
         responseObserver.onNext(EstadoResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Estado.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -61,6 +63,7 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
                 .build());
         //
         responseObserver.onCompleted();
+        this.hashOperations.put(Estado.class.getSimpleName(),estado.getId(),estado);
     }
 
     @Override
@@ -72,12 +75,6 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
                         estado != null ? ProtoConverterPerson.modelToProto(estado) : EstadoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o Estado
-        if (estado != null) {
-            // Atualiza o cache
-            hashOperations.put(Estado.class.getSimpleName(), estado.getId(), estado);
-        }
     }
 
     @Override
@@ -91,12 +88,5 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Estado.class.getSimpleName(),
-                estados.stream().collect(
-                        Collectors.toMap(Estado::getId, estado -> estado)
-                ));
     }
 }

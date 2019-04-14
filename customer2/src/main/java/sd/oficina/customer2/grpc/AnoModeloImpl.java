@@ -21,8 +21,8 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
 
     private AnoModeloDAO dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, AnoModelo> redisTemplate;
+    private final HashOperations<String, Object, AnoModelo> hashOperations;
 
     public AnoModeloImpl() {
         this.dao = new AnoModeloDAO();
@@ -33,19 +33,11 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
 
     @Override
     public void buscarTodos(Empty request, StreamObserver<AnoModeloProtoList> responseObserver) {
-
         List<AnoModelo> anoModelos = dao.todos();
         final AnoModeloProtoList.Builder builder = AnoModeloProtoList.newBuilder();
         anoModelos.forEach(a -> builder.addAnoModelos(ProtoConverterCustomer.modelToProto(a)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                AnoModelo.class.getSimpleName(),
-                anoModelos.stream().collect(
-                        Collectors.toMap(AnoModelo::getId, anoModelo -> anoModelo)
-                ));
     }
 
     @Override
@@ -57,6 +49,7 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
                 .build();
         responseObserver.onNext(anoModeloResult);
         responseObserver.onCompleted();
+        this.hashOperations.put(AnoModelo.class.getSimpleName(),result.getId(),result);
     }
 
     @Override
@@ -69,6 +62,7 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
                 )
                 .build());
         responseObserver.onCompleted();
+        this.hashOperations.put(AnoModelo.class.getSimpleName(),anoModelo.getId(),anoModelo);
     }
 
     @Override
@@ -76,6 +70,7 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
         this.dao.deletar(request.getId());
         responseObserver.onNext(AnoModeloResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(AnoModelo.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -87,12 +82,5 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
                         anoModelo != null ? ProtoConverterCustomer.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou o AnoModelo
-        if (anoModelo != null) {
-            // Atualiza o cache
-            hashOperations.put(Veiculo.class.getSimpleName(), anoModelo.getId(), anoModelo);
-        }
-
     }
 }

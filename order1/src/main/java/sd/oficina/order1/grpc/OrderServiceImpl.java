@@ -20,8 +20,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
 
     private final OrdemServicoDao ordemServicoDao;
     //CACHE
-    private final RedisTemplate<String,Object> redisTemplate;
-    private final HashOperations<String,Object, Object> hashOperations;
+    private final RedisTemplate<String,OrdemServico> redisTemplate;
+    private final HashOperations<String,Object, OrdemServico> hashOperations;
 
     public OrderServiceImpl(){
         this.ordemServicoDao = new OrdemServicoDao();
@@ -34,6 +34,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
         OrdemServico model = new OrdemServico();
         ordemServicoDao.salvar(model);
         responseObserver.onCompleted();
+        //atualizando cache
+        hashOperations.put(OrdemServico.class.getSimpleName(),model.getId(),model);
     }
 
     @Override
@@ -43,6 +45,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
         OrdemServico atualizado = ordemServicoDao.atualizar(ordemServico);
         responseObserver.onNext(ProtoConverterOrder.modelToProto(atualizado));
         responseObserver.onCompleted();
+        //atualizando cache
+        hashOperations.put(OrdemServico.class.getSimpleName(),ordemServico.getId(),ordemServico);
     }
 
     @Override
@@ -52,6 +56,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
         OrdemServico atualizado = ordemServicoDao.atualizar(ordemServico);
         responseObserver.onNext(ProtoConverterOrder.modelToProto(atualizado));
         responseObserver.onCompleted();
+        //atualizando cache
+        hashOperations.put(OrdemServico.class.getSimpleName(),ordemServico.getId(),ordemServico);
     }
 
     @Override
@@ -64,9 +70,6 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
 
         // Finaliza comunicaçao
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o Cache
-        hashOperations.put(OrdemServico.class.getSimpleName(), request.getId(), ordemServicos);
     }
 
     @Override

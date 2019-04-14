@@ -20,8 +20,8 @@ public class ServicoService extends ServicoServiceGrpc.ServicoServiceImplBase {
 
     private ServicoDao servicoDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Servico> redisTemplate;
+    private final HashOperations<String, Object, Servico> hashOperations;
 
     public ServicoService() {
         this.servicoDao = new ServicoDao();
@@ -47,6 +47,7 @@ public class ServicoService extends ServicoServiceGrpc.ServicoServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Servico.class.getSimpleName(),servico.getId(),servico);
     }
 
     @Override
@@ -66,6 +67,7 @@ public class ServicoService extends ServicoServiceGrpc.ServicoServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Servico.class.getSimpleName(),servico.getId(),servico);
     }
 
     @Override
@@ -76,6 +78,7 @@ public class ServicoService extends ServicoServiceGrpc.ServicoServiceImplBase {
                         .setCodigo(200)
                         .build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Servico.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -89,10 +92,6 @@ public class ServicoService extends ServicoServiceGrpc.ServicoServiceImplBase {
                     .setServico(
                             ProtoConverterStore.modelToProto(servico))
                     .build());
-
-            // Atualiza o cache
-            hashOperations.put(Servico.class.getSimpleName(), servico.getId(), servico);
-
         } else {
             responseObserver.onNext(ServicoResult
                     .newBuilder()
@@ -113,12 +112,5 @@ public class ServicoService extends ServicoServiceGrpc.ServicoServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Servico.class.getSimpleName(),
-                servicos.stream().collect(
-                        Collectors.toMap(Servico::getId, servico -> servico)
-                ));
     }
 }

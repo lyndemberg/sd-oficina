@@ -25,8 +25,8 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
 
     private final VeiculoDao veiculoDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Veiculo> redisTemplate;
+    private final HashOperations<String, Object, Veiculo> hashOperations;
 
     public VeiculoService() {
         this.veiculoDao = new VeiculoDao();
@@ -53,12 +53,6 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
         // Finaliza comunicaçao
         responseObserver.onCompleted();
 
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Veiculo.class.getSimpleName(),
-                veiculos.stream().collect(
-                Collectors.toMap(Veiculo::getId, veiculo -> veiculo)
-        ));
     }
 
     @Override
@@ -82,6 +76,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 )
                                 .build()
                 );
+                this.hashOperations.put(Veiculo.class.getSimpleName(),veiculo.getId(),veiculo);
 
             } else {
                 responseObserver.onNext(
@@ -139,6 +134,8 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 .build()
                 );
 
+                this.hashOperations.put(Veiculo.class.getSimpleName(),veiculo.getId(),veiculo);
+
             } else {
                 responseObserver.onNext(
                         VeiculoResult
@@ -189,6 +186,7 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 .setCodigo(200)
                                 .build()
                 );
+                this.hashOperations.delete(Veiculo.class.getSimpleName(),veiculo.getId());
             } else {
 
                 responseObserver.onNext(
@@ -246,9 +244,6 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 )
                                 .build()
                 );
-
-                // Atualiza o cache
-                hashOperations.put(Veiculo.class.getSimpleName(), veiculo.getId(), veiculo);
 
             } else {
 

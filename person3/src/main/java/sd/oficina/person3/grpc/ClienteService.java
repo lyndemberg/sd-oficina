@@ -20,8 +20,8 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase {
 
     private ClienteDao clienteDao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Cliente> redisTemplate;
+    private final HashOperations<String, Object, Cliente> hashOperations;
 
     public ClienteService() {
         this.clienteDao = new ClienteDao();
@@ -47,6 +47,7 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Cliente.class.getSimpleName(),cliente.getId(),cliente);
     }
 
     @Override
@@ -67,6 +68,7 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase {
         }
 
         responseObserver.onCompleted();
+        this.hashOperations.put(Cliente.class.getSimpleName(),cliente.getId(),cliente);
     }
 
     @Override
@@ -77,6 +79,7 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase {
                         .setCodigo(200)
                         .build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Cliente.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -90,9 +93,6 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase {
                     .setCliente(
                             ProtoConverterPerson.modelToProto(cliente))
                     .build());
-
-            // Atualiza o cache
-            hashOperations.put(Cliente.class.getSimpleName(), cliente.getId(), cliente);
 
         } else {
             responseObserver.onNext(ClienteResult
@@ -114,12 +114,5 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Após finalizar a comunicação atualiza o cache
-        hashOperations.putAll(
-                Cliente.class.getSimpleName(),
-                clientes.stream().collect(
-                        Collectors.toMap(Cliente::getId, cliente -> cliente)
-                ));
     }
 }

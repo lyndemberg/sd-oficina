@@ -20,8 +20,8 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
 
     private CidadeDao dao;
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, Cidade> redisTemplate;
+    private final HashOperations<String, Object, Cidade> hashOperations;
 
     public CidadeService() {
         this.dao = new CidadeDao();
@@ -40,6 +40,7 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
         //
         responseObserver.onNext(cidade);
         responseObserver.onCompleted();
+        this.hashOperations.put(Cidade.class.getSimpleName(),resultado.getId(),resultado);
     }
 
     @Override
@@ -54,6 +55,7 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
                 .build());
         //
         responseObserver.onCompleted();
+        this.hashOperations.put(Cidade.class.getSimpleName(),cidade.getId(),cidade);
     }
 
     @Override
@@ -61,6 +63,7 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
         this.dao.remover(request.getId());
         responseObserver.onNext(CidadeResult.newBuilder().setCodigo(200).build());
         responseObserver.onCompleted();
+        this.hashOperations.delete(Cidade.class.getSimpleName(),request.getId());
     }
 
     @Override
@@ -72,12 +75,6 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
                         cidade != null ? ProtoConverterPerson.modelToProto(cidade) : CidadeProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
-
-        // Se encontrou a Cidade
-        if (cidade != null) {
-            // Atualiza o cache
-            hashOperations.put(Cidade.class.getSimpleName(), cidade.getId(), cidade);
-        }
     }
 
     @Override
@@ -91,12 +88,5 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
-
-        // Apos finalizar a comunicaçao atualiza o cache
-        hashOperations.putAll(
-                Cidade.class.getSimpleName(),
-                cidades.stream().collect(
-                        Collectors.toMap(Cidade::getId, cidade -> cidade)
-                ));
     }
 }
