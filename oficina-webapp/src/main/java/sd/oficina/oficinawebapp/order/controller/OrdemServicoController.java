@@ -36,10 +36,16 @@ public class OrdemServicoController {
     @GetMapping("/cliente/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<OrdemServicoValue>> buscarOrdensCliente(@PathVariable Long id) {
-        Cliente cliente = new Cliente();
-        cliente.setId(id);
         List<OrdemServicoValue> ordemServicoValueList =
-                ordemServicoService.buscarOrdensDeServicoPorCliente(cliente);
+                ordemServicoService.buscarOrdensDeServicoPorCliente(id);
+        return ResponseEntity.ok(ordemServicoValueList);
+    }
+
+    @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<List<OrdemServicoValue>> listar() {
+        List<OrdemServicoValue> ordemServicoValueList =
+                ordemServicoService.listarTodos();
         return ResponseEntity.ok(ordemServicoValueList);
     }
 
@@ -64,4 +70,5 @@ public class OrdemServicoController {
         ordemServicoService.concluirOrdem(value);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
 }

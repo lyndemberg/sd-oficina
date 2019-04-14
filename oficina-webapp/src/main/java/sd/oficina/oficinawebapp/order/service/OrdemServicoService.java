@@ -26,6 +26,9 @@ import sd.oficina.shared.util.LocalDateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class OrdemServicoService {
@@ -38,10 +41,10 @@ public class OrdemServicoService {
     private final IdentityManager identityManager;
     private final RescueRepository rescueRepository;
     //CACHE
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final HashOperations<String, Object, Object> hashOperations;
+    private final RedisTemplate<String, OrdemServico> redisTemplate;
+    private final HashOperations<String, Object, OrdemServico> hashOperations;
 
-    public OrdemServicoService(OrderClient clientOrderGrpc, ClienteService clienteService, VeiculoService veiculoService, ServicoService servicoService, IdentityManager identityManager, RescueRepository rescueRepository, @Qualifier("redisTemplateOrder") RedisTemplate<String, Object> redisTemplate) {
+    public OrdemServicoService(OrderClient clientOrderGrpc, ClienteService clienteService, VeiculoService veiculoService, ServicoService servicoService, IdentityManager identityManager, RescueRepository rescueRepository, @Qualifier("redisTemplateOrder") RedisTemplate<String, OrdemServico> redisTemplate) {
         this.clientOrderGrpc = clientOrderGrpc;
         this.veiculoService = veiculoService;
         this.clienteService = clienteService;
@@ -94,7 +97,6 @@ public class OrdemServicoService {
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(ordemServico));
                 rescueRepository.save(eventRescue);
-                ordemServico.setPago(true);
                 hashOperations.put(OrdemServico.class.getSimpleName(), ordemServico.getId(), ordemServico);
             } catch (JsonProcessingException e1) {
                 e1.printStackTrace();
@@ -104,7 +106,7 @@ public class OrdemServicoService {
     }
 
     public void concluirOrdem(OrdemServicoValue value) {
-        value.setPago(true);
+        value.setConcluida(true);
         OrdemServico ordemServico = value.toEntity();
         try {
             clientOrderGrpc.concluirOrdem(ordemServico);
@@ -118,7 +120,6 @@ public class OrdemServicoService {
             try {
                 eventRescue.setPayload(mapper.writeValueAsString(ordemServico));
                 rescueRepository.save(eventRescue);
-                ordemServico.setConcluida(true);
                 hashOperations.put(OrdemServico.class.getSimpleName(), ordemServico.getId(), ordemServico);
             } catch (JsonProcessingException e1) {
                 e1.printStackTrace();
@@ -126,10 +127,10 @@ public class OrdemServicoService {
         }
     }
 
-    public List<OrdemServicoValue> buscarOrdensDeServicoPorCliente(Cliente cliente) {
+    public List<OrdemServicoValue> buscarOrdensDeServicoPorCliente(Long id) {
         List<OrdemServicoValue> ordemServicoValueList = new ArrayList<>();
         try {
-            List<OrdemProto> protos = clientOrderGrpc.buscarOrdensPorCliente(cliente);
+            List<OrdemProto> protos = clientOrderGrpc.buscarOrdensPorCliente(id);
             protos.forEach((ordem) -> {
                 //compõe Cliente
                 Cliente cli = clienteService.buscar(ordem.getIdCliente());
@@ -153,40 +154,85 @@ public class OrdemServicoService {
             });
         } catch (FalhaGrpcException e) {
             // Recupera do cache todas as OrdemServico baseando-se no id do Cliente
-            List<OrdemServico> cache = (List<OrdemServico>) this.hashOperations.get(OrdemServico.class.getSimpleName(), cliente.getId());
+            List<OrdemServico> values = this.hashOperations.values(OrdemServico.class.getSimpleName());
+            List<OrdemServico> collect = values.stream().filter(value -> id.equals(value.getIdCliente()))
+                    .collect(Collectors.toList());
+            collect.forEach(ordem -> {
+                //compõe Cliente
+                Cliente cli = clienteService.buscar(ordem.getIdCliente());
+                //compõe Veículo
+                Veiculo veiculo = veiculoService.buscar(ordem.getIdVeiculo());
+                List<Servico> servicosList = new ArrayList<>();
+                ordem.getServicos().forEach((servico) -> {
+                    Servico s = servicoService.buscar(servico);
+                    servicosList.add(s);
+                });
+                OrdemServicoValue value = new OrdemServicoValue();
+                value.setId(ordem.getId());
+                value.setCliente(cli);
+                value.setVeiculo(veiculo);
+                value.setConcluida(ordem.isConcluida());
+                value.setPago(ordem.isPago());
+                value.setServicos(servicosList);
+                value.setDataPagamento(ordem.getDataPagamento());
+                value.setDataRegistro(ordem.getDataRegistro());
+                ordemServicoValueList.add(value);
+            });
+        }
 
-            // Se existir cache para este cliente
-            if (cache != null) {
+        return ordemServicoValueList;
+    }
 
-                // Para cada OrdemServico no cache converte em OrdemServiceValue
-                cache.forEach((ordem) -> {
-                    //compõe Cliente
-                    Cliente cli = clienteService.buscar(ordem.getIdCliente());
-
-                    //compõe Veículo
-                    Veiculo veiculo = veiculoService.buscar(ordem.getIdVeiculo());
-
-                    List<Servico> servicosList = new ArrayList<>();
-
-                    ordem.getServicos().forEach((servico) -> {
-                        Servico s = servicoService.buscar(servico);
-                        servicosList.add(s);
-                    });
-
-                    OrdemServicoValue value = new OrdemServicoValue();
-
-                    value.setId(ordem.getId());
-                    value.setCliente(cli);
-                    value.setVeiculo(veiculo);
-                    value.setConcluida(ordem.isConcluida());
-                    value.setPago(ordem.isPago());
-                    value.setServicos(servicosList);
-                    value.setDataPagamento(ordem.getDataPagamento());
-                    value.setDataRegistro(ordem.getDataRegistro());
-                    ordemServicoValueList.add(value);
+    public List<OrdemServicoValue> listarTodos(){
+        List<OrdemServicoValue> ordemServicoValueList = new ArrayList<>();
+        try {
+            List<OrdemProto> protos = clientOrderGrpc.listarOrdensServico();
+            protos.forEach((ordem) -> {
+                //compõe Cliente
+                Cliente cli = clienteService.buscar(ordem.getIdCliente());
+                //compõe Veículo
+                Veiculo veiculo = veiculoService.buscar(ordem.getIdVeiculo());
+                List<Servico> servicosList = new ArrayList<>();
+                ordem.getServicosList().forEach((servico) -> {
+                    Servico s = servicoService.buscar(servico);
+                    servicosList.add(s);
+                });
+                OrdemServicoValue value = new OrdemServicoValue();
+                value.setId(ordem.getIdOrdem());
+                value.setCliente(cli);
+                value.setVeiculo(veiculo);
+                value.setConcluida(ordem.getConcluido());
+                value.setPago(ordem.getPago());
+                value.setServicos(servicosList);
+                value.setDataPagamento(LocalDateUtil.toLocalDate(ordem.getDataPagamento()));
+                value.setDataRegistro(LocalDateUtil.toLocalDate(ordem.getDataRegistro()));
+                ordemServicoValueList.add(value);
+            });
+        } catch (FalhaGrpcException e) {
+            // Recupera do cache todas as OrdemServico baseando-se no id do Cliente
+            List<OrdemServico> values = this.hashOperations.values(OrdemServico.class.getSimpleName());
+            values.forEach(ordem->{
+                //compõe Cliente
+                Cliente cli = clienteService.buscar(ordem.getIdCliente());
+                //compõe Veículo
+                Veiculo veiculo = veiculoService.buscar(ordem.getIdVeiculo());
+                List<Servico> servicosList = new ArrayList<>();
+                ordem.getServicos().forEach((servico) -> {
+                    Servico s = servicoService.buscar(servico);
+                    servicosList.add(s);
                 });
 
-            }
+                OrdemServicoValue value = new OrdemServicoValue();
+                value.setId(ordem.getId());
+                value.setCliente(cli);
+                value.setVeiculo(veiculo);
+                value.setConcluida(ordem.isConcluida());
+                value.setPago(ordem.isPago());
+                value.setServicos(servicosList);
+                value.setDataPagamento(ordem.getDataPagamento());
+                value.setDataRegistro(ordem.getDataRegistro());
+                ordemServicoValueList.add(value);
+            });
 
         }
 

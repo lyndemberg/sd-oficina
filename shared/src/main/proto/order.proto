@@ -44,6 +44,7 @@ service OrderService{
     //retorno: objecto atualizado
     rpc concluirOrdem(OrdemProto) returns (OrdemProto);
     rpc buscarOrdensPorCliente(ClienteProto) returns (stream OrdemProto);
+    rpc listarOrdens(google.protobuf.Empty) returns (stream OrdemProto);
 }
 service OrcamentoService{
     rpc fazerOrcamento(OrcamentoData) returns (ResultOrcamento);

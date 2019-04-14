@@ -39,4 +39,9 @@ public class OrdemServicoDao {
         return updated;
     }
 
+    public List<OrdemServico> listarTodos(){
+        return entityManager.createQuery("SELECT o FROM OrdemServico o")
+                .getResultList();
+    }
+
 }

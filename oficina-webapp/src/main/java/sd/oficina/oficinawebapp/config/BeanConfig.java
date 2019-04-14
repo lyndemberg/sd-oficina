@@ -34,6 +34,7 @@ public class BeanConfig {
         return new IdentityManager();
     }
 
+//    CLIENTES DOS SERVIÇOS gRPC
     @Bean
     public OrderClient provideOrderClient(){
         return new OrderClient(hostsProperties);

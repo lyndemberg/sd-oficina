@@ -69,4 +69,17 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
         hashOperations.put(OrdemServico.class.getSimpleName(), request.getId(), ordemServicos);
     }
 
+    @Override
+    public void listarOrdens(Empty request, StreamObserver<OrdemProto> responseObserver) {
+        List<OrdemServico> ordemServicos = ordemServicoDao.listarTodos();
+
+        for(int i=0; i<ordemServicos.size();i++){
+            OrdemServico ordem = ordemServicos.get(i);
+            responseObserver.onNext(ProtoConverterOrder.modelToProto(ordem));
+        }
+
+        // Finaliza comunicaçao
+        responseObserver.onCompleted();
+
+    }
 }
