@@ -48,6 +48,8 @@ import { CadastroOrderComponent } from './order/view/cadastro-order/cadastro-ord
 import {MultiSelectModule} from 'primeng/multiselect';
 import { ListarOrderComponent } from './order/view/listar-order/listar-order.component';
 import { ListarPorClienteComponent } from './order/view/listar-por-cliente/listar-por-cliente.component';
+import { CadastrarServicoComponent } from './store/view/servico/cadastrar-servico/cadastrar-servico.component';
+import { ListarServicoComponent } from './store/view/servico/listar-servico/listar-servico.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { ListarPorClienteComponent } from './order/view/listar-por-cliente/lista
     CadastrarEstoqueComponent,
     CadastroOrderComponent,
     ListarOrderComponent,
-    ListarPorClienteComponent
+    ListarPorClienteComponent,
+    CadastrarServicoComponent,
+    ListarServicoComponent
   ],
   imports: [
     BrowserModule,

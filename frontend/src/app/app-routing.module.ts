@@ -20,6 +20,8 @@ import { CadastrarEstoqueComponent } from './store/view/estoque/cadastrar-estoqu
 import { ListarEstoqueComponent } from './store/view/estoque/listar-estoque/listar-estoque.component';
 import { ListarOrderComponent } from './order/view/listar-order/listar-order.component';
 import { ListarPorClienteComponent } from './order/view/listar-por-cliente/listar-por-cliente.component';
+import { ListarServicoComponent } from './store/view/servico/listar-servico/listar-servico.component';
+import { CadastrarServicoComponent } from './store/view/servico/cadastrar-servico/cadastrar-servico.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -41,7 +43,9 @@ const routes: Routes = [
   { path: 'cadastrarEstoque', component: CadastrarEstoqueComponent},
   { path: 'listarEstoque', component: ListarEstoqueComponent},
   { path: 'listarOrdem', component: ListarOrderComponent},
-  { path: 'listarPorCliente', component: ListarPorClienteComponent}
+  { path: 'listarPorCliente', component: ListarPorClienteComponent},
+  { path: 'listarServico', component: ListarServicoComponent},
+  { path: 'cadastrarServico', component: CadastrarServicoComponent}
 ];
 
 @NgModule({
