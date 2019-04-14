@@ -26,6 +26,10 @@ export class OrderService {
     return this.http.put<OrdemServico>( this.url + "concluir/", ordem, { observe: 'response' });
   }
 
+  listarTodos(): Observable<HttpResponse<OrdemServico[]>>  {
+    return this.http.get<OrdemServico[]>( this.url, { observe: 'response' });
+  }
+
   listarPorCliente(id : number): Observable<HttpResponse<OrdemServico[]>>  {
     return this.http.get<OrdemServico[]>( this.url + "cliente/" + id, { observe: 'response' });
   }

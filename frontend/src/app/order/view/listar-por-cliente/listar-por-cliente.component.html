@@ -1,6 +1,17 @@
 <div class="p-grid">
   <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
-    <h2 class="box">Busca de Ordem</h2>
+    <h2 class="box">Busca de Ordem por cliente</h2>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-4 p-md-4 p-lg-4 p-xl-4 ui-fluid p-offset-4">
+      <p-dropdown [options]="clientes" [(ngModel)]="buscar" placeholder="Selecione o cliente da busca"
+        optionLabel="nome" [showClear]="true"></p-dropdown>
+    </div>
+  </div>
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12 ui-fluid">
+    <div class="p-sm-2 p-md-2 p-lg-2 p-xl-2 ui-fluid p-offset-5">
+      <button (click)="buscarPorServico(buscar)" pButton type="button" label="Buscar"></button>
+    </div>
   </div>
   <p-table [value]="ordens" class="p-sm-12 p-md-12 p-lg-12 p-xl-12">
     <ng-template pTemplate="header">
