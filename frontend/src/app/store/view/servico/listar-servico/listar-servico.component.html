@@ -1,0 +1,76 @@
+<div class="p-grid">
+  <div class="p-sm-12 p-md-12 p-lg-12 p-xl-12" style="text-align:center;">
+    <h2 class="box">Serviço</h2>
+  </div>
+  <p-table [value]="estoques" class="p-sm-12 p-md-12 p-lg-12 p-xl-12">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nome da peça</th>
+        <th>Código da peça</th>
+        <th>Valor da peça</th>
+        <th>Validade</th>
+        <th>Quantidade</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-estoque>
+      <tr style="text-align:center">
+        <td>{{estoque.nomePeca}}</td>
+        <td>{{estoque.codigoPeca}}</td>
+        <td>{{estoque.valorPeca}}</td>
+        <td>{{estoque.validade}}</td>
+        <td>{{estoque.qtdPeca}}</td>
+        <td>
+          <p-button (click)="showDialogUpdate(estoque)" icon="pi pi-pencil"></p-button>&nbsp;
+          <p-button (click)="showDialogDelete(estoque)" icon="pi pi-trash"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Estoque" [(visible)]="displayUpdate" [modal]="true" [responsive]="true"
+  [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <br>
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="50" pInputText [value]="estoque.nomePeca" [(ngModel)]="estoque.nomePeca">
+    <label for="float-input">Nome da peça</label>
+  </span>
+  <br>
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="50" pInputText [value]="estoque.codigoPeca"
+      [(ngModel)]="estoque.codigoPeca">
+    <label for="float-input">código da peça</label>
+  </span>
+  <br>
+  <span class="ui-fluid">
+    <input [(ngModel)]="estoque.qtdPeca" placeholder="Selecione a quantidade" [value]="estoque.qtdPeca">
+  </span>
+  <br>
+  <span class="ui-fluid">
+    <input [(ngModel)]="estoque.validade" placeholder="Informe a validade" [value]="estoque.validade">
+  </span>
+  <br><br>
+  <span class="ui-fluid">
+    <input [(ngModel)]="estoque.valorPeca" placeholder="Informe o valor" [value]="estoque.valorPeca">
+  </span>
+  <br>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="atualizar(estoque)" label="Atualizar"></button>
+    <button type="button" pButton icon="pi pi-close" (click)="displayUpdate=false" label="Cancelar"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Estoque" [(visible)]="displayDelete" [modal]="true" [responsive]="true"
+  [style]="{width: '450px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <br>
+  <span>
+    <p>Deseja realmente excluir este Estoque?</p>
+  </span>
+  <br>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="deletar(estoque)" label="Deletar"></button>
+    <button type="button" pButton icon="pi pi-close" (click)="displayDelete=false" label="Cancelar"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>

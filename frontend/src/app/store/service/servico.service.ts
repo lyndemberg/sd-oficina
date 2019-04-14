@@ -13,7 +13,19 @@ export class ServicoService {
 
   constructor(public http: HttpClient) { }
 
+  salvar(servico: Servico): Observable<HttpResponse<Servico>> {
+    return this.http.post(this.url, servico, { observe: 'response' });
+  }
+
+  atualizar(servico: Servico): Observable<HttpResponse<Servico>> {
+    return this.http.put(this.url, servico, { observe: 'response' });
+  }
+
+  deletar(id: number): Observable<HttpResponse<Servico>> {
+    return this.http.delete(this.url + id, { observe: 'response' });
+  }
+
   buscarTodos(): Observable<HttpResponse<Servico[]>> {
     return this.http.get<Servico[]>(this.url, { observe: 'response' });
-}
+  }
 }
