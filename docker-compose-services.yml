@@ -9,7 +9,7 @@ services:
                 ports:
                         - "4441:4441"
                 networks:
-                        - private_network
+                        - overnetwork
         order2:
                 build:
                         dockerfile: ./Dockerfile
@@ -18,7 +18,7 @@ services:
                 ports:
                         - "4442:4442"
                 networks:
-                        - private_network
+                        - overnetwork
         customer1:
                 build:
                         dockerfile: ./Dockerfile
@@ -27,7 +27,7 @@ services:
                 ports:
                         - "3331:3331"
                 networks:
-                        - private_network
+                        - overnetwork
         customer2:
                 build:
                         dockerfile: ./Dockerfile
@@ -36,7 +36,7 @@ services:
                 ports:
                         - "3332:3332"
                 networks:
-                        - private_network
+                        - overnetwork
         customer3:
                 build:
                         dockerfile: ./Dockerfile
@@ -45,7 +45,7 @@ services:
                 ports:
                         - "3333:3333"
                 networks:
-                        - private_network
+                        - overnetwork
         person1:
                 build:
                         dockerfile: ./Dockerfile
@@ -54,7 +54,7 @@ services:
                 ports:
                         - "2221:2221"
                 networks:
-                        - private_network
+                        - overnetwork
         person2:
                 build:
                         dockerfile: ./Dockerfile
@@ -63,7 +63,7 @@ services:
                 ports:
                         - "2222:2222"
                 networks:
-                        - private_network
+                        - overnetwork
         person3:
                 build:
                         dockerfile: ./Dockerfile
@@ -72,7 +72,7 @@ services:
                 ports:
                         - "2223:2223"
                 networks:
-                        - private_network
+                        - overnetwork
         store1:
                 build:
                         dockerfile: ./Dockerfile
@@ -81,7 +81,7 @@ services:
                 ports:
                         - "1111:1111"
                 networks:
-                        - private_network
+                        - overnetwork
         store2:
                 build:
                         dockerfile: ./Dockerfile
@@ -90,8 +90,7 @@ services:
                 ports:
                         - "1112:1112"
                 networks:
-                        - private_network
-
+                        - overnetwork
 networks:
-        private_network:
-                driver: bridge
+       overnetwork:
+               external: true
