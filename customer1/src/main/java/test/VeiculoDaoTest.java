@@ -27,18 +27,18 @@ public class VeiculoDaoTest {
 
     @Test
     public void test1() {
-        assertEquals(true, veiculoDao.salvar(veiculo).isPresent());
+        assertNotNull(veiculoDao.salvar(veiculo));
     }
 
     @Test
     public void test2() {
-        assertEquals(true, veiculoDao.buscarPorId(veiculo.getId()).isPresent());
+        assertNotNull(veiculoDao.buscarPorId(veiculo.getId()));
     }
 
     @Test
     public void test3() {
         veiculo.setQuilometragem(80000);
-        assertEquals(true, veiculoDao.atualizar(veiculo).isPresent());
+        assertNotNull(veiculoDao.atualizar(veiculo));
     }
 
     @Test

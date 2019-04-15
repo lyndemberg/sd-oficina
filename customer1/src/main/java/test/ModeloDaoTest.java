@@ -27,18 +27,18 @@ public class ModeloDaoTest {
 
     @Test
     public void test1() {
-        assertEquals(true, modeloDao.salvar(modelo).isPresent());
+        assertNotNull(modeloDao.salvar(modelo));
     }
 
     @Test
     public void test2() {
-        assertEquals(true, modeloDao.buscarPorId(modelo.getId()).isPresent());
+        assertNotNull(modeloDao.buscarPorId(modelo.getId()));
     }
 
     @Test
     public void test3() {
         modelo.setNome("Ford");
-        assertEquals(true, modeloDao.atualizar(modelo).isPresent());
+        assertNotNull(modeloDao.atualizar(modelo));
     }
 
     @Test

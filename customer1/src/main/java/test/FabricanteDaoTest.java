@@ -26,18 +26,18 @@ public class FabricanteDaoTest {
 
     @Test
     public void test1() {
-        assertEquals(true, fabricanteDao.salvar(fabricante).isPresent());
+        assertNotNull(fabricanteDao.salvar(fabricante));
     }
 
     @Test
     public void test2() {
-        assertEquals(true, fabricanteDao.buscarPorId(fabricante.getId()).isPresent());
+        assertNotNull(fabricanteDao.buscarPorId(fabricante.getId()));
     }
 
     @Test
     public void test3() {
         fabricante.setNome("Ford");
-        assertEquals(true, fabricanteDao.atualizar(fabricante).isPresent());
+        assertNotNull(fabricanteDao.atualizar(fabricante));
     }
 
     @Test

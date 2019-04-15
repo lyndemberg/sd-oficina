@@ -27,18 +27,18 @@ public class AnoModeloDaoTest {
 
     @Test
     public void test1() {
-       assertEquals(true, anoModeloDao.salvar(anoModelo).isPresent());
+       assertNotNull(anoModeloDao.salvar(anoModelo));
     }
 
     @Test
     public void test2() {
-        assertEquals(true, anoModeloDao.buscarPorId(anoModelo.getId()).isPresent());
+        assertNotNull(anoModeloDao.buscarPorId(anoModelo.getId()));
     }
 
     @Test
     public void test3() {
         anoModelo.setNome("Fiat 2017");
-        assertEquals(true, anoModeloDao.atualizar(anoModelo).isPresent());
+        assertNotNull(anoModeloDao.atualizar(anoModelo));
     }
 
     @Test
