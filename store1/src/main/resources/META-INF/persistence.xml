@@ -5,6 +5,8 @@
 
         <class>sd.oficina.shared.model.store.Servico</class>
         <class>sd.oficina.shared.model.store.Estoque</class>
+        <class>sd.oficina.shared.model.store.Nota</class>
+        <class>sd.oficina.shared.model.converters.LocalDateAttributeConverter</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db-postgres:5432/db_store"/>
