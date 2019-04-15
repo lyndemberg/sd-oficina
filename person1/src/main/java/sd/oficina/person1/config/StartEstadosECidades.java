@@ -8,10 +8,8 @@ import sd.oficina.shared.model.person.Cidade;
 import sd.oficina.shared.model.person.Estado;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,40 +24,43 @@ public class StartEstadosECidades {
 
         Gson gson = new Gson();
 
-        try {
-            if (estadoDao.listar().isEmpty()) {
+        if (estadoDao.listar().isEmpty()) {
 
-                File file = new File(Person1Application.class.getClassLoader().getResource("estados-cidades.json").toURI());
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(
+                            Objects.requireNonNull(
+                                    Person1Application
+                                            .class
+                                            .getClassLoader()
+                                            .getResourceAsStream("estados-cidades.json")
+                            )
+                    )
+            );
 
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            //Converte String JSON para objeto Java
+            Estados estados = gson.fromJson(bufferedReader, Estados.class);
 
-                //Converte String JSON para objeto Java
-                Estados estados = gson.fromJson(bufferedReader, Estados.class);
+            System.out.println("INSERINDO ESTADOS E CIDADES, POR FAVOR AGUARDE!");
 
-                System.out.println("INSERINDO ESTADOS E CIDADES, POR FAVOR AGUARDE!");
-
-                Runnable runnable = () -> {
-                    for (EstadoJSON estadoJSON : estados.getEstados()) {
-                        Estado estado = new Estado();
-                        estado.setNome(estadoJSON.getNome());
-                        Estado estadoParaSalvar = estadoDao.salvar(estado);
-                        for (String cidadeJSON : estadoJSON.getCidades()) {
-                            Cidade cidade = new Cidade();
-                            cidade.setNome(cidadeJSON);
-                            cidade.setEstado(estadoParaSalvar);
-                            cidadeDao.salvar(cidade);
-                        }
+            Runnable runnable = () -> {
+                for (EstadoJSON estadoJSON : estados.getEstados()) {
+                    Estado estado = new Estado();
+                    estado.setNome(estadoJSON.getNome());
+                    Estado estadoParaSalvar = estadoDao.salvar(estado);
+                    for (String cidadeJSON : estadoJSON.getCidades()) {
+                        Cidade cidade = new Cidade();
+                        cidade.setNome(cidadeJSON);
+                        cidade.setEstado(estadoParaSalvar);
+                        cidadeDao.salvar(cidade);
                     }
-                };
+                }
+            };
 
-                System.out.println("INSERÇÕES DE ESTADOS E CIDADES CONCLUÍDAS!");
+            System.out.println("INSERÇÕES DE ESTADOS E CIDADES CONCLUÍDAS!");
 
-                executorService.execute(runnable);
+            executorService.execute(runnable);
 
-            }
-
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
         }
+
     }
 }
