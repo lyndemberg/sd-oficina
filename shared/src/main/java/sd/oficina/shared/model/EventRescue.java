@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+@Entity(name = "eventrescue")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -10,12 +10,12 @@ import sd.oficina.shared.model.ServiceEnum;
 import javax.persistence.Persistence;
 import java.io.IOException;
 
-public class Order2Application {
+public class Order2Loader {
 
     public static void main(String[] args) {
 
         // Inicializa serviço de EventRescue
-        new Thread(Order2Application::startEventRescue).start();
+        new Thread(Order2Loader::startEventRescue).start();
 
         Server server = ServerBuilder.forPort(4442)
                 .addService(new OrdemServicoService())
