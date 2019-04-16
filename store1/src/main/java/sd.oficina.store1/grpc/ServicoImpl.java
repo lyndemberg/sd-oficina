@@ -14,6 +14,7 @@ import sd.oficina.store1.dao.ServicoDAO;
 import sd.oficina.store1.cache.ConnectionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
 
@@ -36,6 +37,13 @@ public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
         servicos.forEach(f -> builder.addServico(ProtoConverterStore.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Servico.class.getSimpleName(),
+                servicos.stream().collect(
+                        Collectors.toMap(Servico::getId, servico -> servico)
+                ));
     }
 
     @Override
@@ -83,5 +91,11 @@ public class ServicoImpl extends ServicoServiceGrpc.ServicoServiceImplBase {
                                 ServicoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou a Nota
+        if (servico != null) {
+            // Atualiza o cache
+            hashOperations.put(Servico.class.getSimpleName(), servico.getId(), servico);
+        }
     }
 }

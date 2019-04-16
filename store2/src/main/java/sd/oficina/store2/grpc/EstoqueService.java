@@ -14,6 +14,7 @@ import sd.oficina.store2.daos.EstoqueDao;
 import sd.oficina.store2.cache.ConnectionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
 
@@ -91,6 +92,10 @@ public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
                     .setEstoque(
                             ProtoConverterStore.modelToProto(estoque))
                     .build());
+
+            // Atualiza o cache
+            hashOperations.put(Estoque.class.getSimpleName(), estoque.getIdPeca(), estoque);
+
         } else {
             responseObserver.onNext(EstoqueResult
                     .newBuilder()
@@ -111,5 +116,12 @@ public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
         }
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Estoque.class.getSimpleName(),
+                estoques.stream().collect(
+                        Collectors.toMap(Estoque::getIdPeca, estoque -> estoque)
+                ));
     }
 }

@@ -14,6 +14,7 @@ import sd.oficina.store1.dao.NotaDAO;
 import sd.oficina.store1.cache.ConnectionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
 
@@ -73,6 +74,12 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
                                 NotaProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou a Nota
+        if (Estoque != null) {
+            // Atualiza o cache
+            hashOperations.put(Nota.class.getSimpleName(), Estoque.getId(), Estoque);
+        }
     }
 
     @Override
@@ -82,5 +89,12 @@ public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
         notas.forEach(f -> builder.addNota(ProtoConverterStore.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Nota.class.getSimpleName(),
+                notas.stream().collect(
+                        Collectors.toMap(Nota::getId, nota -> nota)
+                ));
     }
 }
