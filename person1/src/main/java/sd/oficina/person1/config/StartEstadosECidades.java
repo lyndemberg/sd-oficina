@@ -4,20 +4,15 @@ import com.google.gson.Gson;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.person1.Person1Application;
+import sd.oficina.person1.cache.ConnectionFactory;
 import sd.oficina.person1.daos.CidadeDao;
 import sd.oficina.person1.daos.EstadoDao;
-import sd.oficina.person1.infra.cache.ConnectionFactory;
 import sd.oficina.shared.model.person.Cidade;
 import sd.oficina.shared.model.person.Estado;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class StartEstadosECidades {
 
@@ -25,8 +20,6 @@ public class StartEstadosECidades {
 
         EstadoDao estadoDao = new EstadoDao();
         CidadeDao cidadeDao = new CidadeDao();
-
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
 
         Gson gson = new Gson();
 
@@ -46,41 +39,6 @@ public class StartEstadosECidades {
             //Converte String JSON para objeto Java
             Estados estados = gson.fromJson(bufferedReader, Estados.class);
 
-            // Inicializa a lista de Objetos para o cache
-            final List<Estado> estadosToCache = new ArrayList<>();
-            final List<Cidade> cidadesToCache = new ArrayList<>();
-
-            System.out.println("INSERINDO ESTADOS E CIDADES, POR FAVOR AGUARDE!");
-
-            // Define runnable de persistencia em DB
-            Runnable runnableDB = () -> {
-                for (EstadoJSON estadoJSON : estados.getEstados()) {
-                    Estado estado = new Estado();
-
-                    estado.setNome(estadoJSON.getNome());
-                    Estado estadoParaSalvar = estadoDao.salvar(estado);
-
-                    estadosToCache.add(estadoParaSalvar);
-
-                    for (String cidadeJSON : estadoJSON.getCidades()) {
-                        Cidade cidade = new Cidade();
-
-                        cidade.setNome(cidadeJSON);
-                        cidade.setEstado(estadoParaSalvar);
-
-                        cidadesToCache.add(
-                                cidadeDao.salvar(cidade)
-                        );
-                    }
-
-                }
-
-            };
-
-            System.out.println("INSERÇÕES DE ESTADOS E CIDADES CONCLUÍDAS!");
-
-            executorService.execute(runnableDB);
-
             // Inicializa Objetos do Cache para Estado
             final RedisTemplate<String, Estado> redisTemplateEstado = ConnectionFactory.getRedisTemplate();
             final HashOperations<String, Object, Estado> hashOperationsEstado = redisTemplateEstado.opsForHash();
@@ -89,29 +47,33 @@ public class StartEstadosECidades {
             final RedisTemplate<String, Cidade> redisTemplateCidade = ConnectionFactory.getRedisTemplate();
             final HashOperations<String, Object, Cidade> hashOperationsCidade = redisTemplateCidade.opsForHash();
 
-            try {
-                executorService.awaitTermination(1, TimeUnit.MINUTES);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+            new Thread(() -> {
 
-            System.out.println("INICIANDO INSERÇAO DE ESTADOS E CIDADES NO CACHE");
+                System.out.println("INSERINDO ESTADOS E CIDADES, POR FAVOR AGUARDE!");
 
-            estadosToCache.forEach(estado -> executorService.execute(() -> {
-                System.out.println(estado);
-                hashOperationsEstado.put(Estado.class.getSimpleName(), estado.getId(), estado);
-            }));
-            cidadesToCache.forEach(cidade -> executorService.execute(() -> {
-                System.out.println(cidade);
-                hashOperationsCidade.put(Cidade.class.getSimpleName(), cidade.getId(), cidade);
-            }));
+                estados.getEstados().forEach(estadoJSON -> {
+                    Estado estado = new Estado();
 
-            try {
-                executorService.awaitTermination(1, TimeUnit.MINUTES);
-                System.out.println("INSERÇOES NO CACHE DE ESTADOS E CIDADES FORAM CONCLUIDAS");
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+                    estado.setNome(estadoJSON.getNome());
+                    Estado estadoSalvo = estadoDao.salvar(estado);
+
+                    hashOperationsEstado.put(Estado.class.getSimpleName(), estadoSalvo.getId(), estadoSalvo);
+
+                    for (String cidadeJSON : estadoJSON.getCidades()) {
+                        Cidade cidade = new Cidade();
+
+                        cidade.setNome(cidadeJSON);
+                        cidade.setEstado(estadoSalvo);
+
+                        Cidade cidadeSalva = cidadeDao.salvar(cidade);
+
+                        hashOperationsCidade.put(Cidade.class.getSimpleName(), cidadeSalva.getId(), cidadeSalva);
+                    }
+                });
+
+                System.out.println("INSERÇÕES DE ESTADOS E CIDADES CONCLUÍDAS!");
+
+            }).start();
 
         }
 
