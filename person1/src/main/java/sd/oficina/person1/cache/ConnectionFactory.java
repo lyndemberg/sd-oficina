@@ -1,4 +1,4 @@
-package sd.oficina.person1.infra.cache;
+package sd.oficina.person1.cache;
 
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;

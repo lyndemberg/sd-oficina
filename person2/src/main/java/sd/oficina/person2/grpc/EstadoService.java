@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.person2.dao.EstadoDao;
-import sd.oficina.person2.infra.cache.ConnectionFactory;
+import sd.oficina.person2.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterPerson;
 import sd.oficina.shared.model.person.Estado;
 import sd.oficina.shared.proto.person.EstadoList;
@@ -14,7 +14,6 @@ import sd.oficina.shared.proto.person.EstadoResult;
 import sd.oficina.shared.proto.person.EstadoServiceGrpc;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
 

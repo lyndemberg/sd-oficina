@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.person1.daos.CidadeDao;
-import sd.oficina.person1.infra.cache.ConnectionFactory;
+import sd.oficina.person1.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterPerson;
 import sd.oficina.shared.model.person.Cidade;
 import sd.oficina.shared.proto.person.CidadeList;

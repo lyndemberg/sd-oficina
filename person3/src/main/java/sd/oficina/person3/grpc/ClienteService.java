@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.person3.daos.ClienteDao;
-import sd.oficina.person3.infra.cache.ConnectionFactory;
+import sd.oficina.person3.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterPerson;
 import sd.oficina.shared.model.person.Cliente;
 import sd.oficina.shared.proto.person.ClienteList;
@@ -14,7 +14,6 @@ import sd.oficina.shared.proto.person.ClienteResult;
 import sd.oficina.shared.proto.person.ClienteServiceGrpc;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase {
 
