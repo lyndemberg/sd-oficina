@@ -11,10 +11,9 @@ import sd.oficina.shared.proto.customer.ServicoProtoList;
 import sd.oficina.shared.proto.customer.ServicoResult;
 import sd.oficina.shared.proto.customer.ServicoServiceGrpc;
 import sd.oficina.store2.daos.ServicoDao;
-import sd.oficina.store2.infra.cache.ConnectionFactory;
+import sd.oficina.store2.cache.ConnectionFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ServicoService extends ServicoServiceGrpc.ServicoServiceImplBase {
 

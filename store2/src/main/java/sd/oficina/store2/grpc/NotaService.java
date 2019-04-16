@@ -8,10 +8,9 @@ import sd.oficina.shared.converter.ProtoConverterStore;
 import sd.oficina.shared.model.store.Nota;
 import sd.oficina.shared.proto.customer.*;
 import sd.oficina.store2.daos.NotaDao;
-import sd.oficina.store2.infra.cache.ConnectionFactory;
+import sd.oficina.store2.cache.ConnectionFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NotaService extends NotaServiceGrpc.NotaServiceImplBase {
 

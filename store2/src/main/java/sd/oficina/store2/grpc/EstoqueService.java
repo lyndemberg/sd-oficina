@@ -11,10 +11,9 @@ import sd.oficina.shared.proto.customer.EstoqueProtoList;
 import sd.oficina.shared.proto.customer.EstoqueResult;
 import sd.oficina.shared.proto.customer.EstoqueServiceGrpc;
 import sd.oficina.store2.daos.EstoqueDao;
-import sd.oficina.store2.infra.cache.ConnectionFactory;
+import sd.oficina.store2.cache.ConnectionFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EstoqueService extends EstoqueServiceGrpc.EstoqueServiceImplBase {
 

@@ -11,10 +11,9 @@ import sd.oficina.shared.proto.customer.NotaProtoList;
 import sd.oficina.shared.proto.customer.NotaResult;
 import sd.oficina.shared.proto.customer.NotaServiceGrpc;
 import sd.oficina.store1.dao.NotaDAO;
-import sd.oficina.store1.infra.cache.ConnectionFactory;
+import sd.oficina.store1.cache.ConnectionFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NotaImpl extends NotaServiceGrpc.NotaServiceImplBase {
 
