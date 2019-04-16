@@ -3,7 +3,6 @@ package sd.oficina.oficinawebapp.customer.grpc;
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 import sd.oficina.oficinawebapp.config.HostsProperties;
 import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
@@ -43,7 +42,7 @@ public class CustomerClient {
                     .salvar(ProtoConverterCustomer.modelToProto(anoModelo))
                     .getAnoModelo();
             persistido = ProtoConverterCustomer.protoToModel(proto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM CUSTOMER2
             try{
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -55,7 +54,7 @@ public class CustomerClient {
                         .salvar(ProtoConverterCustomer.modelToProto(anoModelo))
                         .getAnoModelo();
                 persistido = ProtoConverterCustomer.protoToModel(proto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM CUSTOMER3
                 try{
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -67,7 +66,7 @@ public class CustomerClient {
                             .salvar(ProtoConverterCustomer.modelToProto(anoModelo))
                             .getAnoModelo();
                     persistido = ProtoConverterCustomer.protoToModel(proto);
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -88,7 +87,7 @@ public class CustomerClient {
                     .build();
             AnoModeloServiceGrpc.AnoModeloServiceBlockingStub stub = AnoModeloServiceGrpc.newBlockingStub(channelCustomer1);
             anoModelo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getAnoModelo());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM CUSTOMER2
             try{
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -97,7 +96,7 @@ public class CustomerClient {
                         .build();
                 AnoModeloServiceGrpc.AnoModeloServiceBlockingStub stub = AnoModeloServiceGrpc.newBlockingStub(channelCustomer2);
                 anoModelo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getAnoModelo());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM CUSTOMER3
                 try{
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -106,7 +105,7 @@ public class CustomerClient {
                             .build();
                     AnoModeloServiceGrpc.AnoModeloServiceBlockingStub stub = AnoModeloServiceGrpc.newBlockingStub(channelCustomer3);
                     anoModelo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getAnoModelo());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -125,7 +124,7 @@ public class CustomerClient {
                     .usePlaintext()
                     .build();
             AnoModeloServiceGrpc.newBlockingStub(channelCustomer1).deletar(proto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
 
             try{
                 //TENTANDO COM CUSTOMER2
@@ -134,7 +133,7 @@ public class CustomerClient {
                         .usePlaintext()
                         .build();
                 AnoModeloServiceGrpc.newBlockingStub(channelCustomer2).deletar(proto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -142,7 +141,7 @@ public class CustomerClient {
                             .usePlaintext()
                             .build();
                     AnoModeloServiceGrpc.newBlockingStub(channelCustomer3).deletar(proto);
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -164,7 +163,7 @@ public class CustomerClient {
             anoModeloAtualizado = ProtoConverterCustomer
                     .protoToModel(stub
                             .atualizar(proto).getAnoModelo());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -175,7 +174,7 @@ public class CustomerClient {
                 anoModeloAtualizado = ProtoConverterCustomer
                         .protoToModel(stub
                                 .atualizar(proto).getAnoModelo());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -186,7 +185,7 @@ public class CustomerClient {
                     anoModeloAtualizado = ProtoConverterCustomer
                             .protoToModel(stub
                                     .atualizar(proto).getAnoModelo());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -207,7 +206,7 @@ public class CustomerClient {
                     .usePlaintext()
                     .build();
             fornecedoresProto = AnoModeloServiceGrpc.newBlockingStub(channelCustomer1).buscarTodos(empty).getAnoModelosList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -215,7 +214,7 @@ public class CustomerClient {
                         .usePlaintext()
                         .build();
                 fornecedoresProto = AnoModeloServiceGrpc.newBlockingStub(channelCustomer2).buscarTodos(empty).getAnoModelosList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -223,7 +222,7 @@ public class CustomerClient {
                             .usePlaintext()
                             .build();
                     fornecedoresProto = AnoModeloServiceGrpc.newBlockingStub(channelCustomer3).buscarTodos(empty).getAnoModelosList();
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -246,7 +245,7 @@ public class CustomerClient {
                     .build();
             FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer1);
             fabricanteProtos = stub.buscarTodos(empty).getFabricantesList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -255,7 +254,7 @@ public class CustomerClient {
                         .build();
                 FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer2);
                 fabricanteProtos = stub.buscarTodos(empty).getFabricantesList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -264,7 +263,7 @@ public class CustomerClient {
                             .build();
                     FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer3);
                     fabricanteProtos = stub.buscarTodos(empty).getFabricantesList();
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -289,7 +288,7 @@ public class CustomerClient {
                     .protoToModel(stub
                             .salvar(ProtoConverterCustomer.modelToProto(fabricante))
                             .getFabricante());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM CUSTOMER2
             try{
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -301,7 +300,7 @@ public class CustomerClient {
                         .protoToModel(stub
                                 .salvar(ProtoConverterCustomer.modelToProto(fabricante))
                                 .getFabricante());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM CUSTOMER3
                 try{
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -313,7 +312,7 @@ public class CustomerClient {
                             .protoToModel(stub
                                     .salvar(ProtoConverterCustomer.modelToProto(fabricante))
                                     .getFabricante());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -333,7 +332,7 @@ public class CustomerClient {
                     .build();
             FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer1);
             fabricante = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getFabricante());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM CUSTOMER2
             try{
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -342,7 +341,7 @@ public class CustomerClient {
                         .build();
                 FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer2);
                 fabricante = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getFabricante());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM CUSTOMER3
                 try{
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -351,7 +350,7 @@ public class CustomerClient {
                             .build();
                     FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer3);
                     fabricante = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getFabricante());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -374,7 +373,7 @@ public class CustomerClient {
             fabricanteAtualizado = ProtoConverterCustomer
                     .protoToModel(stub
                             .atualizar(ProtoConverterCustomer.modelToProto(fabricante)).getFabricante());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -385,7 +384,7 @@ public class CustomerClient {
                 fabricanteAtualizado = ProtoConverterCustomer
                         .protoToModel(stub
                                 .atualizar(ProtoConverterCustomer.modelToProto(fabricante)).getFabricante());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -396,7 +395,7 @@ public class CustomerClient {
                     fabricanteAtualizado = ProtoConverterCustomer
                             .protoToModel(stub
                                     .atualizar(ProtoConverterCustomer.modelToProto(fabricante)).getFabricante());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -415,7 +414,7 @@ public class CustomerClient {
                     .build();
             FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer1);
             stub.deletar(proto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -424,7 +423,7 @@ public class CustomerClient {
                         .build();
                 FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer2);
                 stub.deletar(proto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -433,7 +432,7 @@ public class CustomerClient {
                             .build();
                     FabricanteServiceGrpc.FabricanteServiceBlockingStub stub = FabricanteServiceGrpc.newBlockingStub(channelCustomer3);
                     stub.deletar(proto);
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -452,7 +451,7 @@ public class CustomerClient {
                     .build();
             ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer1);
             modeloProtoList = stub.buscarTodos(empty).getModelosList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -461,7 +460,7 @@ public class CustomerClient {
                         .build();
                 ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer2);
                 modeloProtoList = stub.buscarTodos(empty).getModelosList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -470,7 +469,7 @@ public class CustomerClient {
                             .build();
                     ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer3);
                     modeloProtoList = stub.buscarTodos(empty).getModelosList();
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -495,7 +494,7 @@ public class CustomerClient {
                     .protoToModel(stub
                             .salvar(ProtoConverterCustomer.modelToProto(modelo))
                             .getModelo());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM CUSTOMER2
             try{
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -507,7 +506,7 @@ public class CustomerClient {
                         .protoToModel(stub
                                 .salvar(ProtoConverterCustomer.modelToProto(modelo))
                                 .getModelo());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM CUSTOMER3
                 try{
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -519,7 +518,7 @@ public class CustomerClient {
                             .protoToModel(stub
                                     .salvar(ProtoConverterCustomer.modelToProto(modelo))
                                     .getModelo());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -539,7 +538,7 @@ public class CustomerClient {
                     .build();
             ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer1);
             modelo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getModelo());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM CUSTOMER2
             try{
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -548,7 +547,7 @@ public class CustomerClient {
                         .build();
                 ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer2);
                 modelo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getModelo());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM CUSTOMER3
                 try{
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -557,7 +556,7 @@ public class CustomerClient {
                             .build();
                     ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer3);
                     modelo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getModelo());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -580,7 +579,7 @@ public class CustomerClient {
             modeloAtualizado = ProtoConverterCustomer
                     .protoToModel(stub
                             .atualizar(ProtoConverterCustomer.modelToProto(modelo)).getModelo());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -591,7 +590,7 @@ public class CustomerClient {
                 modeloAtualizado = ProtoConverterCustomer
                         .protoToModel(stub
                                 .atualizar(ProtoConverterCustomer.modelToProto(modelo)).getModelo());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -602,7 +601,7 @@ public class CustomerClient {
                     modeloAtualizado = ProtoConverterCustomer
                             .protoToModel(stub
                                     .atualizar(ProtoConverterCustomer.modelToProto(modelo)).getModelo());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -621,7 +620,7 @@ public class CustomerClient {
                     .build();
             ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer1);
             stub.deletar(proto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -630,7 +629,7 @@ public class CustomerClient {
                         .build();
                 ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer2);
                 stub.deletar(proto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -639,7 +638,7 @@ public class CustomerClient {
                             .build();
                     ModeloServiceGrpc.ModeloServiceBlockingStub stub = ModeloServiceGrpc.newBlockingStub(channelCustomer3);
                     stub.deletar(proto);
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -658,7 +657,7 @@ public class CustomerClient {
                     .build();
             veiculoProtoList = VeiculoServiceGrpc.newBlockingStub(channelCustomer1).buscarTodos(empty)
                     .getVeiculosList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -667,7 +666,7 @@ public class CustomerClient {
                         .build();
                 veiculoProtoList = VeiculoServiceGrpc.newBlockingStub(channelCustomer2).buscarTodos(empty)
                         .getVeiculosList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -676,7 +675,7 @@ public class CustomerClient {
                             .build();
                     veiculoProtoList = VeiculoServiceGrpc.newBlockingStub(channelCustomer3).buscarTodos(empty)
                             .getVeiculosList();
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -701,7 +700,7 @@ public class CustomerClient {
                     .protoToModel(stub
                             .salvar(ProtoConverterCustomer.modelToProto(veiculo))
                             .getVeiculo());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM CUSTOMER2
             try{
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -713,7 +712,7 @@ public class CustomerClient {
                         .protoToModel(stub
                                 .salvar(ProtoConverterCustomer.modelToProto(veiculo))
                                 .getVeiculo());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM CUSTOMER3
                 try{
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -725,7 +724,7 @@ public class CustomerClient {
                             .protoToModel(stub
                                     .salvar(ProtoConverterCustomer.modelToProto(veiculo))
                                     .getVeiculo());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -745,7 +744,7 @@ public class CustomerClient {
                     .build();
             VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channelCustomer1);
             veiculo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getVeiculo());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM CUSTOMER2
             try{
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -754,7 +753,7 @@ public class CustomerClient {
                         .build();
                 VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channelCustomer2);
                 veiculo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getVeiculo());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM CUSTOMER3
                 try{
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -763,7 +762,7 @@ public class CustomerClient {
                             .build();
                     VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channelCustomer3);
                     veiculo = ProtoConverterCustomer.protoToModel(stub.buscar(proto).getVeiculo());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -786,7 +785,7 @@ public class CustomerClient {
             veiculoAtualizado =  ProtoConverterCustomer
                     .protoToModel(stub
                             .atualizar(ProtoConverterCustomer.modelToProto(veiculo)).getVeiculo());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -797,7 +796,7 @@ public class CustomerClient {
                 veiculoAtualizado =  ProtoConverterCustomer
                         .protoToModel(stub
                                 .atualizar(ProtoConverterCustomer.modelToProto(veiculo)).getVeiculo());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -808,7 +807,7 @@ public class CustomerClient {
                     veiculoAtualizado =  ProtoConverterCustomer
                             .protoToModel(stub
                                     .atualizar(ProtoConverterCustomer.modelToProto(veiculo)).getVeiculo());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }
@@ -827,7 +826,7 @@ public class CustomerClient {
                     .build();
             VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channelCustomer1);
             stub.deletar(proto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             try{
                 //TENTANDO COM CUSTOMER2
                 ManagedChannel channelCustomer2 = ManagedChannelBuilder
@@ -836,7 +835,7 @@ public class CustomerClient {
                         .build();
                 VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channelCustomer2);
                 stub.deletar(proto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 try{
                     //TENTANDO COM CUSTOMER3
                     ManagedChannel channelCustomer3 = ManagedChannelBuilder
@@ -845,7 +844,7 @@ public class CustomerClient {
                             .build();
                     VeiculoServiceGrpc.VeiculoServiceBlockingStub stub = VeiculoServiceGrpc.newBlockingStub(channelCustomer3);
                     stub.deletar(proto);
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
             }

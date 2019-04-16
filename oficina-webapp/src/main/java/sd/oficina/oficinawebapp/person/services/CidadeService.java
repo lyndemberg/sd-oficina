@@ -22,7 +22,7 @@ public class CidadeService {
     private final IdentityManager identityManager;
     private final sd.oficina.oficinawebapp.rescue.RescueRepository rescueRepository;
 
-    public CidadeService(PersonClient personClient, @Qualifier("redisTemplateOrder") RedisTemplate<String, Cidade> redisTemplate, IdentityManager identityManager, RescueRepository rescueRepository) {
+    public CidadeService(PersonClient personClient, @Qualifier("redisTemplatePerson") RedisTemplate<String, Cidade> redisTemplate, IdentityManager identityManager, RescueRepository rescueRepository) {
         this.personClient = personClient;
         this.redisTemplate = redisTemplate;
         this.hashOperations = redisTemplate.opsForHash();

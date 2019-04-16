@@ -3,7 +3,6 @@ package sd.oficina.oficinawebapp.person.grpc;
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 import sd.oficina.oficinawebapp.config.HostsProperties;
 import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.shared.converter.ProtoConverterPerson;
@@ -31,6 +30,7 @@ public class PersonClient {
                     .forAddress(hostsProperties.getPerson1Host(), hostsProperties.getPerson1Port())
                     .usePlaintext()
                     .build();
+
             ClienteProto clienteProto =
                     ClienteServiceGrpc.
                             newBlockingStub(channelPerson1)
@@ -38,7 +38,7 @@ public class PersonClient {
                                     .modelToProto(cliente))
                             .getCliente();
             clientePersistido = ProtoConverterPerson.protoToModel(clienteProto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -52,7 +52,7 @@ public class PersonClient {
                                         .modelToProto(cliente))
                                 .getCliente();
                 clientePersistido = ProtoConverterPerson.protoToModel(clienteProto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -66,7 +66,7 @@ public class PersonClient {
                                             .modelToProto(cliente))
                                     .getCliente();
                     clientePersistido = ProtoConverterPerson.protoToModel(clienteProto);
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -91,7 +91,7 @@ public class PersonClient {
                                     .atualizar(ProtoConverterPerson
                                             .modelToProto(cliente))
                                     .getCliente());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -105,7 +105,7 @@ public class PersonClient {
                                         .atualizar(ProtoConverterPerson
                                                 .modelToProto(cliente))
                                         .getCliente());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -119,7 +119,7 @@ public class PersonClient {
                                             .atualizar(ProtoConverterPerson
                                                     .modelToProto(cliente))
                                             .getCliente());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -141,7 +141,7 @@ public class PersonClient {
                     .deletar(ClienteProto
                             .newBuilder().setId(idDoCliente)
                             .build());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO SALVAR COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -153,7 +153,7 @@ public class PersonClient {
                         .deletar(ClienteProto
                                 .newBuilder().setId(idDoCliente)
                                 .build());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO SALVAR COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -165,7 +165,7 @@ public class PersonClient {
                             .deletar(ClienteProto
                                     .newBuilder().setId(idDoCliente)
                                     .build());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -188,7 +188,7 @@ public class PersonClient {
                                     .newBuilder()
                                     .setId(idDoCliente)
                                     .build()).getCliente());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -202,7 +202,7 @@ public class PersonClient {
                                         .newBuilder()
                                         .setId(idDoCliente)
                                         .build()).getCliente());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -216,7 +216,7 @@ public class PersonClient {
                                             .newBuilder()
                                             .setId(idDoCliente)
                                             .build()).getCliente());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -240,7 +240,7 @@ public class PersonClient {
                             .newBlockingStub(channelPerson1)
                             .listar(Empty.newBuilder()
                                     .build()).getClientesList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -252,7 +252,7 @@ public class PersonClient {
                                 .newBlockingStub(channelPerson2)
                                 .listar(Empty.newBuilder()
                                         .build()).getClientesList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -264,7 +264,7 @@ public class PersonClient {
                                     .newBlockingStub(channelPerson3)
                                     .listar(Empty.newBuilder()
                                             .build()).getClientesList();
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -294,7 +294,7 @@ public class PersonClient {
                                     .newBuilder()
                                     .setId(idDaCidade)
                                     .build()).getCidade());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -308,7 +308,7 @@ public class PersonClient {
                                         .newBuilder()
                                         .setId(idDaCidade)
                                         .build()).getCidade());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -322,7 +322,7 @@ public class PersonClient {
                                             .newBuilder()
                                             .setId(idDaCidade)
                                             .build()).getCidade());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -346,7 +346,7 @@ public class PersonClient {
                             .newBlockingStub(channelPerson1)
                             .listar(Empty.newBuilder()
                                     .build()).getCidadesList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -358,7 +358,7 @@ public class PersonClient {
                                 .newBlockingStub(channelPerson2)
                                 .listar(Empty.newBuilder()
                                         .build()).getCidadesList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -370,7 +370,7 @@ public class PersonClient {
                                     .newBlockingStub(channelPerson3)
                                     .listar(Empty.newBuilder()
                                             .build()).getCidadesList();
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -400,7 +400,7 @@ public class PersonClient {
                                     .newBuilder()
                                     .setId(idDoEstado)
                                     .build()).getEstado());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -414,7 +414,7 @@ public class PersonClient {
                                         .newBuilder()
                                         .setId(idDoEstado)
                                         .build()).getEstado());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -428,7 +428,7 @@ public class PersonClient {
                                             .newBuilder()
                                             .setId(idDoEstado)
                                             .build()).getEstado());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -453,7 +453,7 @@ public class PersonClient {
                             .newBlockingStub(channelPerson1)
                             .listar(Empty.newBuilder()
                                     .build()).getEstadosList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -465,7 +465,7 @@ public class PersonClient {
                                 .newBlockingStub(channelPerson2)
                                 .listar(Empty.newBuilder()
                                         .build()).getEstadosList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -477,7 +477,7 @@ public class PersonClient {
                                     .newBlockingStub(channelPerson3)
                                     .listar(Empty.newBuilder()
                                             .build()).getEstadosList();
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -508,7 +508,7 @@ public class PersonClient {
                             .getFornecedor();
 
             fornecedorPersistido = ProtoConverterPerson.protoToModel(fornecedorProto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -523,7 +523,7 @@ public class PersonClient {
                                 .getFornecedor();
 
                 fornecedorPersistido = ProtoConverterPerson.protoToModel(fornecedorProto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -538,7 +538,7 @@ public class PersonClient {
                                     .getFornecedor();
 
                     fornecedorPersistido = ProtoConverterPerson.protoToModel(fornecedorProto);
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -563,7 +563,7 @@ public class PersonClient {
                                     .atualizar(ProtoConverterPerson
                                             .modelToProto(fornecedor))
                                     .getFornecedor());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -577,7 +577,7 @@ public class PersonClient {
                                         .atualizar(ProtoConverterPerson
                                                 .modelToProto(fornecedor))
                                         .getFornecedor());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -591,7 +591,7 @@ public class PersonClient {
                                             .atualizar(ProtoConverterPerson
                                                     .modelToProto(fornecedor))
                                             .getFornecedor());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -613,7 +613,7 @@ public class PersonClient {
                     .deletar(FornecedorProto
                             .newBuilder().setId(idDoFornecedor)
                             .build());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO SALVAR COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -625,7 +625,7 @@ public class PersonClient {
                         .deletar(FornecedorProto
                                 .newBuilder().setId(idDoFornecedor)
                                 .build());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO SALVAR COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -637,7 +637,7 @@ public class PersonClient {
                             .deletar(FornecedorProto
                                     .newBuilder().setId(idDoFornecedor)
                                     .build());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -660,7 +660,7 @@ public class PersonClient {
                                     .newBuilder()
                                     .setId(idDoFornecedor)
                                     .build()).getFornecedor());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -674,7 +674,7 @@ public class PersonClient {
                                         .newBuilder()
                                         .setId(idDoFornecedor)
                                         .build()).getFornecedor());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -688,7 +688,7 @@ public class PersonClient {
                                             .newBuilder()
                                             .setId(idDoFornecedor)
                                             .build()).getFornecedor());
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 
@@ -713,7 +713,7 @@ public class PersonClient {
                             .newBlockingStub(channelPerson1)
                             .listar(Empty.newBuilder()
                                     .build()).getFornecedoresList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM PERSON2
             try{
                 ManagedChannel channelPerson2 = ManagedChannelBuilder
@@ -725,7 +725,7 @@ public class PersonClient {
                                 .newBlockingStub(channelPerson2)
                                 .listar(Empty.newBuilder()
                                         .build()).getFornecedoresList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 //TENTANDO COM PERSON3
                 try{
                     ManagedChannel channelPerson3 = ManagedChannelBuilder
@@ -737,7 +737,7 @@ public class PersonClient {
                                     .newBlockingStub(channelPerson3)
                                     .listar(Empty.newBuilder()
                                             .build()).getFornecedoresList();
-                }catch(StatusRuntimeException ex3){
+                }catch(Exception ex3){
                     throw new FalhaGrpcException();
                 }
 

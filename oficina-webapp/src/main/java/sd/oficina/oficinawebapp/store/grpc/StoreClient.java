@@ -3,7 +3,6 @@ package sd.oficina.oficinawebapp.store.grpc;
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 import sd.oficina.oficinawebapp.config.HostsProperties;
 import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
 import sd.oficina.shared.converter.ProtoConverterStore;
@@ -34,7 +33,7 @@ public class StoreClient {
                     .protoToModel(EstoqueServiceGrpc.newBlockingStub(channelStore1)
                             .salvar(ProtoConverterStore.modelToProto(estoque))
                             .getEstoque());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try {
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -45,7 +44,7 @@ public class StoreClient {
                         .protoToModel(EstoqueServiceGrpc.newBlockingStub(channelStore2)
                                 .salvar(ProtoConverterStore.modelToProto(estoque))
                                 .getEstoque());
-            } catch (StatusRuntimeException ex) {
+            } catch (Exception ex) {
                 throw new FalhaGrpcException();
             }
 
@@ -65,7 +64,7 @@ public class StoreClient {
                     .protoToModel(EstoqueServiceGrpc.newBlockingStub(channelStore1)
                             .atualizar(ProtoConverterStore.modelToProto(estoque))
                             .getEstoque());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -76,7 +75,7 @@ public class StoreClient {
                         .protoToModel(EstoqueServiceGrpc.newBlockingStub(channelStore2)
                                 .atualizar(ProtoConverterStore.modelToProto(estoque))
                                 .getEstoque());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
@@ -93,7 +92,7 @@ public class StoreClient {
                     .usePlaintext()
                     .build();
             EstoqueServiceGrpc.newBlockingStub(channelStore1).deletar(proto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -101,7 +100,7 @@ public class StoreClient {
                         .usePlaintext()
                         .build();
                 EstoqueServiceGrpc.newBlockingStub(channelStore2).deletar(proto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
@@ -120,7 +119,7 @@ public class StoreClient {
                             .buscar(EstoqueProto.newBuilder()
                                     .setIdPeca(id).build())
                             .getEstoque());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -132,7 +131,7 @@ public class StoreClient {
                                 .buscar(EstoqueProto.newBuilder()
                                         .setIdPeca(id).build())
                                 .getEstoque());
-            }catch(StatusRuntimeException ex2) {
+            }catch(Exception ex2) {
                 throw new FalhaGrpcException();
             }
 
@@ -154,7 +153,7 @@ public class StoreClient {
                     .newBlockingStub(channelStore1)
                     .buscarTodos(Empty.newBuilder().build())
                     .getEstoqueList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -165,7 +164,7 @@ public class StoreClient {
                         .newBlockingStub(channelStore2)
                         .buscarTodos(Empty.newBuilder().build())
                         .getEstoqueList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
@@ -187,7 +186,7 @@ public class StoreClient {
                     .build();
             ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channelStore1);
             servicoProtoList = stub.buscarTodos(empty).getServicoList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -196,7 +195,7 @@ public class StoreClient {
                         .build();
                 ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channelStore2);
                 servicoProtoList = stub.buscarTodos(empty).getServicoList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
@@ -218,7 +217,7 @@ public class StoreClient {
 
             ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channelStore1);
             salvo = ProtoConverterStore.protoToModel(stub.salvar(proto).getServico());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try {
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -227,7 +226,7 @@ public class StoreClient {
                         .build();
                 ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channelStore2);
                 salvo = ProtoConverterStore.protoToModel(stub.salvar(proto).getServico());
-            } catch (StatusRuntimeException ex) {
+            } catch (Exception ex) {
                 throw new FalhaGrpcException();
             }
 
@@ -246,7 +245,7 @@ public class StoreClient {
                     .build();
             ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channelStore1);
             servico = ProtoConverterStore.protoToModel(stub.buscar(proto).getServico());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -255,7 +254,7 @@ public class StoreClient {
                         .build();
                 ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channelStore2);
                 servico = ProtoConverterStore.protoToModel(stub.buscar(proto).getServico());
-            }catch(StatusRuntimeException ex2) {
+            }catch(Exception ex2) {
                 throw new FalhaGrpcException();
             }
 
@@ -277,7 +276,7 @@ public class StoreClient {
             servicoAtualizado = ProtoConverterStore
                     .protoToModel(stub
                             .atualizar(servicoProto).getServico());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -288,7 +287,7 @@ public class StoreClient {
                 servicoAtualizado = ProtoConverterStore
                         .protoToModel(stub
                                 .atualizar(servicoProto).getServico());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
@@ -306,7 +305,7 @@ public class StoreClient {
                     .build();
             ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channelStore1);
             stub.deletar(proto);
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -315,7 +314,7 @@ public class StoreClient {
                         .build();
                 ServicoServiceGrpc.ServicoServiceBlockingStub stub = ServicoServiceGrpc.newBlockingStub(channelStore2);
                 stub.deletar(proto);
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
@@ -334,7 +333,7 @@ public class StoreClient {
                     .protoToModel(NotaServiceGrpc.newBlockingStub(channelStore1)
                             .salvar(notaProto)
                             .getNota());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try {
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -345,7 +344,7 @@ public class StoreClient {
                         .protoToModel(NotaServiceGrpc.newBlockingStub(channelStore2)
                                 .salvar(notaProto)
                                 .getNota());
-            } catch (StatusRuntimeException ex) {
+            } catch (Exception ex) {
                 throw new FalhaGrpcException();
             }
 
@@ -367,7 +366,7 @@ public class StoreClient {
                     .protoToModel(NotaServiceGrpc.newBlockingStub(channelStore1)
                             .atualizar(notaProto)
                             .getNota());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -378,7 +377,7 @@ public class StoreClient {
                         .protoToModel(NotaServiceGrpc.newBlockingStub(channelStore2)
                                 .atualizar(notaProto)
                                 .getNota());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
@@ -399,7 +398,7 @@ public class StoreClient {
                             .buscar(NotaProto.newBuilder()
                                     .setId(id).build())
                             .getNota());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -411,7 +410,7 @@ public class StoreClient {
                                 .buscar(NotaProto.newBuilder()
                                         .setId(id).build())
                                 .getNota());
-            }catch(StatusRuntimeException ex2) {
+            }catch(Exception ex2) {
                 throw new FalhaGrpcException();
             }
 
@@ -434,7 +433,7 @@ public class StoreClient {
                     .newBlockingStub(channelStore1)
                     .buscarTodos(Empty.newBuilder().build())
                     .getNotaList();
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -445,7 +444,7 @@ public class StoreClient {
                         .newBlockingStub(channelStore2)
                         .buscarTodos(Empty.newBuilder().build())
                         .getNotaList();
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
@@ -465,7 +464,7 @@ public class StoreClient {
                     .usePlaintext()
                     .build();
             NotaServiceGrpc.newBlockingStub(channelStore1).deletar(NotaProto.newBuilder().setId(id).build());
-        }catch(StatusRuntimeException ex1){
+        }catch(Exception ex1){
             //TENTANDO COM STORE 2
             try{
                 ManagedChannel channelStore2 = ManagedChannelBuilder
@@ -473,7 +472,7 @@ public class StoreClient {
                         .usePlaintext()
                         .build();
                 NotaServiceGrpc.newBlockingStub(channelStore2).deletar(NotaProto.newBuilder().setId(id).build());
-            }catch(StatusRuntimeException ex2){
+            }catch(Exception ex2){
                 throw new FalhaGrpcException();
             }
         }
