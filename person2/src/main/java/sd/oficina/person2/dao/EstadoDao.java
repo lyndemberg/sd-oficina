@@ -19,9 +19,10 @@ public class EstadoDao implements Dao<Estado>{
     @Override
     public Estado salvar(Estado obj) {
         entity.getTransaction().begin();
-        entity.persist(obj);
+        Estado objSalvo = entity.merge(obj);
         entity.getTransaction().commit();
-        return obj;
+
+        return objSalvo;
     }
 
     @Override

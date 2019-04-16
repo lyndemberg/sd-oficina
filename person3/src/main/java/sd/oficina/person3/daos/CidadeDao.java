@@ -17,10 +17,12 @@ public class CidadeDao {
 
     public Cidade salvar(Cidade cidade) {
         EntityTransaction transaction = entityManager.getTransaction();
+
         transaction.begin();
-        entityManager.persist(cidade);
+        Cidade cidadeSalva = entityManager.merge(cidade);
         transaction.commit();
-        return cidade;
+
+        return cidadeSalva;
     }
 
     public Cidade atualizar(Cidade cidade) {

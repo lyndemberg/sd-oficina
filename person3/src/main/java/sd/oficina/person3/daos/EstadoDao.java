@@ -17,10 +17,12 @@ public class EstadoDao {
 
     public Estado salvar(Estado estado) {
         EntityTransaction transaction = entityManager.getTransaction();
+
         transaction.begin();
-        entityManager.persist(estado);
+        Estado estadoSalvo = entityManager.merge(estado);
         transaction.commit();
-        return estado;
+
+        return estadoSalvo;
     }
 
     public Estado atualizar(Estado estado) {
