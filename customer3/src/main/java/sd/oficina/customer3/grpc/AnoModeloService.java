@@ -3,12 +3,11 @@ package sd.oficina.customer3.grpc;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer3.dao.AnoModeloDao;
-import sd.oficina.customer3.infra.cache.ConnectionFactory;
+import sd.oficina.customer3.cache.ConnectionFactory;
 import sd.oficina.shared.model.customer.AnoModelo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.stub.StreamObserver;
-import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.proto.customer.*;
 
 import java.util.List;
@@ -73,6 +72,12 @@ public class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplB
                         anoModelo != null ? ProtoConverterCustomer.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o AnoModelo
+        if (anoModelo != null) {
+            // Atualiza o cache
+            hashOperations.put(AnoModelo.class.getSimpleName(), anoModelo.getId(), anoModelo);
+        }
     }
 
     @Override
@@ -84,5 +89,12 @@ public class AnoModeloService extends AnoModeloServiceGrpc.AnoModeloServiceImplB
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                AnoModelo.class.getSimpleName(),
+                anos.stream().collect(
+                        Collectors.toMap(AnoModelo::getId, anoModelo -> anoModelo)
+                ));
     }
 }

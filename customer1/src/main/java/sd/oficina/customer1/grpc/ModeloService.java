@@ -18,6 +18,7 @@ import sd.oficina.shared.proto.customer.ModeloServiceGrpc;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase implements Serializable {
 
@@ -50,6 +51,13 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
 
         // Finaliza comunicaçao
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Modelo.class.getSimpleName(),
+                modelos.stream().collect(
+                        Collectors.toMap(Modelo::getId, modelo -> modelo)
+                ));
     }
 
     @Override
@@ -240,6 +248,9 @@ public final class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase
                                 )
                                 .build()
                 );
+
+                // Atualiza o cache
+                hashOperations.put(Modelo.class.getSimpleName(), modelo.getId(), modelo);
 
             } else {
 

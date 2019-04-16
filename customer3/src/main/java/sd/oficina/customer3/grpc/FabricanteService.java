@@ -4,7 +4,7 @@ import com.google.protobuf.Empty;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer3.dao.FabricanteDao;
-import sd.oficina.customer3.infra.cache.ConnectionFactory;
+import sd.oficina.customer3.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.stub.StreamObserver;
 import sd.oficina.shared.model.customer.Fabricante;
@@ -71,6 +71,12 @@ public class FabricanteService extends FabricanteServiceGrpc.FabricanteServiceIm
                         fabricante != null ? ProtoConverterCustomer.modelToProto(fabricante) : FabricanteProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o Fabricante
+        if (fabricante != null) {
+            // Atualiza o cache
+            hashOperations.put(Fabricante.class.getSimpleName(), fabricante.getId(), fabricante);
+        }
     }
 
     @Override
@@ -82,5 +88,12 @@ public class FabricanteService extends FabricanteServiceGrpc.FabricanteServiceIm
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Fabricante.class.getSimpleName(),
+                anos.stream().collect(
+                        Collectors.toMap(Fabricante::getId, fabricante -> fabricante)
+                ));
     }
 }

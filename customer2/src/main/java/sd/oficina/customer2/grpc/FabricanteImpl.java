@@ -14,6 +14,7 @@ import sd.oficina.shared.proto.customer.FabricanteResult;
 import sd.oficina.shared.proto.customer.FabricanteServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplBase {
 
@@ -35,6 +36,13 @@ public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplB
         fabricantes.forEach(f-> builder.addFabricantes(ProtoConverterCustomer.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Fabricante.class.getSimpleName(),
+                fabricantes.stream().collect(
+                        Collectors.toMap(Fabricante::getId, fabricante -> fabricante)
+                ));
     }
 
     @Override
@@ -80,6 +88,12 @@ public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplB
                         fabricante != null ? ProtoConverterCustomer.modelToProto(fabricante) : FabricanteProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o Fabricante
+        if (fabricante != null) {
+            // Atualiza o cache
+            hashOperations.put(Fabricante.class.getSimpleName(), fabricante.getId(), fabricante);
+        }
     }
 
 }

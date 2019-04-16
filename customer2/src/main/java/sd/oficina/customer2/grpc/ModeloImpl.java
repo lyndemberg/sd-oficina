@@ -87,5 +87,11 @@ public class ModeloImpl extends ModeloServiceGrpc.ModeloServiceImplBase {
                         modelo != null ? ProtoConverterCustomer.modelToProto(modelo) : ModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o Modelo
+        if (modelo != null) {
+            // Atualiza o cache
+            hashOperations.put(Modelo.class.getSimpleName(), modelo.getId(), modelo);
+        }
     }
 }

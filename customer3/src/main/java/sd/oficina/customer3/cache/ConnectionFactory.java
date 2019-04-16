@@ -1,4 +1,4 @@
-package sd.oficina.customer3.infra.cache;
+package sd.oficina.customer3.cache;
 
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;

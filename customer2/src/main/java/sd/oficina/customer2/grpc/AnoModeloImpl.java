@@ -14,6 +14,7 @@ import sd.oficina.shared.proto.customer.AnoModeloResult;
 import sd.oficina.shared.proto.customer.AnoModeloServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase {
 
@@ -28,7 +29,6 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
         this.hashOperations = redisTemplate.opsForHash();
     }
 
-
     @Override
     public void buscarTodos(Empty request, StreamObserver<AnoModeloProtoList> responseObserver) {
         List<AnoModelo> anoModelos = dao.todos();
@@ -36,6 +36,13 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
         anoModelos.forEach(a -> builder.addAnoModelos(ProtoConverterCustomer.modelToProto(a)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                AnoModelo.class.getSimpleName(),
+                anoModelos.stream().collect(
+                        Collectors.toMap(AnoModelo::getId, anoModelo -> anoModelo)
+                ));
     }
 
     @Override
@@ -80,5 +87,11 @@ public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase
                         anoModelo != null ? ProtoConverterCustomer.modelToProto(anoModelo) : AnoModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o AnoModelo
+        if (anoModelo != null) {
+            // Atualiza o cache
+            hashOperations.put(AnoModelo.class.getSimpleName(), anoModelo.getId(), anoModelo);
+        }
     }
 }

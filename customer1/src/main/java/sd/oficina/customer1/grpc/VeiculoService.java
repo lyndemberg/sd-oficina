@@ -18,6 +18,7 @@ import sd.oficina.shared.proto.customer.VeiculoServiceGrpc;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase implements Serializable {
 
@@ -51,6 +52,12 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
         // Finaliza comunicaçao
         responseObserver.onCompleted();
 
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Veiculo.class.getSimpleName(),
+                veiculos.stream().collect(
+                        Collectors.toMap(Veiculo::getId, veiculo -> veiculo)
+                ));
     }
 
     @Override
@@ -242,6 +249,9 @@ public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplB
                                 )
                                 .build()
                 );
+
+                // Atualiza o cache
+                hashOperations.put(Veiculo.class.getSimpleName(), veiculo.getId(), veiculo);
 
             } else {
 

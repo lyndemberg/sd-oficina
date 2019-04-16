@@ -14,6 +14,7 @@ import sd.oficina.shared.proto.customer.VeiculoResult;
 import sd.oficina.shared.proto.customer.VeiculoServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
 
@@ -35,6 +36,13 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
         veiculos.forEach(f -> builder.addVeiculos(ProtoConverterCustomer.modelToProto(f)));
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Veiculo.class.getSimpleName(),
+                veiculos.stream().collect(
+                        Collectors.toMap(Veiculo::getId, veiculo -> veiculo)
+                ));
     }
 
     @Override
@@ -77,5 +85,11 @@ public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
                 .setVeiculo(veiculo != null ? ProtoConverterCustomer.modelToProto(veiculo) : VeiculoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o veiculo
+        if (veiculo != null) {
+            // Atualiza o cache
+            hashOperations.put(Veiculo.class.getSimpleName(), veiculo.getId(), veiculo);
+        }
     }
 }

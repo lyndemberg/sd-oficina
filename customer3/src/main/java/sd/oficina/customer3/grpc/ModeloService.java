@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer3.dao.ModeloDao;
-import sd.oficina.customer3.infra.cache.ConnectionFactory;
+import sd.oficina.customer3.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Modelo;
 import sd.oficina.shared.proto.customer.ModeloProto;
@@ -75,6 +75,12 @@ public class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase {
                         modelo != null ? ProtoConverterCustomer.modelToProto(modelo) : ModeloProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o Modelo
+        if (modelo != null) {
+            // Atualiza o cache
+            hashOperations.put(Modelo.class.getSimpleName(), modelo.getId(), modelo);
+        }
     }
 
     @Override
@@ -86,5 +92,12 @@ public class ModeloService extends ModeloServiceGrpc.ModeloServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Modelo.class.getSimpleName(),
+                anos.stream().collect(
+                        Collectors.toMap(Modelo::getId, modelo -> modelo)
+                ));
     }
 }

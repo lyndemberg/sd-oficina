@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer3.dao.VeiculoDao;
-import sd.oficina.customer3.infra.cache.ConnectionFactory;
+import sd.oficina.customer3.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.proto.customer.VeiculoProto;
@@ -72,6 +72,12 @@ public class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase {
                         veiculo != null ? ProtoConverterCustomer.modelToProto(veiculo) : VeiculoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o veiculo
+        if (veiculo != null) {
+            // Atualiza o cache
+            hashOperations.put(Veiculo.class.getSimpleName(), veiculo.getId(), veiculo);
+        }
     }
 
     @Override
@@ -83,5 +89,12 @@ public class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Veiculo.class.getSimpleName(),
+                anos.stream().collect(
+                        Collectors.toMap(Veiculo::getId, veiculo -> veiculo)
+                ));
     }
 }
