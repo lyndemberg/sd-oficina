@@ -40,7 +40,7 @@ public class EventRescueManager {
         final ObjectMapper mapper = new ObjectMapper();
 
         this.emRescue
-                .createNativeQuery("SELECT * FROM EventRescue WHERE service ILIKE #serviceName ORDER BY id", EventRescue.class)
+                .createNativeQuery("SELECT id, action, entity, convert_from(loread(lo_open(payload::int, x'40000'::int), x'40000'::int),  'UTF8') as payload, service FROM EventRescue WHERE service ILIKE #serviceName ORDER BY id", EventRescue.class)
                 .setParameter("serviceName", this.service.toString())
                 .getResultList()
                 .forEach(eventRescue -> {
