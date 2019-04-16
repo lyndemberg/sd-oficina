@@ -14,6 +14,7 @@ import sd.oficina.shared.proto.person.CidadeResult;
 import sd.oficina.shared.proto.person.CidadeServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
 
@@ -74,6 +75,12 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
                         cidade != null ? ProtoConverterPerson.modelToProto(cidade) : CidadeProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou a Cidade
+        if (cidade != null) {
+            // Atualiza o cache
+            hashOperations.put(Cidade.class.getSimpleName(), cidade.getId(), cidade);
+        }
     }
 
     @Override
@@ -87,5 +94,12 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Cidade.class.getSimpleName(),
+                cidades.stream().collect(
+                        Collectors.toMap(Cidade::getId, cidade -> cidade)
+                ));
     }
 }

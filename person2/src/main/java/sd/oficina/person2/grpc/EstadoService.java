@@ -14,6 +14,7 @@ import sd.oficina.shared.proto.person.EstadoResult;
 import sd.oficina.shared.proto.person.EstadoServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
 
@@ -74,6 +75,12 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
                         estado != null ? ProtoConverterPerson.modelToProto(estado) : EstadoProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o Estado
+        if (estado != null) {
+            // Atualiza o cache
+            hashOperations.put(Estado.class.getSimpleName(), estado.getId(), estado);
+        }
     }
 
     @Override
@@ -87,5 +94,12 @@ public class EstadoService extends EstadoServiceGrpc.EstadoServiceImplBase {
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Estado.class.getSimpleName(),
+                estados.stream().collect(
+                        Collectors.toMap(Estado::getId, estado -> estado)
+                ));
     }
 }

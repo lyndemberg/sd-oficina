@@ -14,6 +14,7 @@ import sd.oficina.shared.proto.person.FornecedorResult;
 import sd.oficina.shared.proto.person.FornecedorServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceImplBase {
 
@@ -93,6 +94,9 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
                             ProtoConverterPerson.modelToProto(fornecedor))
                     .build());
 
+            // Atualiza o cache
+            hashOperations.put(Fornecedor.class.getSimpleName(), fornecedor.getId(), fornecedor);
+
         } else {
             responseObserver.onNext(FornecedorResult
                     .newBuilder()
@@ -114,5 +118,11 @@ public class FornecedorService extends FornecedorServiceGrpc.FornecedorServiceIm
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
 
+        // Após finalizar a comunicação atualiza o cache
+        hashOperations.putAll(
+                Fornecedor.class.getSimpleName(),
+                fornecedores.stream().collect(
+                        Collectors.toMap(Fornecedor::getId, fornecedor -> fornecedor)
+                ));
     }
 }

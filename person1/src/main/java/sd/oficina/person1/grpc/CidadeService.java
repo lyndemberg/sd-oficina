@@ -93,6 +93,9 @@ public class CidadeService extends CidadeServiceGrpc.CidadeServiceImplBase {
                             ProtoConverterPerson.modelToProto(cidade))
                     .build());
 
+            // Atualiza o cache
+            hashOperations.put(Cidade.class.getSimpleName(), cidade.getId(), cidade);
+
         } else {
             responseObserver.onNext(CidadeResult
                     .newBuilder()

@@ -14,6 +14,7 @@ import sd.oficina.shared.proto.person.ClienteResult;
 import sd.oficina.shared.proto.person.ClienteServiceGrpc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
 
@@ -74,6 +75,12 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
                         cliente != null ? ProtoConverterPerson.modelToProto(cliente) : ClienteProto.newBuilder().build())
                 .build());
         responseObserver.onCompleted();
+
+        // Se encontrou o cliente
+        if (cliente != null) {
+            // Atualiza o cache
+            hashOperations.put(Cliente.class.getSimpleName(), cliente.getId(), cliente);
+        }
     }
 
     @Override
@@ -87,5 +94,12 @@ public class ClienteService extends ClienteServiceGrpc.ClienteServiceImplBase{
         //
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+
+        // Apos finalizar a comunicaçao atualiza o cache
+        hashOperations.putAll(
+                Cliente.class.getSimpleName(),
+                clientes.stream().collect(
+                        Collectors.toMap(Cliente::getId, cliente -> cliente)
+                ));
     }
 }
