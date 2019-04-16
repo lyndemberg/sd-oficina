@@ -5,6 +5,8 @@
 
         <class>sd.oficina.shared.model.store.Servico</class>
         <class>sd.oficina.shared.model.store.Estoque</class>
+        <class>sd.oficina.shared.model.store.Nota</class>
+        <class>sd.oficina.shared.model.converters.LocalDateAttributeConverter</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db-postgres:5432/db_store"/>
@@ -20,7 +22,7 @@
         <class>sd.oficina.shared.model.EventRescue</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/db_shared"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db-postgres:5432/db_shared"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="postgres"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>

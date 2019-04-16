@@ -19,9 +19,10 @@ public class CidadeDao implements Dao<Cidade> {
     @Override
     public Cidade salvar(Cidade obj) {
         entity.getTransaction().begin();
-        entity.persist(obj);
+        Cidade objSalvo = entity.merge(obj);
         entity.getTransaction().commit();
-        return obj;
+
+        return objSalvo;
     }
 
     @Override

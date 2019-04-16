@@ -11,15 +11,17 @@
 
     <artifactId>order1</artifactId>
 
-
     <properties>
         <class.main>sd.oficina.order1.Order1Application</class.main>
         <skip.assembly>false</skip.assembly>
     </properties>
 
-    <dependencies>
+    <build>
+        <finalName>order1</finalName>
+    </build>
 
-        <!--para ler o arquivo properties-->
+    <dependencies>
+        <!-- LEITURA DO ARQUIVO PROPERTIES -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-configuration2</artifactId>
@@ -30,77 +32,100 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
         </dependency>
-        <!-- - - - - - - - - -->
 
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <version>2.0.3.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-        </dependency>
+        <!-- PERSISTENCIA -->
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
             <version>2.5.2</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.6</version>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.5.2</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- BANCO DE DADOS DA APLICAÇAO -->
         <dependency>
-            <groupId>sd.oficina</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+            <version>42.2.5.jre7</version>
         </dependency>
 
-
-        <!--JASPER-->
+        <!-- CACHE -->
         <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.10-FINAL</version>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>2.0.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+            <type>jar</type>
         </dependency>
 
+        <!-- LOMBOK -->
         <dependency>
-            <groupId>net.sourceforge.barbecue</groupId>
-            <artifactId>barbecue</artifactId>
-            <version>1.5-beta1</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
         </dependency>
 
+        <!-- OBJETOS IMUTAVEIS -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.11</version>
+        </dependency>
+
+        <!-- JASPERREPORTS PARA RELATORIOS -->
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
             <version>5.0.1</version>
         </dependency>
-
-
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports-fonts</artifactId>
             <version>4.0.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.10-FINAL</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.barbecue</groupId>
+            <artifactId>barbecue</artifactId>
+            <version>1.5-beta1</version>
+        </dependency>
         <dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
             <version>2.10.0</version>
         </dependency>
+
+        <!-- TESTES -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>sd.oficina</groupId>
+            <artifactId>shared</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
-    <build>
-        <finalName>order1</finalName>
-    </build>
 
 </project>

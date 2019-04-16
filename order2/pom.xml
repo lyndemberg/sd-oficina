@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <class.main>sd.oficina.customer1.Customer1Loader</class.main>
+        <class.main>sd.oficina.order2.Order2Loader</class.main>
         <skip.assembly>false</skip.assembly>
     </properties>
 
@@ -125,6 +125,13 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- TESTES -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
