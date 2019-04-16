@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.order2.dao.OrdemServicoDao;
 import sd.oficina.order2.exceptions.AtributoIdInvalidoException;
-import sd.oficina.order2.infra.cache.ConnectionFactory;
+import sd.oficina.order2.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterOrder;
 import sd.oficina.shared.model.order.OrdemServico;
 import sd.oficina.shared.proto.order.ClienteProto;

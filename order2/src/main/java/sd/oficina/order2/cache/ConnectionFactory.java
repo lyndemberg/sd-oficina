@@ -1,4 +1,4 @@
-package sd.oficina.order1.cache;
+package sd.oficina.order2.cache;
 
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -28,4 +28,5 @@ public class ConnectionFactory {
         template.afterPropertiesSet();
         return template;
     }
+
 }
