@@ -4,7 +4,7 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer2.dao.FabricanteDAO;
 import com.google.protobuf.Empty;
-import sd.oficina.customer2.infra.cache.ConnectionFactory;
+import sd.oficina.customer2.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Fabricante;
 import io.grpc.stub.StreamObserver;
@@ -14,7 +14,6 @@ import sd.oficina.shared.proto.customer.FabricanteResult;
 import sd.oficina.shared.proto.customer.FabricanteServiceGrpc;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FabricanteImpl extends FabricanteServiceGrpc.FabricanteServiceImplBase {
 

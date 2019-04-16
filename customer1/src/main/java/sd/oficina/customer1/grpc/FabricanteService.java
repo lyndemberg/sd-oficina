@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer1.dao.FabricanteDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
-import sd.oficina.customer1.infra.cache.ConnectionFactory;
+import sd.oficina.customer1.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Fabricante;
 import sd.oficina.shared.proto.customer.FabricanteProto;

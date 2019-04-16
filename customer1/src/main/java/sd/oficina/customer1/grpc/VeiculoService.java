@@ -7,10 +7,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer1.dao.VeiculoDao;
 import sd.oficina.customer1.exceptions.AtributoIdInvalidoException;
 import sd.oficina.customer1.exceptions.TentaPersistirObjetoNullException;
-import sd.oficina.customer1.infra.cache.ConnectionFactory;
+import sd.oficina.customer1.cache.ConnectionFactory;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import sd.oficina.shared.model.customer.Veiculo;
-import sd.oficina.shared.model.order.OrdemServico;
 import sd.oficina.shared.proto.customer.VeiculoProto;
 import sd.oficina.shared.proto.customer.VeiculoProtoList;
 import sd.oficina.shared.proto.customer.VeiculoResult;
@@ -19,7 +18,6 @@ import sd.oficina.shared.proto.customer.VeiculoServiceGrpc;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public final class VeiculoService extends VeiculoServiceGrpc.VeiculoServiceImplBase implements Serializable {
 

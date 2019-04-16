@@ -3,19 +3,17 @@ package sd.oficina.customer2.grpc;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer2.dao.AnoModeloDAO;
-import sd.oficina.customer2.infra.cache.ConnectionFactory;
+import sd.oficina.customer2.cache.ConnectionFactory;
 import sd.oficina.shared.model.customer.AnoModelo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
 import io.grpc.stub.StreamObserver;
-import sd.oficina.shared.model.customer.Veiculo;
 import sd.oficina.shared.proto.customer.AnoModeloProto;
 import sd.oficina.shared.proto.customer.AnoModeloProtoList;
 import sd.oficina.shared.proto.customer.AnoModeloResult;
 import sd.oficina.shared.proto.customer.AnoModeloServiceGrpc;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AnoModeloImpl extends AnoModeloServiceGrpc.AnoModeloServiceImplBase {
 

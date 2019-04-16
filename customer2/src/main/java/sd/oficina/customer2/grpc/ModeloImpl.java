@@ -4,7 +4,7 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer2.dao.ModeloDAO;
-import sd.oficina.customer2.infra.cache.ConnectionFactory;
+import sd.oficina.customer2.cache.ConnectionFactory;
 import sd.oficina.shared.model.customer.Modelo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverterCustomer;

@@ -3,7 +3,7 @@ package sd.oficina.customer2.grpc;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import sd.oficina.customer2.dao.VeiculoDAO;
-import sd.oficina.customer2.infra.cache.ConnectionFactory;
+import sd.oficina.customer2.cache.ConnectionFactory;
 import sd.oficina.shared.model.customer.Veiculo;
 import com.google.protobuf.Empty;
 import sd.oficina.shared.converter.ProtoConverterCustomer;
@@ -14,7 +14,6 @@ import sd.oficina.shared.proto.customer.VeiculoResult;
 import sd.oficina.shared.proto.customer.VeiculoServiceGrpc;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VeiculoImpl extends VeiculoServiceGrpc.VeiculoServiceImplBase {
 
