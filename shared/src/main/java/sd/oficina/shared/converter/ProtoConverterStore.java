@@ -58,8 +58,8 @@ public class ProtoConverterStore {
 
     public static Nota protoToModel(NotaProto proto) {
         Nota nota = new Nota();
-        nota.setDataCompra(LocalDate.parse(proto.getDataCompra()));
-        nota.setDataVencimento(LocalDate.parse(proto.getDataVencimento()));
+        nota.setDataCompra(proto.getDataCompra() != ""? LocalDate.parse(proto.getDataCompra()): null);
+        nota.setDataVencimento(proto.getDataVencimento() != ""? LocalDate.parse(proto.getDataVencimento()): null);
         nota.setEstoques(proto.getEstoques().getEstoqueList().stream().map(e ->
                 protoToModel(e)).collect(Collectors.toList()));
         nota.setId(proto.getId());
@@ -75,8 +75,8 @@ public class ProtoConverterStore {
         }
 
         return NotaProto.newBuilder()
-                .setDataCompra(model.getDataCompra().toString())
-                .setDataVencimento(model.getDataVencimento().toString())
+                .setDataCompra(model.getDataCompra() != null ?model.getDataCompra().toString() : "")
+                .setDataVencimento(model.getDataVencimento() != null ? model.getDataVencimento().toString() : "")
                 .setEstoques(builder.build())
                 .setId(model.getId())
                 .setNumero(model.getNumero())

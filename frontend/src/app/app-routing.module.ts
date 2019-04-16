@@ -49,7 +49,7 @@ const routes: Routes = [
   { path: 'listarServico', component: ListarServicoComponent},
   { path: 'cadastrarServico', component: CadastrarServicoComponent},
   { path: 'cadastrarNota', component: CadastrarNotaComponent},
-  { path: 'cadastrarNota', component: ListarNotaComponent}
+  { path: 'listarNota', component: ListarNotaComponent}
 ];
 
 @NgModule({
