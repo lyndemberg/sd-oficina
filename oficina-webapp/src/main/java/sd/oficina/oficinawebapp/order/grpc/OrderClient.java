@@ -3,19 +3,13 @@ package sd.oficina.oficinawebapp.order.grpc;
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 import sd.oficina.oficinawebapp.config.HostsProperties;
 import sd.oficina.oficinawebapp.exception.FalhaGrpcException;
-import sd.oficina.oficinawebapp.order.valueobject.OrdemServicoValue;
 import sd.oficina.shared.converter.ProtoConverterOrder;
 import sd.oficina.shared.model.order.OrdemServico;
-import sd.oficina.shared.model.person.Cliente;
 import sd.oficina.shared.proto.order.ClienteProto;
 import sd.oficina.shared.proto.order.OrdemProto;
 import sd.oficina.shared.proto.order.OrderServiceGrpc;
-import sd.oficina.shared.util.LocalDateUtil;
-
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,14 +30,14 @@ public class OrderClient {
                     .usePlaintext()
                     .build();
             Empty empty = OrderServiceGrpc.newBlockingStub(channelOrder1).cadastrarNovaOrdem(ordemProto);
-        } catch (StatusRuntimeException ex1) {
+        } catch (Exception ex1) {
             //tentando com ORDER 2
             try{
                 ManagedChannel channelOrder2 = ManagedChannelBuilder
                         .forAddress(hostsProperties.getOrder2Host(), hostsProperties.getOrder2Port())
                         .usePlaintext()
                         .build();
-            } catch (StatusRuntimeException ex2) {
+            } catch (Exception ex2) {
                 throw new FalhaGrpcException();
             }
         }
@@ -62,7 +56,7 @@ public class OrderClient {
                     .build();
             OrdemProto atualizado = OrderServiceGrpc.newBlockingStub(channelOrder1)
                     .realizarPagamento(ordemProto);
-        } catch (StatusRuntimeException ex1) {
+        } catch (Exception ex1) {
             //tentando com ORDER 2
             try{
                 ManagedChannel channelOrder2 = ManagedChannelBuilder
@@ -71,7 +65,7 @@ public class OrderClient {
                         .build();
                 OrdemProto atualizado = OrderServiceGrpc.newBlockingStub(channelOrder2)
                         .realizarPagamento(ordemProto);
-            } catch (StatusRuntimeException ex2) {
+            } catch (Exception ex2) {
                 throw new FalhaGrpcException();
             }
         }
@@ -89,7 +83,7 @@ public class OrderClient {
                     .build();
             return OrderServiceGrpc.newBlockingStub(channelOrder1)
                     .concluirOrdem(ordemProto);
-        } catch (StatusRuntimeException ex1) {
+        } catch (Exception ex1) {
             //tentando com ORDER 2
             try{
                 ManagedChannel channelOrder2 = ManagedChannelBuilder
@@ -98,7 +92,7 @@ public class OrderClient {
                         .build();
                 return OrderServiceGrpc.newBlockingStub(channelOrder2)
                         .concluirOrdem(ordemProto);
-            } catch (StatusRuntimeException ex2) {
+            } catch (Exception ex2) {
                 throw new FalhaGrpcException();
             }
         }
@@ -119,7 +113,7 @@ public class OrderClient {
                 OrdemProto next = iterator.next();
                 ordemProtosList.add(next);
             }
-        } catch (StatusRuntimeException ex1) {
+        } catch (Exception ex1) {
             //tentando com ORDER 2
             try{
                 ManagedChannel channelOrder2 = ManagedChannelBuilder
@@ -132,7 +126,7 @@ public class OrderClient {
                     OrdemProto next = iterator.next();
                     ordemProtosList.add(next);
                 }
-            } catch (StatusRuntimeException ex2) {
+            } catch (Exception ex2) {
                 throw new FalhaGrpcException();
             }
         }
@@ -155,7 +149,7 @@ public class OrderClient {
                 OrdemProto next = iterator.next();
                 ordemProtosList.add(next);
             }
-        } catch (StatusRuntimeException ex1) {
+        } catch (Exception ex1) {
             //tentando com ORDER 2
             try{
                 ManagedChannel channelOrder2 = ManagedChannelBuilder
@@ -168,7 +162,7 @@ public class OrderClient {
                     OrdemProto next = iterator.next();
                     ordemProtosList.add(next);
                 }
-            } catch (StatusRuntimeException ex2) {
+            } catch (Exception ex2) {
                 throw new FalhaGrpcException();
             }
         }
