@@ -22,6 +22,8 @@ import { ListarOrderComponent } from './order/view/listar-order/listar-order.com
 import { ListarPorClienteComponent } from './order/view/listar-por-cliente/listar-por-cliente.component';
 import { ListarServicoComponent } from './store/view/servico/listar-servico/listar-servico.component';
 import { CadastrarServicoComponent } from './store/view/servico/cadastrar-servico/cadastrar-servico.component';
+import { CadastrarNotaComponent } from './store/view/cadastrar-nota/cadastrar-nota.component';
+import { ListarNotaComponent } from './store/view/listar-nota/listar-nota.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -45,7 +47,9 @@ const routes: Routes = [
   { path: 'listarOrdem', component: ListarOrderComponent},
   { path: 'listarPorCliente', component: ListarPorClienteComponent},
   { path: 'listarServico', component: ListarServicoComponent},
-  { path: 'cadastrarServico', component: CadastrarServicoComponent}
+  { path: 'cadastrarServico', component: CadastrarServicoComponent},
+  { path: 'cadastrarNota', component: CadastrarNotaComponent},
+  { path: 'cadastrarNota', component: ListarNotaComponent}
 ];
 
 @NgModule({

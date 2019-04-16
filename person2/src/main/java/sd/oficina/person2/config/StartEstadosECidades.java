@@ -111,7 +111,7 @@ public class StartEstadosECidades {
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-            
+
         }
 
     }

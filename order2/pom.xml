@@ -125,6 +125,13 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- TESTES -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
